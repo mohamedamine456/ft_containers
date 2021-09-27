@@ -51,7 +51,7 @@ int main(int argc, char** argv) {
 
 	//ft::vector<std::string> vector_str;
 	//ft::vector<int> vector_int;
-	//ft::stack<int> stack_int;
+	ft::stack<int> stack_int;
 	//ft::vector<Buffer> vector_buffer;
 	//ft::stack<Buffer, std::deque<int> > stack_deq_buffer;
 	//ft::map<int, int> map_int;

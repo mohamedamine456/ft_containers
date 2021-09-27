@@ -3,8 +3,12 @@
 
 #include "namespace.hpp"
 
-template < class T, class Container = ft::vector <T> >
-class stack {
+template < class T, class Container >
+class ft::stack {
+	public:
+		stack<T>(){}
+		//stack<T>( const Container & cont = Container() );
+		~stack(){}
 };
 
 #endif

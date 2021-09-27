@@ -3,8 +3,8 @@
 
 #include "namespace.hpp"
 
-template < class T, class Allocator = std::allocator<T> >
-class vector {
+template < class T, class Allocator >
+class ft::vector {
 };
 
 #endif
