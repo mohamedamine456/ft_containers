@@ -4,7 +4,7 @@
 int main()
 {
 	// assign & at
-	std::cout << "assign & at" << std::endl;
+	std::cout << "assign & at: " << std::endl;
 	{
 		std::vector<int> vec;
 		vec.assign(5, 124);
@@ -30,7 +30,7 @@ int main()
 		std::cout << std::endl;
 	}
 	// back
-	std::cout << std::endl << "back" << std::endl;
+	std::cout << std::endl << "back: " << std::endl;
 	{
 		std::vector<int> vec;
 
@@ -49,7 +49,7 @@ int main()
 		std::cout << std::endl;
 	}
 	// begin & end
-	std::cout << std::endl << "begin & end" << std::endl;
+	std::cout << std::endl << "begin & end: " << std::endl;
 	{
 		std::vector<int> vec;
 
@@ -64,7 +64,7 @@ int main()
 		std::cout << std::endl;
 	}
 	// size & capacity & max_size
-	std::cout << std::endl << "size & capacity & max_size" << std::endl;
+	std::cout << std::endl << "size & capacity & max_size: " << std::endl;
 	{
 		std::vector<int> vec;
 
@@ -87,7 +87,7 @@ int main()
 		std::cout << "vec is empty: " << (vec.empty() ? "Yes" : "No") << std::endl;
 	}
 	// erase
-	std::cout << std::endl << "erase" << std::endl;
+	std::cout << std::endl << "erase: " << std::endl;
 	{
 		std::vector<int> vec;
 		vec.assign(7, 100);
@@ -106,7 +106,7 @@ int main()
 		}
 	}
 	// front 
-	std::cout << std::endl << "front" <<std::endl;
+	std::cout << std::endl << "front: " <<std::endl;
 	{
 		std::vector<int> vec;
 
