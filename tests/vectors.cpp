@@ -247,6 +247,7 @@ int main()
 		std::cout << "Sum of the vector is: " << sum << std::endl;
 	}
 	// rbegin & rend
+	std::cout << std::endl << "rbegin & rend: " << std::endl << std::endl;
 	{
 		std::vector<int> vec(5);
 		int i = 0;
@@ -265,6 +266,73 @@ int main()
 			*rit = ++i;
 		*rit = 5;
 		for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
+	// reserve
+	std::cout << std::endl << "reserve: " << std::endl << std::endl;
+	{
+		std::vector<int>::size_type sz;
+		std::vector<int> vec;
+
+		sz = vec.capacity();
+		for (int i = 0; i < 100; i++)
+		{
+			vec.push_back((i + 1) * 42);
+			if (sz != vec.capacity())
+			{
+				std::cout << "Capacity changed from: " << sz << " to: " << vec.capacity() << std::endl;
+				sz = vec.capacity();
+			}
+		}
+
+		std::vector<int> sec;
+		sz = sec.capacity();
+		std::cout << "USing reserve: " << std::endl;
+		sec.reserve(100);
+		for (int i = 0; i < 100; i++)
+		{
+			sec.push_back((i + 1) * 42);
+			if (sz != sec.capacity())
+			{
+				std::cout << "Capacity changed from: " << sz << " to: " << sec.capacity() << std::endl;
+				sz = sec.capacity();
+			}
+		}
+	}
+	// resize
+	std::cout << std::endl << "resize: " << std::endl << std::endl;
+	{
+		std::vector<int> vec;
+
+		for (int i = 0; i < 10; i++)
+			vec.push_back((i + 1) * 42);
+		vec.resize(5);
+		vec.resize(8, 300);
+		vec.resize(12);
+		for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+	}
+	// swap
+	std::cout << std::endl << "swap: " << std::endl << std::endl;
+	{
+		std::vector<int> vec(5, 100);
+		std::vector<int> sec(7, 400);
+		std::cout << "Before Swap: " << std::endl;
+		for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		for (std::vector<int>::iterator it = sec.begin(); it != sec.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+
+		std::cout << "After Swap: " << std::endl;
+		vec.swap(sec);
+		for (std::vector<int>::iterator it = vec.begin(); it != vec.end(); it++)
+			std::cout << *it << " ";
+		std::cout << std::endl;
+		for (std::vector<int>::iterator it = sec.begin(); it != sec.end(); it++)
 			std::cout << *it << " ";
 		std::cout << std::endl;
 	}
