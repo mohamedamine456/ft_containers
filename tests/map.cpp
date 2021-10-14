@@ -225,4 +225,131 @@ int main()
             std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
         std::cout << std::endl;
     }
+    // max_size
+    std::cout << std::endl << "max_size: " << std::endl << std::endl;
+    {
+        std::map<int, int> mp;
+
+        if (mp.max_size() > 1000)
+        {
+            for (int i = 0; i < 1000; i++)
+                mp[i] = i + 1;
+            std::cout << "The Map Contains 1000 elements." << std::endl;
+        }
+        else
+            std::cout << "The Map could not hold 1000 elements." << std::endl;
+    }
+    // operator=
+    std::cout << std::endl << "operator=: " << std::endl << std::endl;
+    {
+        std::map<std::string, int> mp;
+        std::map<std::string, int> sec_mp; 
+        mp["a"] = 100;
+        mp["c"] = 200;
+        mp["z"] = 300;
+        mp["h"] = 400;
+        mp["x"] = 500;
+        mp["m"] = 600;
+        mp["t"] = 700;
+        mp["j"] = 800;
+
+        sec_mp = mp;
+        // mp.clear();
+        mp = std::map<std::string, int>();
+
+        std::cout << "Size of mp: " << mp.size() << std::endl;
+        std::cout << "Size of sec_mp: " << sec_mp.size() << std::endl;
+    }
+    // operator[]
+    std::cout << std::endl << "operator[]: " << std::endl << std::endl;
+    {
+        std::map<std::string, std::string> mp;
+        mp["x"] = "this case contains 500";
+        mp["m"] = "this case contains 600";
+        mp["j"] = "this case contains 800";
+
+        std::cout << "mp[\"x\"]: " << mp["x"] <<std::endl;
+        std::cout << "mp[\"m\"]: " << mp["m"] <<std::endl;
+        std::cout << "mp[\"j\"]: " << mp["j"] <<std::endl;
+        std::cout << "mp[\"o\"]: " << mp["o"] <<std::endl;
+
+        std::cout << "mp now contains: " << mp.size() << " elements." << std::endl;
+    }
+    // rbegin && rend
+    std::cout << std::endl << "rbegin && rend: " << std::endl << std::endl;
+    {
+        std::map<std::string, int> mp;
+        mp["a"] = 100;
+        mp["c"] = 200;
+        mp["z"] = 300;
+        mp["h"] = 400;
+        mp["x"] = 500;
+        mp["m"] = 600;
+        mp["t"] = 700;
+        mp["j"] = 800;
+        
+        std::map<std::string, int>::reverse_iterator rit;
+        for (rit = mp.rbegin(); rit != mp.rend(); rit++)
+            std::cout << rit->first << " => " << rit->second << std::endl;
+    }
+    // size
+    std::cout << std::endl << "size: " << std::endl << std::endl;
+    {
+        std::map<std::string, int> mp;
+        mp["a"] = 100;
+        mp["c"] = 200;
+        mp["z"] = 300;
+        mp["h"] = 400;
+        mp["x"] = 500;
+        mp["m"] = 600;
+        mp["t"] = 700;
+        mp["j"] = 800;
+
+        std::cout << "The Map size is: " << mp.size() << std::endl;
+    }
+    // swap
+    std::cout << std::endl << "swap: " << std::endl << std::endl;
+    {
+        std::map<std::string, int> mp;
+        std::map<std::string, int> sec;
+        mp["a"] = 100;
+        mp["b"] = 200;
+        mp["c"] = 300;
+        mp["d"] = 400;
+
+        sec["v"] = 900;
+        sec["w"] = 500;
+        sec["x"] = 600;
+        sec["y"] = 700;
+        sec["z"] = 800;
+
+        mp.swap(sec);
+        std::cout << "After Swap, The Map mp contains: " << std::endl;
+        for (std::map<std::string, int>::iterator it = mp.begin(); it != mp.end(); it++)
+            std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
+        std::cout << "After Swap, The Map sec contains: " << std::endl;
+        for (std::map<std::string, int>::iterator it = sec.begin(); it != sec.end(); it++)
+            std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
+        std::cout << std::endl;
+    }
+    // value_comp
+    std::cout << std::endl << "value_comp: " << std::endl << std::endl;
+    {
+        std::map<std::string, int> mp;
+        mp["a"] = 100;
+        mp["b"] = 200;
+        mp["c"] = 300;
+        mp["d"] = 400;
+
+        std::cout << "The Map mp contains: " << std::endl;
+        std::map<std::string, int>::value_compare vcmp = mp.value_comp();
+
+        std::pair<std::string, int> highest = *mp.rbegin();
+
+        std::map<std::string, int>::iterator it = mp.begin();
+
+        do {
+            std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
+        } while (vcmp(*it++, highest));
+    }
 }
