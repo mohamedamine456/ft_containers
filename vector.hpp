@@ -5,6 +5,7 @@
 
 template < class T, class Allocator >
 class ft::vector {
+    
 };
 
 #endif
