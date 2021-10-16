@@ -140,5 +140,10 @@ class back_insert_iterator: public iterator<output_iterator_tag, void, void, voi
     }
 };
 
+template < class Container>
+back_insert_iterator< Container > back_inserter (Container &c)
+{
+    return back_insert_iterator<Container>(c);
+}
 
 #endif
