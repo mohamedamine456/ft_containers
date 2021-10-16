@@ -110,8 +110,35 @@ typename iterator_traits<InputIterator>::difference_type	disctance(InputIterator
 
 
 
+// back_inserter front_inserter inserter
 
 
+
+
+// back_insert_iterator
+
+template < class Container >
+class back_insert_iterator: public iterator<output_iterator_tag, void, void, void, void>
+{
+    protected:
+        Container *container;
+    public:
+        typedef Container container_type;
+        back_insert_iterator(Container &c) : container(c) {}
+    back_insert_iterator<Container>& operator= (typename Container::const_reference value) {
+        container->push_back(value);
+        return (*this);
+    }
+    back_insert_iterator<Container>& operator* (){
+        return *this;   
+    }
+    back_insert_iterator<Container>& operator++() {
+        return (*this);
+    }
+    back_insert_iterator<Container> operator++(int) {
+        return *this;
+    }
+};
 
 
 #endif
