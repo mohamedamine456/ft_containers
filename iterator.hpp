@@ -127,12 +127,4 @@ ft::reverse_iterator<Iterator> operator+ (
     return ft::reverse_iterator<Iterator>(it.base() - n);
 }
 
-
-
-
-
-
-
-
-
 #endif

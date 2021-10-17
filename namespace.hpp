@@ -193,21 +193,21 @@ namespace ft {
 				return &(operator*());
 			}
 			reverse_iterator& operator++ () {
-				current--;
+				--current;
 				return *this;
 			}
-			reverse_iterator& operator++ (int) {
+			reverse_iterator operator++ (int) {
 				reverse_iterator tmp(*this);
-				current--;
+				--current;
 				return tmp;
 			}
 			reverse_iterator& operator-- () {
-				current++;
+				++current;
 				return *this;
 			}
-			reverse_iterator& operator-- (int) {
+			reverse_iterator operator-- (int) {
 				reverse_iterator tmp(*this);
-				current++;
+				++current;
 				return tmp;
 			}
 			reverse_iterator operator+ (difference_type n) const {
