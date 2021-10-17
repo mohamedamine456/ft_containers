@@ -97,7 +97,7 @@ typename iterator_traits<InputIterator>::difference_type	_distance(InputIterator
 }
 
 template < class RandomAccessIterator >
-typename iterator_traits<RandomAccessIterator>::difference_type	_distance(RandomAccessIterator first, RandomAccessIterator last, input_iterator_tag)
+typename iterator_traits<RandomAccessIterator>::difference_type	_distance(RandomAccessIterator first, RandomAccessIterator last, random_access_iterator_tag)
 {
 	return last - first;
 }
@@ -158,7 +158,7 @@ class front_insert_iterator: public iterator<output_iterator_tag, void, void, vo
         Container *container;
     public:
         typedef Container container_type;
-        front_insert_iterator (Container &c): container(&c);
+        front_insert_iterator (Container &c): container(&c) {}
         front_insert_iterator<Container>& operator= (typename Container::const_reference value) {
             container->push_front(value);
             return *this;
@@ -207,8 +207,8 @@ class insert_iterator: public iterator<output_iterator_tag, void, void,void, voi
 
 // inserter
 template < class Container >
-insert_iterator< Container > inserter (Container &c, typename Container::iterator :: iter) {
-    return insert_iterator<Container>(c, i);
+insert_iterator< Container > inserter (Container &c, typename Container::iterator iter) {
+    return insert_iterator<Container>(c, iter);
 }
 
 
@@ -227,6 +227,11 @@ class reverse_iterator: public iterator<typename iterator_traits<Iter>::iterator
     protected:
         Iter    current;
     public:
+        typedef Iter                                            iterator_type;
+        typedef typename iterator_traits<Iter>::reference       reference;
+        typedef typename iterator_traits<Iter>::difference_type difference_type;
+        typedef typename iterator_traits<Iter>::pointer         pointer;
+
         reverse_iterator(): current() {}
         reverse_iterator(Iter c): current(c) {}
         reverse_iterator(const reverse_iterator<Iter>& rv_iter): current(rv_iter.base()) {}
@@ -273,7 +278,7 @@ class reverse_iterator: public iterator<typename iterator_traits<Iter>::iterator
             current -= n;
             return *this;
         }
-        reverse_iterator& operator+= (difference_type n) {
+        reverse_iterator& operator-= (difference_type n) {
             current += n;
             return *this;
         }
@@ -312,7 +317,7 @@ bool operator>= ( const reverse_iterator<Iterator>& lhs, const reverse_iterator<
 }
 
 template < class Iterator >
-typename reverse_iterator<Iterator> operator+ (
+reverse_iterator<Iterator> operator+ (
     typename reverse_iterator<Iterator>::difference_type n,
     const reverse_iterator<Iterator>& it)
 {
