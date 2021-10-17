@@ -124,26 +124,105 @@ class back_insert_iterator: public iterator<output_iterator_tag, void, void, voi
         Container *container;
     public:
         typedef Container container_type;
-        back_insert_iterator(Container &c) : container(c) {}
-    back_insert_iterator<Container>& operator= (typename Container::const_reference value) {
-        container->push_back(value);
-        return (*this);
-    }
-    back_insert_iterator<Container>& operator* (){
-        return *this;   
-    }
-    back_insert_iterator<Container>& operator++() {
-        return (*this);
-    }
-    back_insert_iterator<Container> operator++(int) {
-        return *this;
-    }
+        back_insert_iterator (Container &c) : container(c) {}
+        back_insert_iterator<Container>& operator= (typename Container::const_reference value) {
+            container->push_back(value);
+            return (*this);
+        }
+        back_insert_iterator<Container>& operator* () {
+            return *this;   
+        }
+        back_insert_iterator<Container>& operator++() {
+            return (*this);
+        }
+        back_insert_iterator<Container> operator++(int) {
+            return *this;
+        }
 };
+
+// back_inserter
 
 template < class Container>
 back_insert_iterator< Container > back_inserter (Container &c)
 {
     return back_insert_iterator<Container>(c);
+}
+
+
+//front_insert_iterator
+
+template < class Container >
+class front_insert_iterator: public iterator<output_iterator_tag, void, void, void, void>
+{
+    protected:
+        Container *container;
+    public:
+        typedef Container container_type;
+        front_insert_iterator (Container &c): container(&c);
+        front_insert_iterator<Container>& operator= (typename Container::const_reference value) {
+            container->push_front(value);
+            return *this;
+        }
+        front_insert_iterator<Container>& operator* () {
+            return *this;
+        }
+        front_insert_iterator<Container>& operator++ () {
+            return *this;
+        }
+        front_insert_iterator<Container>& operator++(int) {
+            return *this;
+        }
+};
+
+// front_inserter
+template < class Container >
+front_insert_iterator< Container > front_inserter (Container &c) {
+    return front_insert_iterator<Container>(c);
+}
+
+// insert_iterator
+template < class Container >
+class insert_iterator: public iterator<output_iterator_tag, void, void,void, void>
+{
+    protected:
+        Container *container;
+        typename Container::iterator    iter;
+    public:
+        insert_iterator(Container &c, typename Container::iterator i) : container(c), iter(i) {}
+        insert_iterator<Container>& operator= (typename Container::const_reference value) {
+            iter = container->insert(iter, value);
+            ++iter;
+            return *this;
+        }
+        insert_iterator<Container>& operator* () {
+            return *this;
+        }
+        insert_iterator<Container>& operator++ () {
+            return *this;
+        }
+        insert_iterator<Container>& operator++(int) {
+            return *this;
+        }
+};
+
+// inserter
+template < class Container >
+insert_iterator< Container > inserter (Container &c, typename Container::iterator :: iter) {
+    return insert_iterator<Container>(c, i);
+}
+
+// reverse iterator
+template < class Iter >
+class reverse_iterator: public iterator<typename iterator_traits<Iter>::iterator_category,
+                                        typename iterator_traits<Iter>::value_type,
+                                        typename iterator_traits<Iter>::difference_type,
+                                        typename iterator_traits<Iter>::pointer,
+                                        typename iterator_traits<Iter>::reference>
+{
+    protected:
+        Iter    iter;
+    public:
+        
 }
 
 #endif
