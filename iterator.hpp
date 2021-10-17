@@ -220,9 +220,56 @@ class reverse_iterator: public iterator<typename iterator_traits<Iter>::iterator
                                         typename iterator_traits<Iter>::reference>
 {
     protected:
-        Iter    iter;
+        Iter    current;
     public:
-        
-}
+        reverse_iterator(): current() {}
+        reverse_iterator(Iter c): current(c) {}
+        reverse_iterator(const reverse_iterator<Iter>& rv_iter): current(rv_iter.base()) {}
+        template < class U>
+        reverse_iterator& operator= (reverse_iterator<U>& other) {
+            current = other.base();
+            return *this;
+        }
+        Iter    base() const {
+            return current;
+        }
+        reference operator*() const {
+            Iter tmp = current;
+            return *--tmp;
+        }
+        pointer operator-> () {
+            return &(operator*());
+        }
+        reverse_iterator& operator++ () const {
+            current--;
+            return *this;
+        }
+        reverse_iterator& operator++ (int) const {
+            reverse_iterator tmp = *this;
+            current--;
+            return tmp;
+        }
+        reverse_iterator& operator-- () const {
+            current++;
+            return *this;
+        }
+        reverse_iterator& operator-- (int) const {
+            reverse_iterator tmp = *this;
+            current++;
+            return tmp;
+        }
+        reverse_iterator operator+ (difference_type n) const {
+            return reverse_iterator(current - n);
+        }
+        reverse_iterator operator- (difference_type n) const {
+            return reverse_iterator(current + n);
+        }
+        reverse_iterator& operator+= (difference_type n) {
+
+        }
+        reverse_iterator& operator+= (difference_type n) {
+            
+        }
+};
 
 #endif
