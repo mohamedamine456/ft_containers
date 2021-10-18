@@ -87,6 +87,7 @@ class ft::back_insert_iterator: public ft::iterator<ft::output_iterator_tag, voi
         ft::back_insert_iterator<Container> operator++(int) {
             return *this;
         }
+        virtual ~back_insert_iterator() {}
 };
 
 // back_inserter
@@ -118,6 +119,7 @@ class ft::front_insert_iterator: public ft::iterator<ft::output_iterator_tag, vo
         ft::front_insert_iterator<Container>& operator++(int) {
             return *this;
         }
+        virtual ~front_insert_iterator() {}
 };
 
 // front_inserter
@@ -149,6 +151,7 @@ class ft::insert_iterator: public ft::iterator<ft::output_iterator_tag, void, vo
         ft::insert_iterator<Container>& operator++(int) {
             return *this;
         }
+        virtual ~insert_iterator() {}
 };
 
 // inserter

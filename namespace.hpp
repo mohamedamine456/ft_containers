@@ -103,25 +103,6 @@ namespace ft {
 	template < class Iter >
 	class reverse_iterator;
 
-	// relational operators for reverse_iterator
-	template < class Iterator >
-	bool operator== ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
-
-	template < class Iterator >
-	bool operator!= ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
-
-	template < class Iterator >
-	bool operator< ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
-
-	template < class Iterator >
-	bool operator<= ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
-
-	template < class Iterator >
-	bool operator> ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
-
-	template < class Iterator >
-	bool operator>= ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
-
 	// equal
 	template < class InputIterator1, class InputIterator2 >
 	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2);
@@ -142,25 +123,6 @@ namespace ft {
 	// pair
 	template < class T1, class T2 >
 	struct pair;
-
-	// pair relational operators
-	template < class T1, class T2 >
-	bool operator== ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
-
-	template < class T1, class T2 >
-	bool operator!= ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
-
-	template < class T1, class T2 >
-	bool operator< ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
-
-	template < class T1, class T2 >
-	bool operator<= ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
-
-	template < class T1, class T2 >
-	bool operator> ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
-
-	template < class T1, class T2 >
-	bool operator>= ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
 
 	// make_pair
 	template < class T1, class T2 >

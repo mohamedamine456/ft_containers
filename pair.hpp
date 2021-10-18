@@ -1,4 +1,4 @@
-#ifndef PAIT_HPP
+#ifndef PAIR_HPP
 #define PAIR_HPP
 
 #include "namespace.hpp"
@@ -17,6 +17,7 @@ struct ft::pair
         this->second = pr.second;
         return *this;
     }
+    virtual ~pair() {}
 };
 
 // pair relational operators
@@ -53,7 +54,7 @@ bool operator>= ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs ) {
 // make_pair
 template < class T1, class T2 >
 ft::pair< T1, T2> ft::make_pair (T1 x, T2 y) {
-    return ft::pair(x, y);
+    return ft::pair<T1, T2>(x, y);
 }
 
 #endif
