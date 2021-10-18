@@ -24,7 +24,6 @@ namespace ft {
 	struct bidirectional_iterator_tag : public forward_iterator_tag {};
 	struct random_access_iterator_tag : public bidirectional_iterator_tag {};
 
-
 	// terator_traits
 	template <class Iterator>
 	struct iterator_traits
@@ -77,56 +76,15 @@ namespace ft {
 
 	// back_insert_iterator
 	template < class Container >
-	class back_insert_iterator: public iterator<output_iterator_tag, void, void, void, void>
-	{
-		protected:
-			Container *container;
-		public:
-			typedef Container container_type;
-			back_insert_iterator (Container &c) : container(c) {}
-			back_insert_iterator<Container>& operator= (typename Container::const_reference value) {
-				container->push_back(value);
-				return (*this);
-			}
-			back_insert_iterator<Container>& operator* () {
-				return *this;   
-			}
-			back_insert_iterator<Container>& operator++() {
-				return (*this);
-			}
-			back_insert_iterator<Container> operator++(int) {
-				return *this;
-			}
-	};
+	class back_insert_iterator;
 
 	// back_inserter function
 	template < class Container>
 	back_insert_iterator< Container > back_inserter (Container &c);
 
 	// front_insert_iterator
-
 	template < class Container >
-	class front_insert_iterator: public iterator<output_iterator_tag, void, void, void, void>
-	{
-		protected:
-			Container *container;
-		public:
-			typedef Container container_type;
-			front_insert_iterator (Container &c): container(&c) {}
-			front_insert_iterator<Container>& operator= (typename Container::const_reference value) {
-				container->push_front(value);
-				return *this;
-			}
-			front_insert_iterator<Container>& operator* () {
-				return *this;
-			}
-			front_insert_iterator<Container>& operator++ () {
-				return *this;
-			}
-			front_insert_iterator<Container>& operator++(int) {
-				return *this;
-			}
-	};
+	class front_insert_iterator;
 
 	// front_inserter function
 	template < class Container >
@@ -135,28 +93,7 @@ namespace ft {
 
 	// insert_iterator
 	template < class Container >
-	class insert_iterator: public iterator<output_iterator_tag, void, void,void, void>
-	{
-		protected:
-			Container *container;
-			typename Container::iterator    iter;
-		public:
-			insert_iterator(Container &c, typename Container::iterator i) : container(c), iter(i) {}
-			insert_iterator<Container>& operator= (typename Container::const_reference value) {
-				iter = container->insert(iter, value);
-				++iter;
-				return *this;
-			}
-			insert_iterator<Container>& operator* () {
-				return *this;
-			}
-			insert_iterator<Container>& operator++ () {
-				return *this;
-			}
-			insert_iterator<Container>& operator++(int) {
-				return *this;
-			}
-	};
+	class insert_iterator;
 
 	// inserter
 	template < class Container >
@@ -164,128 +101,70 @@ namespace ft {
 
 	// reverse_iterator class
 	template < class Iter >
-	class reverse_iterator: public iterator<typename iterator_traits<Iter>::iterator_category,
-                                        typename iterator_traits<Iter>::value_type,
-                                        typename iterator_traits<Iter>::difference_type,
-                                        typename iterator_traits<Iter>::pointer,
-                                        typename iterator_traits<Iter>::reference>
-	{
-		protected:
-			Iter    current;
-		public:
-			typedef Iter                                            iterator_type;
-			typedef typename iterator_traits<Iter>::reference       reference;
-			typedef typename iterator_traits<Iter>::difference_type difference_type;
-			typedef typename iterator_traits<Iter>::pointer         pointer;
+	class reverse_iterator;
 
-			reverse_iterator(): current() {}
-			reverse_iterator(Iter c): current(c) {}
-			reverse_iterator(const reverse_iterator<Iter>& rv_iter): current(rv_iter.base()) {}
-			
-			Iter    base() const {
-				return current;
-			}
-			reference operator*() const {
-				Iter tmp = current;
-				return *--tmp;
-			}
-			pointer operator-> () const {
-				return &(operator*());
-			}
-			reverse_iterator& operator++ () {
-				--current;
-				return *this;
-			}
-			reverse_iterator operator++ (int) {
-				reverse_iterator tmp(*this);
-				--current;
-				return tmp;
-			}
-			reverse_iterator& operator-- () {
-				++current;
-				return *this;
-			}
-			reverse_iterator operator-- (int) {
-				reverse_iterator tmp(*this);
-				++current;
-				return tmp;
-			}
-			reverse_iterator operator+ (difference_type n) const {
-				return reverse_iterator(current - n);
-			}
-			reverse_iterator operator- (difference_type n) const {
-				return reverse_iterator(current + n);
-			}
-			reverse_iterator& operator+= (difference_type n) {
-				current -= n;
-				return *this;
-			}
-			reverse_iterator& operator-= (difference_type n) {
-				current += n;
-				return *this;
-			}
-			reference operator[] (difference_type n) const {
-				return *(*this + n);
-			}
-	};
+	// relational operators for reverse_iterator
+	template < class Iterator >
+	bool operator== ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
 
+	template < class Iterator >
+	bool operator!= ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
+
+	template < class Iterator >
+	bool operator< ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
+
+	template < class Iterator >
+	bool operator<= ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
+
+	template < class Iterator >
+	bool operator> ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
+
+	template < class Iterator >
+	bool operator>= ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs );
 
 	// equal
 	template < class InputIterator1, class InputIterator2 >
-	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
-	{
-		while (first1 != last1) {
-			if (!(*first1 == *first))
-				return false;
-			++first1;
-			++first2;
-		}
-		return true;
-	}
+	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2);
 
 	template < class InputIterator1, class InputIterator2, class BinaryPredicate >
-	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, BinaryPredicate pred)
-	{
-		while (first1 != last1) {
-			if (!pred(*first1 == *first))
-				return false;
-			++first1;
-			++first2;
-		}
-		return true;	
-	}
+	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2, BinaryPredicate pred);
 
 	// lexicographical_compare
 	template < class InputIterator1, class InputIterator2 >
 	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
-									InputIterator2 first2, InputIterator2 last2)
-	{
-		while (first1 != last1) {
-			if (first2 == last2 || *first2 < *first1)
-				return (false);
-			else if (*first1 < *first2)
-				return true;
-			++first1;
-			++first2;
-		}
-		return first2 != last2;
-	}
+									InputIterator2 first2, InputIterator2 last2);
 
 	template < class InputIterator1, class InputIterator2, class Compare >
 	bool lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
 									InputIterator2 first2, InputIterator2 last2,
-									Compare comp)
-	{
-		while (first1 != last1) {
-			if (first2 == last2 || comp(*first2, *first1))
-				return (false);
-			else if (comp(*first1, *first2))
-				return true;
-			++first1;
-			++first2;
-		}
-		return first2 != last2;
-	}
+									Compare comp);
+
+	// pair
+	template < class T1, class T2 >
+	struct pair;
+
+	// pair relational operators
+	template < class T1, class T2 >
+	bool operator== ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
+
+	template < class T1, class T2 >
+	bool operator!= ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
+
+	template < class T1, class T2 >
+	bool operator< ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
+
+	template < class T1, class T2 >
+	bool operator<= ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
+
+	template < class T1, class T2 >
+	bool operator> ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
+
+	template < class T1, class T2 >
+	bool operator>= ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs );
+
+	// make_pair
+	template < class T1, class T2 >
+	pair< T1, T2> make_pair (T1 x, T2 y);
 };
 
 #endif
