@@ -21,6 +21,7 @@ struct ft::pair
 };
 
 // pair relational operators
+
 template < class T1, class T2 >
 bool operator== ( const ft::pair<T1, T2> &lhs, const ft::pair<T1, T2> &rhs ) {
     return lhs.first == rhs.first && lhs.second == rhs.second;

@@ -127,6 +127,19 @@ namespace ft {
 	// make_pair
 	template < class T1, class T2 >
 	pair< T1, T2> make_pair (T1 x, T2 y);
+
+	// enable_if
+	template < bool B, class T = void >
+	struct	enable_if {};
+
+	template < class T >	// define type if B is true otherwise don't
+	struct enable_if <true, T>
+	{
+		typedef T type;
+	};
+
+	// is_integral
+	
 };
 
 #endif
