@@ -27,7 +27,7 @@ namespace ft {
 	template <class T>
 	struct iterator_traits<T*>
 	{
-		typedef ptrdiff_t					difference_type;
+		typedef std::ptrdiff_t				difference_type;
 		typedef T							value_type;
 		typedef T*							pointer;
 		typedef T&							reference;
@@ -37,7 +37,7 @@ namespace ft {
 	template <class T>
 	struct iterator_traits<const T*>
 	{
-		typedef ptrdiff_t					difference_type;
+		typedef std::ptrdiff_t				difference_type;
 		typedef T							value_type;
 		typedef T*							pointer;
 		typedef T&							reference;
@@ -45,7 +45,7 @@ namespace ft {
 	};
 
 	// iterator
-	template < class Category, class T, class Distance = ptrdiff_t,
+	template < class Category, class T, class Distance = std::ptrdiff_t,
 		class Pointer = T*, class Reference = T& >
 	struct iterator
 	{
@@ -150,7 +150,7 @@ namespace ft {
 			typedef ft::reverse_iterator<iterator>								reverse_iterator;
 			typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
 			typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;
-			typedef size_t														size_type;
+			typedef std::size_t													size_type;
 
 
 			// constructors
@@ -254,7 +254,7 @@ namespace ft {
 		public:
 			typedef T															value_type;
 			typedef Container													container_type;
-			typedef size_t														size_type;
+			typedef std::size_t													size_type;
 
 			// constructor
 			explicit stack( const container_type& ctnr = container_type() );	// default constructor
@@ -284,11 +284,31 @@ namespace ft {
 	};
 	
 	// map
-	template < class key,
+	template < class Key,
 		class T,
-		class Compare = std::less<key>,
-		class Allocator = std::allocator<std::pair <const key, T> > >
-	class map;
+		class Compare = std::less<Key>,
+		class Allocator = std::allocator<ft::pair <const Key, T> > >
+	class map
+	{
+		private:
+			// properties
+		public:
+			typedef Key															key_type;
+			typedef T															mapped_type;
+			typedef pair<const key_type, mapped_type>							value_type;
+			typedef	Compare														key_compare;
+			typedef Allocator													allocator_type;
+			typedef value_type&													reference;
+			typedef const value_type&											const_reference;
+			typedef typename allocator_type::pointer							pointer;
+			typedef typename allocator_type::const_pointer						const_pointer;
+			typedef ft::iterator<random_access_iterator_tag, T>					iterator;
+			typedef ft::iterator<random_access_iterator_tag, const	T>			const_iterator;
+			typedef ft::reverse_iterator<iterator>								reverse_iterator;
+			typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
+			typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;
+			typedef std::size_t													size_type;
+	};
 };
 
 #endif
