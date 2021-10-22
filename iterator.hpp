@@ -60,7 +60,33 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         T operator[] (int n) const {
             return *(*this + n);
         }
+        bool operator< ( const iterator<Category, T> fr,
+                            const iterator<Category, T> & sc ) {
+            
+        }
+
+        bool operator<= ( const iterator<Category, T>, T>& fr,
+                            const iterator<Category, T>, T>& sc ) {
+            
+        }
+
+        bool operator> ( const iterator<Category, T>, T>& fr,
+                            const iterator<Category, T>, T>& sc ) {
+            
+        }
+        bool operator>= ( const iterator<Category, T>, T>& fr,
+                            const iterator<Category, T>, T>& sc ) {
+            
+        }
 };
+
+template < class Iterator >
+ft::reverse_iterator<Iterator> operator+ (
+    typename ft::reverse_iterator<Iterator>::difference_type n,
+    const ft::reverse_iterator<Iterator>& it)
+{
+    return ft::reverse_iterator<Iterator>(it.base() - n);
+}
 
 template < class Iterator >
 ft::reverse_iterator<Iterator> operator+ (
