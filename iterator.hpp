@@ -3,11 +3,12 @@
 
 #include "namespace.hpp"
 
-
 // advance function
 
-template < class InputIterator >
-void    _advance(InputIterator &inputIterator, typename ft::iterator_traits<InputIterator>::difference_type n, ft::input_iterator_tag)
+template < class It >
+void    _advance(It &inputIterator,
+    typename ft::iterator_traits<It>::difference_type n,
+    ft::input_iterator_tag)
 {
     while (n > 0) {
         n--;
@@ -15,8 +16,10 @@ void    _advance(InputIterator &inputIterator, typename ft::iterator_traits<Inpu
     }
 }
 
-template < class BidirectionalIterator >
-void    _advance(BidirectionalIterator &bidirectionalIterator, typename ft::iterator_traits<BidirectionalIterator>::difference_type n, ft::bidirectional_iterator_tag)
+template < class It >
+void    _advance(It &bidirectionalIterator,
+    typename ft::iterator_traits<It>::difference_type n,
+    ft::bidirectional_iterator_tag)
 {
     while (n > 0) {
         n--;
@@ -28,23 +31,25 @@ void    _advance(BidirectionalIterator &bidirectionalIterator, typename ft::iter
     }
 }
 
-template < class RandomAccessIterator >
-void    _advance(RandomAccessIterator &randomAccessIterator, typename ft::iterator_traits<RandomAccessIterator>::difference_type n, ft::random_access_iterator_tag)
+template < class It >
+void    _advance(It &randomAccessIterator,
+    typename ft::iterator_traits<It>::difference_type n,
+    ft::random_access_iterator_tag)
 {
     randomAccessIterator += n;
 }
 
-template < class InputIterator >
-void	ft::advance(InputIterator &inputIterator, typename ft::iterator_traits<InputIterator>::difference_type n)
+template < class InputIterator, class Distance >
+void	ft::advance(InputIterator &inputIterator, Distance n)
 {
-	_advance(inputIterator, n, ft::iterator_traits<InputIterator>::iterator_category());
+	_advance(inputIterator, n, typename ft::iterator_traits<InputIterator>::iterator_category());
 }
 
 // distance function
-template < class InputIterator >
-typename ft::iterator_traits<InputIterator>::difference_type	_distance(InputIterator first, InputIterator last, ft::input_iterator_tag)
+template < class It >
+typename ft::iterator_traits<It>::difference_type	_distance(It first, It last, ft::input_iterator_tag)
 {
-	typename ft::iterator_traits<InputIterator>::difference_type result = 0;
+	typename ft::iterator_traits<It>::difference_type result = 0;
 
 	while (first != last) {
 		first++;
@@ -53,8 +58,8 @@ typename ft::iterator_traits<InputIterator>::difference_type	_distance(InputIter
 	return (result);
 }
 
-template < class RandomAccessIterator >
-typename ft::iterator_traits<RandomAccessIterator>::difference_type	_distance(RandomAccessIterator first, RandomAccessIterator last, ft::random_access_iterator_tag)
+template < class It >
+typename ft::iterator_traits<It>::difference_type	_distance(It first, It last, ft::random_access_iterator_tag)
 {
 	return last - first;
 }
@@ -62,7 +67,7 @@ typename ft::iterator_traits<RandomAccessIterator>::difference_type	_distance(Ra
 template < class InputIterator >
 typename ft::iterator_traits<InputIterator>::difference_type	ft::distance(InputIterator first, InputIterator last)
 {
-	_distance(first, last, ft::iterator_traits<InputIterator>::iterator_category());
+	_distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 }
 
 // back_insert_iterator
