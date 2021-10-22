@@ -47,7 +47,7 @@ namespace ft {
 	// iterator
 	template < class Category, class T, class Distance = std::ptrdiff_t,
 		class Pointer = T*, class Reference = T& >
-	struct iterator
+	struct iterator_base
 	{
 		typedef T			value_type;
 		typedef Distance	difference_type;
@@ -55,6 +55,9 @@ namespace ft {
 		typedef Reference	reference;
 		typedef Category	iterator_category;
 	};
+
+	template < class Category, class T >
+	class iterator;
 
 	// iterator functions
 	template < class InputIterator, class Distance >

@@ -3,6 +3,74 @@
 
 #include "namespace.hpp"
 
+template < class Category, class T >
+class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T>
+{
+    private:
+        T*	p;
+    public:
+        iterator () {}
+        iterator (T* x) : p(x) {}
+        iterator ( const iterator& cp) : p(cp.p) {}
+        iterator& operator++ () {
+            ++p;
+            return *this;
+        }
+        iterator& operator++ (int) {
+            iterator tmp (*this);
+            ++p;
+            return tmp;
+        }
+        iterator& operator-- () {
+            --p;
+            return *this;
+        }
+        iterator& operator-- (int) {
+            iterator tmp (*this);
+            --p;
+            return tmp;
+        }
+        // reference operator*() const {
+        //     Iter tmp = current;
+        //     return *--tmp;
+        // }
+        // pointer operator-> () const {
+        //     return &(operator*());
+        // }
+        T operator*() const {
+
+        }
+        iterator operator-> () const {
+            return &(operator*());
+        }
+        iterator operator+ (int n) const {
+            return iterator(p - n);
+        }
+        iterator operator- (int n) const {
+            return iterator(p + n);
+        }
+        iterator& operator+= (int n) {
+            p -= n;
+            return *this;
+        }
+        iterator& operator-= (int n) {
+            p += n;
+            return *this;
+        }
+        T operator[] (int n) const {
+            return *(*this + n);
+        }
+};
+
+template < class Iterator >
+ft::reverse_iterator<Iterator> operator+ (
+    typename ft::reverse_iterator<Iterator>::difference_type n,
+    const ft::reverse_iterator<Iterator>& it)
+{
+    return ft::reverse_iterator<Iterator>(it.base() - n);
+}
+
+
 // advance function
 
 template < class It >
@@ -11,8 +79,8 @@ void    _advance(It &inputIterator,
     ft::input_iterator_tag)
 {
     while (n > 0) {
-        n--;
-        inputIterator++;
+        --n;
+        ++inputIterator;
     }
 }
 
@@ -22,12 +90,12 @@ void    _advance(It &bidirectionalIterator,
     ft::bidirectional_iterator_tag)
 {
     while (n > 0) {
-        n--;
-        bidirectionalIterator++;
+        --n;
+        ++bidirectionalIterator;
     }
     while (n < 0) {
-        n++;
-        bidirectionalIterator++;
+        ++n;
+        ++bidirectionalIterator;
     }
 }
 
@@ -42,7 +110,7 @@ void    _advance(It &randomAccessIterator,
 template < class InputIterator, class Distance >
 void	ft::advance(InputIterator &inputIterator, Distance n)
 {
-	_advance(inputIterator, n, typename ft::iterator_traits<InputIterator>::iterator_category());
+	_advance(inputIterator, (typename ft::iterator_traits<InputIterator>::difference_type)(n) , typename ft::iterator_traits<InputIterator>::iterator_category());
 }
 
 // distance function
