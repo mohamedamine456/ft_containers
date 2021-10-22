@@ -9,7 +9,7 @@ class ft::vector
     private:
         // properties
         T*																	sequence;
-        T*																	arr;
+        // T*																	arr;
         Allocator															alloc;
     public:
         typedef T															value_type;
@@ -28,7 +28,7 @@ class ft::vector
 
         // constructors
         explicit vector ( const allocator_type& alloc = allocator_type() ) {													// default constructor
-			sequence = alloc.allocate(1);
+			sequence = alloc.allocate(0);
 
         }
         explicit vector ( size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type() );	// construct with range initialize

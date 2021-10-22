@@ -26,7 +26,7 @@ int main () {
     for (int i=0; i < 10; i++)
       myvector.push_back(i);
 
-    ft::reverse_iterator<iter_type> rev_iterator = myvector.rend() - 3;
+    std::reverse_iterator<iter_type> rev_iterator = myvector.rend() - 3;
 
     std::cout << "ft::myvector.rend() - 3 points to: " << *rev_iterator << '\n';
   }

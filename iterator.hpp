@@ -177,8 +177,9 @@ class ft::reverse_iterator: public ft::iterator<typename ft::iterator_traits<Ite
         typedef typename ft::iterator_traits<Iter>::pointer         pointer;
 
         reverse_iterator(): current() {}
-        reverse_iterator(Iter c): current(c) {}
-        reverse_iterator(const ft::reverse_iterator<Iter>& rv_iter): current(rv_iter.base()) {}
+        explicit reverse_iterator(iterator_type c): current(c) {}
+        template < class U >
+        reverse_iterator(const reverse_iterator<U>& rv_iter): current(rv_iter.base()) {}
         
         Iter    base() const {
             return current;
