@@ -49,12 +49,11 @@ namespace ft {
 		class Pointer = T*, class Reference = T& >
 	struct iterator_base
 	{
-		protected:
-			typedef T			value_type;
-			typedef Distance	difference_type;
-			typedef Pointer		pointer;
-			typedef Reference	reference;
-			typedef Category	iterator_category;
+		typedef T			value_type;
+		typedef Distance	difference_type;
+		typedef Pointer		pointer;
+		typedef Reference	reference;
+		typedef Category	iterator_category;
 	};
 
 	template < class Category, class T >
