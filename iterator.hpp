@@ -10,13 +10,17 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         pointer	p;
     public:
         iterator () {}
-        iterator (T* x) : p(x) {}
-        iterator ( const iterator& cp) : p(cp.p) {}
+        iterator ( T* x ) : p(x) {}
+        iterator ( const iterator& cp ) : p(cp.p) {}
+        iterator& operator= ( const iterator& cp ) const {
+            this->p = cp.p;
+            return *this;
+        } 
         iterator& operator++ () {
             ++p;
             return *this;
         }
-        iterator& operator++ (int) {
+        iterator& operator++ ( int ) {
             iterator tmp (*this);
             ++p;
             return tmp;
@@ -25,7 +29,7 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
             --p;
             return *this;
         }
-        iterator& operator-- (int) {
+        iterator& operator-- ( int ) {
             iterator tmp (*this);
             --p;
             return tmp;
@@ -37,7 +41,7 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         pointer operator-> () const {
             return &(operator*());
         }
-        iterator operator+ (difference_type n) const {
+        iterator operator+ ( difference_type n ) const {
             return iterator(p - n);
         }
         iterator operator- (difference_type n) const {
