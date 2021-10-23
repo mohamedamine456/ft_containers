@@ -1,7 +1,6 @@
 #ifndef VECTOR_HPP
 #define VECTOR_HPP
 
-#include "namespace.hpp"
 #include "iterator.hpp"
 
 template < class T, class Allocator>
@@ -49,26 +48,27 @@ class ft::vector
 				throw LengthError();
 			}
 		}
-        template < class InputIterator >
-        vector ( InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type() ) {						// constructor with iterators
-			__size = ft::distance(first, last);
-            try {
-				__sequence = __allocator.allocate(__size);
-				for (int i = 0; first != last; i++, first++)
-                    __sequence[i] = *first;
-                __capacity = __size;
+        // template < class InputIterator >
+        // vector ( InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type() ) {						// constructor with iterators
+		// 	__size = ft::distance(first, last);
+        //     try {
+		// 		__sequence = __allocator.allocate(__size);
+		// 		for (int i = 0; first != last; i++, first++)
+        //             __sequence[i] = *first;
+        //         __capacity = __size;
                 
-			} catch (std::exception &ex) {
-				throw LengthError();
-			}
-		}
+		// 	} catch (std::exception &ex) {
+		// 		throw LengthError();
+		// 	}
+		// }
+
 		vector ( const vector& vec ) {
             *this = vec;
         }																							// copy constructor
 
         // destructor
         ~vector() {
-            __allocator.deallocate(__capacity);
+            __allocator.deallocate(__sequence, __capacity);
             __allocator.destroy(__sequence);
             __size = 0;
             __capacity = 0;
@@ -83,16 +83,26 @@ class ft::vector
 
         // (Iterators) begin & end
         iterator				begin() {
-            iterator	it;
-        }
-        const_iterator			begin() const;
+			return	iterator(__sequence);
+		};
+        const_iterator			begin() const {
+			return	const_iterator(__sequence);
+		}
         
-        iterator				end();
-        const_iterator			end() const;
+        iterator				end() {
+			return	iterator(__sequence + __size);
+		}
+        const_iterator			end() const {
+			return	const_iterator(__sequence + __size);
+		}
 
         // (Iterators) rbegin & rend
-        reverse_iterator		rbegin();
-        const_reverse_iterator	rbegin() const;
+        reverse_iterator		rbegin() {
+			// return reverse_iterator (__sequence);
+		}
+        const_reverse_iterator	rbegin() const {
+			// return const_reverse_iterator (__sequence);
+		}
         
         reverse_iterator		rend();
         const_reverse_iterator	rend() const;
@@ -102,24 +112,38 @@ class ft::vector
 			return this->__size;
 		}
         size_type				max_size() const {
-			return this->__max_size;
+			return std::numeric_limits<difference_type>::max();
 		}
         size_type				capacity() const {
 			return this->__capacity;
 		}
         
         // (capacity) resize
-        void					resize( size_type n, value_type val = value_type() );
+        void					resize( size_type n, value_type val = value_type() ) {
+			if (n < __size) {
+				__size = n;
+			}
+			else {
+				for (int i = __size; i < n; i++)
+					this->push_back(val);
+			}
+		}
 
         // (capacity) empty
-        bool					empty() const;
+        bool					empty() const {
+			return this->begin() == this->end();
+		}
 
         // (capacity) reserve
         void					reserve( size_type n );
 
         // (Element access) operator[]
-        reference				operator[] ( size_type n );
-        const_reference			operator[] ( size_type n ) const;
+        reference				operator[] ( size_type n ) {
+			return *(this->__sequence + n);
+		}
+        const_reference			operator[] ( size_type n ) const {
+			return *(this->__sequence + n);
+		}
 
         // (Element access) at
         reference				at ( size_type n );
@@ -140,7 +164,22 @@ class ft::vector
         void					assign ( size_type n, const value_type& val );
 
         // (Modifiers) push_back
-        void					push_back( const value_type& val );
+        void					push_back( const value_type& val ) {
+			if (__size == __capacity) {
+				if (__capacity == 0)
+					__capacity += 1;
+				else
+					__capacity *= 2;
+				pointer		tmp = __allocator.allocate(__capacity);
+				for (int i = 0; i < __size; i++) {
+					tmp[i] = __sequence[i];
+				}
+				__allocator.deallocate(__sequence, __size);
+				__sequence = tmp;
+			}
+			__sequence[__size] = val;
+			__size++;
+		}
 
         // (Modifiers) pop_back
         void					pop_back();
