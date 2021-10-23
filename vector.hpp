@@ -124,8 +124,7 @@ class ft::vector
 				__size = n;
 			}
 			else {
-				for (int i = __size; i < n; i++)
-					this->push_back(val);
+				
 			}
 		}
 

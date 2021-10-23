@@ -51,13 +51,14 @@ int main() {
         std::vector<int> myvector;
         std::cout << "capacity: " << myvector.capacity() << std::endl;
         // set some initial content:
-        for (int i=1;i<10;i++)
+        for (int i=1;i<17;i++)
             myvector.push_back(i);
+        std::cout << "capacity: " << myvector.capacity() << std::endl;
         std::cout << "myvector contains:";
         for (int i=0;i<myvector.size();i++)
             std::cout << ' ' << myvector[i];
         myvector.resize(5);
-        std::cout << "capacity: " << myvector.capacity() << std::endl;
+        std::cout << std::endl << "capacity: " << myvector.capacity() << std::endl;
         std::cout << std::endl;
         std::cout << "myvector contains:";
         for (int i=0;i<myvector.size();i++)
@@ -81,13 +82,14 @@ int main() {
         ft::vector<int> myvector;
         std::cout << "capacity: " << myvector.capacity() << std::endl;
         // set some initial content:
-        for (int i=1;i<10;i++)
+        for (int i=1;i<17;i++)
             myvector.push_back(i);
+        std::cout << "capacity: " << myvector.capacity() << std::endl;
         std::cout << "myvector contains:";
         for (int i=0;i<myvector.size();i++)
             std::cout << ' ' << myvector[i];
         myvector.resize(5);
-        std::cout << "capacity: " << myvector.capacity() << std::endl;
+        std::cout << std::endl << "capacity: " << myvector.capacity() << std::endl;
         std::cout << std::endl;
         std::cout << "myvector contains:";
         for (int i=0;i<myvector.size();i++)
