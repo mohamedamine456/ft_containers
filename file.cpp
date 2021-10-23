@@ -70,7 +70,7 @@ int main() {
         for (int i=0;i<myvector.size();i++)
             std::cout << ' ' << myvector[i];
         std::cout << std::endl << myvector[8] << std::endl;
-        myvector.resize(33);
+        myvector.resize(12);
         std::cout << "capacity: " << myvector.capacity() << std::endl;
         std::cout << "myvector contains:";
         for (int i=0;i<myvector.size();i++)
@@ -79,6 +79,9 @@ int main() {
         std::vector<int> vv;
         vv.reserve(33);
         std::cout << "capacity: " << vv.capacity() << std::endl;
+        myvector.clear();
+        std::cout << "capacity: " << myvector.capacity() << std::endl;
+        std::cout << std::endl << myvector[4] << std::endl;
     }
     std::cout << std::endl << "FT::" << std::endl;
     {
@@ -104,7 +107,7 @@ int main() {
         for (int i=0;i<myvector.size();i++)
             std::cout << ' ' << myvector[i];
         std::cout << std::endl << myvector[8] << std::endl;
-        myvector.resize(33);
+        myvector.resize(12);
         std::cout << "capacity: " << myvector.capacity() << std::endl;
         std::cout << "myvector contains:";
         for (int i=0;i<myvector.size();i++)

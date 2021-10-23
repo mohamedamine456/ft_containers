@@ -190,7 +190,10 @@ class ft::vector
 		}
 
         // (Modifiers) pop_back
-        void					pop_back();
+        void					pop_back() {
+			if (__size > 0)
+				__size--;
+		}
 
         // (Modifiers) insert
         iterator				insert( iterator position, const value_type& val );
@@ -206,7 +209,9 @@ class ft::vector
         void					swap( vector &vec );
 
         // (Modifiers) clear
-        void					clear();
+        void					clear() {
+			__allocator.destroy(__sequence);
+		}
 
         // (Allocator) get_allocator
         allocator_type			get_allocator() const;
