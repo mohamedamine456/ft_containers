@@ -290,8 +290,9 @@ int main()
 
 		std::vector<int> sec;
 		sz = sec.capacity();
-		std::cout << "USing reserve: " << std::endl;
+		std::cout << "Using reserve: " << std::endl;
 		sec.reserve(100);
+		// std::cout << sec.size() << std::endl;
 		for (int i = 0; i < 100; i++)
 		{
 			sec.push_back((i + 1) * 42);

@@ -124,7 +124,7 @@ class ft::vector
 				__size = n;
 			}
 			else {
-				
+
 			}
 		}
 
@@ -134,7 +134,12 @@ class ft::vector
 		}
 
         // (capacity) reserve
-        void					reserve( size_type n );
+        void					reserve( size_type n ) {
+			if (n > __capacity) {
+				__capacity = n;
+				__sequence = __allocator.allocate(__capacity);
+			}
+		}
 
         // (Element access) operator[]
         reference				operator[] ( size_type n ) {
@@ -145,8 +150,12 @@ class ft::vector
 		}
 
         // (Element access) at
-        reference				at ( size_type n );
-        const_reference			at ( size_type n ) const;
+        reference				at ( size_type n ) {
+			return *(this->__sequence + n);
+		}
+        const_reference			at ( size_type n ) const {
+			return *(this->__sequence + n);
+		}
 
         // (Element access) front
         reference				front ( size_type n );
