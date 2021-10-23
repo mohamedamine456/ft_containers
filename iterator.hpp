@@ -7,7 +7,7 @@ template < class Category, class T >
 class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T>
 {
     private:
-        T*	p;
+        pointer	p;
     public:
         iterator () {}
         iterator (T* x) : p(x) {}
@@ -30,53 +30,51 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
             --p;
             return tmp;
         }
-        // reference operator*() const {
-        //     Iter tmp = current;
-        //     return *--tmp;
-        // }
-        // pointer operator-> () const {
-        //     return &(operator*());
-        // }
-        T operator*() const {
-
+        reference operator*() const {
+            pointer tmp = p;
+            return *--tmp;
         }
-        iterator operator-> () const {
+        pointer operator-> () const {
             return &(operator*());
         }
-        iterator operator+ (int n) const {
+        iterator operator+ (difference_type n) const {
             return iterator(p - n);
         }
-        iterator operator- (int n) const {
+        iterator operator- (difference_type n) const {
             return iterator(p + n);
         }
-        iterator& operator+= (int n) {
+        iterator& operator+= (difference_type n) {
             p -= n;
             return *this;
         }
-        iterator& operator-= (int n) {
+        iterator& operator-= (difference_type n) {
             p += n;
             return *this;
         }
-        T operator[] (int n) const {
+        T operator[] (difference_type n) const {
             return *(*this + n);
         }
-        bool operator< ( const iterator<Category, T> fr,
-                            const iterator<Category, T> & sc ) {
-            
+        difference_type operator- (iterator<Category, T> sec) const {
+            //
+            return ;
         }
-
-        bool operator<= ( const iterator<Category, T>, T>& fr,
-                            const iterator<Category, T>, T>& sc ) {
-            
+        bool    operator== (iterator<Category, T> sec) {
+            return this->p == sec.p;
         }
-
-        bool operator> ( const iterator<Category, T>, T>& fr,
-                            const iterator<Category, T>, T>& sc ) {
-            
+        bool    operator!= (iterator<Category, T> sec) {
+            return this->p != sec.p;
         }
-        bool operator>= ( const iterator<Category, T>, T>& fr,
-                            const iterator<Category, T>, T>& sc ) {
-            
+        bool    operator> (iterator<Category, T> sec) {
+            return this->p > sec.p;
+        }
+        bool    operator>= (iterator<Category, T> sec) {
+            return this->p >= sec.p;
+        }
+        bool    operator< (iterator<Category, T> sec) {
+            return this->p < sec.p;
+        }
+        bool    operator<= (iterator<Category, T> sec) {
+            return this->p <= sec.p;
         }
 };
 
