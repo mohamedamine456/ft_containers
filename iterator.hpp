@@ -25,22 +25,21 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
             return *this;
         }
         iterator& operator++ ( int ) {
-            iterator tmp (*this);
+            iterator *tmp (this);
             ++p;
-            return tmp;
+            return *tmp;
         }
         iterator& operator-- () {
             --p;
             return *this;
         }
         iterator& operator-- ( int ) {
-            iterator tmp (*this);
+            iterator *tmp (this);
             --p;
-            return tmp;
+            return *tmp;
         }
         typename ft::iterator_base<Category, T>::reference operator*() const {
-            typename ft::iterator_base<Category, T>::pointer tmp = p;
-            return *--tmp;
+            return *p;
         }
         typename ft::iterator_base<Category, T>::pointer operator-> () const {
             return &(operator*());

@@ -11,7 +11,6 @@ class ft::vector
         // properties
         T*																	__sequence;
         Allocator															__allocator;
-        std::size_t															__max_size;
         std::size_t															__size;
         std::size_t															__capacity;
     public:
@@ -63,16 +62,29 @@ class ft::vector
 				throw LengthError();
 			}
 		}
-		vector ( const vector& vec ) {}																							// copy constructor
+		vector ( const vector& vec ) {
+            *this = vec;
+        }																							// copy constructor
 
         // destructor
-        ~vector() {}
+        ~vector() {
+            __allocator.deallocate(__capacity);
+            __allocator.destroy(__sequence);
+            __size = 0;
+            __capacity = 0;
+        }
 
         // operator=
-        vector&	operator= ( const vector& vec );
+        vector&	operator= ( const vector& vec ) {
+            this->__sequence = vec.__sequence;
+            this->__size = vec.__size;
+            this->__capacity = vec.__capacity;
+        }
 
         // (Iterators) begin & end
-        iterator				begin();
+        iterator				begin() {
+            iterator	it;
+        }
         const_iterator			begin() const;
         
         iterator				end();
