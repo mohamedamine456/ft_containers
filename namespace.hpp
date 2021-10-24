@@ -163,6 +163,18 @@ namespace ft {
 		class Compare = std::less<Key>,
 		class Allocator = std::allocator<ft::pair <const Key, T> > >
 	class map;
+
+	// Exceptions
+	class LengthError: public std::exception {
+		private:
+			const char	*error;
+		public:
+			LengthError(const char *err) : error(err) {}
+		virtual const char * what() const throw() {
+			return error;
+		}
+	};
+
 };
 
 #endif

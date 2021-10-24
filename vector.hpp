@@ -24,12 +24,6 @@ class ft::vector
         typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
         typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;
         typedef std::size_t													size_type;
-		class LengthError: public std::exception {
-			virtual const char * what() const throw() {
-				return "vector: length_error";
-			}
-		};
-
         // constructors
         explicit vector ( const allocator_type& alloc = allocator_type() ) {													// default constructor
 			__sequence = __allocator.allocate(0);
@@ -44,7 +38,7 @@ class ft::vector
 				__capacity = n;
 				__size = n;
 			} catch (std::exception &ex) {
-				throw LengthError();
+				throw ft::LengthError("vector");
 			}
 		}
         template < class InputIterator >
@@ -58,7 +52,7 @@ class ft::vector
                 __capacity = __size;
                 
 			} catch (std::exception &ex) {
-				throw LengthError();
+				throw ft::LengthError("vector");
 			}
 		}
 
@@ -181,14 +175,35 @@ class ft::vector
         template < class InputIterator >
         void					assign ( InputIterator first, InputIterator last,
 			typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {
-
+				size_type n = last - first;
+				if (n > __capacity) {
+					try {
+						__allocator.deallocate(__sequence, __capacity);
+						__capacity = n;
+						__sequence = __allocator.allocate(__capacity);
+					} catch (std::exception &ex) {
+						throw ft::LengthError("vector");
+					}
+				}
+				__size = 0;
+				while (first != last) {
+					__sequence[__size] = *first;
+					__size++;
+					first++;
+				}
 		}
 
         void					assign ( size_type n, const value_type& val ) {
+			if (n < 0)
+				throw ft::LengthError("vector");
 			if (n > __capacity) {
-				__allocator.deallocate(__sequence, __capacity);
-				__capacity = n;
-				__sequence = __allocator.allocate(__capacity);
+				try {
+					__allocator.deallocate(__sequence, __capacity);
+					__capacity = n;
+					__sequence = __allocator.allocate(__capacity);
+				} catch (std::exception &ex) {
+					throw ft::LengthError("vector");
+				}
 			}
 			for (__size = 0; __size < n; __size++)
 				__sequence[__size] = val;

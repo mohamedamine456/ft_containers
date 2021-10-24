@@ -162,6 +162,13 @@ int main() {
             std::cout << numbers[i] << " ";
         std::cout << std::endl;
         std::cout << numbers[4] << std::endl;
+
+        std::string extra(12, 'b');
+        numbers.assign(extra.begin(), extra.end());
+        std::cout << numbers.capacity() << std::endl;
+        for (int i = 0; i < numbers.size(); i++)
+            std::cout << numbers[i] << " ";
+        std::cout << std::endl;
     }
     std::cout << std::endl;
     {
@@ -182,6 +189,13 @@ int main() {
             std::cout << numbers[i] << " ";
         std::cout << std::endl;
         std::cout << numbers[4] << std::endl;
+
+        std::string extra(12, 'b');
+        numbers.assign(extra.begin(), extra.end());
+        std::cout << numbers.capacity() << std::endl;
+        for (int i = 0; i < numbers.size(); i++)
+            std::cout << numbers[i] << " ";
+        std::cout << std::endl;
     }
     return 0;
 }
