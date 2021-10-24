@@ -200,11 +200,13 @@ int main() {
     std::cout << std::endl << "STD::CLEAR:" << std::endl;
     {
         std::vector<std::string> vec;
-        vec.assign(25, "C++");
+        std::string *str = new std::string("C++");
+        vec.assign(25, *str);
         std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
+        delete str;
         vec.clear();
         std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.capacity(); i++)
@@ -214,16 +216,58 @@ int main() {
     std::cout << std::endl << "FT::CLEAR:" << std::endl;
     {
         ft::vector<std::string> vec;
-        vec.assign(25, "C++");
+        std::string *str = new std::string("C++");
+        vec.assign(25, *str);
         std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
+        delete str;
         vec.clear();
         std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.capacity(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
+    }
+    std::cout << std::endl << "STD::relational operators:" << std::endl;
+    {
+        std::vector<int> vec;
+        vec.assign(5,6);
+        std::vector<int> sec;
+        sec.assign(5,6);
+        std::cout << (vec == sec ? "equals" : "different") << std::endl;
+        sec.assign(5,7);
+        std::cout << (vec == sec ? "equals" : "different") << std::endl;
+        sec.assign(5,7);
+        std::cout << (vec != sec ? "different" : "equals") << std::endl;
+        sec.assign(5,5);
+        std::cout << (vec > sec ? "bigger" : "smaller") << std::endl;
+        sec.assign(5,8);
+        std::cout << (vec < sec ? "smaller" : "bigger") << std::endl;
+        sec.assign(5,5);
+        std::cout << (vec >= sec ? "bigger or equal" : "smaller or eqaul") << std::endl;
+        sec.assign(5,8);
+        std::cout << (vec <= sec ? "smaller or equal" : "bigger or eqaul") << std::endl;
+    }
+    std::cout << std::endl << "FT::relational operators:" << std::endl;
+    {
+        ft::vector<int> vec;
+        vec.assign(5,6);
+        ft::vector<int> sec;
+        sec.assign(5,6);
+        std::cout << (vec == sec ? "equals" : "different") << std::endl;
+        sec.assign(5,7);
+        std::cout << (vec == sec ? "equals" : "different") << std::endl;
+        sec.assign(5,7);
+        std::cout << (vec != sec ? "different" : "equals") << std::endl;
+        sec.assign(5,5);
+        std::cout << (vec > sec ? "bigger" : "smaller") << std::endl;
+        sec.assign(5,8);
+        std::cout << (vec < sec ? "smaller" : "bigger") << std::endl;
+        sec.assign(5,5);
+        std::cout << (vec >= sec ? "bigger or equal" : "smaller or eqaul") << std::endl;
+        sec.assign(5,8);
+        std::cout << (vec <= sec ? "smaller or equal" : "bigger or eqaul") << std::endl;
     }
     return 0;
 }

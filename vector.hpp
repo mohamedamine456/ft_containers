@@ -74,6 +74,10 @@ class ft::vector
             this->__capacity = vec.__capacity;
         }
 
+		// pointer					base() {
+		// 	return __sequence;
+		// }
+
         // (Iterators) begin & end
         iterator				begin() {
 			return	iterator(__sequence);
@@ -271,32 +275,34 @@ class ft::vector
 
 template < class U, class Alloc >
 bool	operator== (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
-	return true;
+	if (lhs.size() != rhs.size())
+		return false;
+	return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
 template < class U, class Alloc >
 bool	operator!= (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
-	return true;
+	return !(lhs == rhs);
 }
 
 template < class U, class Alloc >
 bool	operator< (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
-	return true;
+	return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
 template < class U, class Alloc >
 bool	operator<= (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
-	return true;
+	return (lhs < rhs || lhs == rhs);
 }
 
 template < class U, class Alloc >
 bool	operator> (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
-	return true;
+	return !(lhs < rhs);
 }
 
 template < class U, class Alloc >
 bool	operator>= (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
-	return true;
+	return (lhs > rhs || lhs == rhs);;
 }
 
 #endif
