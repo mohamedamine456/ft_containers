@@ -56,14 +56,13 @@ class ft::vector
 			}
 		}
 
-		vector ( const vector& vec ) {
+		vector ( const vector& vec ) {							// copy constructor
             *this = vec;
-        }																							// copy constructor
+        }
 
         // destructor
         ~vector() {
             __allocator.deallocate(__sequence, __capacity);
-            __allocator.destroy(__sequence);
             __size = 0;
             __capacity = 0;
         }
@@ -207,6 +206,7 @@ class ft::vector
 			}
 			for (__size = 0; __size < n; __size++)
 				__sequence[__size] = val;
+				// __sequence[__size] = *(new value_type(val));
 		}
 
         // (Modifiers) push_back
@@ -219,11 +219,13 @@ class ft::vector
 				pointer		tmp = __allocator.allocate(__capacity);
 				for (int i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
+					// tmp[i]] = *(new value_type(__sequence[i]));
 				}
 				__allocator.deallocate(__sequence, __size);
 				__sequence = tmp;
 			}
 			__sequence[__size] = val;
+			// __sequence[__size] = *(new value_type(val));
 			__size++;
 		}
 
@@ -239,26 +241,62 @@ class ft::vector
 		}
         void					insert( iterator position, size_type n, const value_type& val );
         template < class InputIterator >
-        void					insert( iterator position, InputIterator first, InputIterator last );
+        void					insert( iterator position, InputIterator first, InputIterator last,
+				typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {
+
+		}
 
         // (Modifiers) erase
-        iterator				erase( iterator position );
-        iterator				erase( iterator first, iterator last );
+        iterator				erase( iterator position ) {
+
+		}
+        iterator				erase( iterator first, iterator last ) {
+
+		}
 
         // (Modifiers) swap
         void					swap( vector &vec );
 
         // (Modifiers) clear
         void					clear() {
-			__allocator.destroy(__sequence);
+			// __allocator.destroy(__sequence);
+			__size = 0;
 		}
 
         // (Allocator) get_allocator
         allocator_type			get_allocator() const {
 			return __allocator;
 		}
-
-        // should add relational operators and swap function     
 };
+
+template < class U, class Alloc >
+bool	operator== (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
+	return true;
+}
+
+template < class U, class Alloc >
+bool	operator!= (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
+	return true;
+}
+
+template < class U, class Alloc >
+bool	operator< (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
+	return true;
+}
+
+template < class U, class Alloc >
+bool	operator<= (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
+	return true;
+}
+
+template < class U, class Alloc >
+bool	operator> (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
+	return true;
+}
+
+template < class U, class Alloc >
+bool	operator>= (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
+	return true;
+}
 
 #endif

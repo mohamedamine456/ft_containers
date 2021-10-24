@@ -197,5 +197,33 @@ int main() {
             std::cout << numbers[i] << " ";
         std::cout << std::endl;
     }
+    std::cout << std::endl << "STD::CLEAR:" << std::endl;
+    {
+        std::vector<std::string> vec;
+        vec.assign(25, "C++");
+        std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << std::endl;
+        vec.clear();
+        std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        for (int i = 0; i < vec.capacity(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << std::endl;
+    }
+    std::cout << std::endl << "FT::CLEAR:" << std::endl;
+    {
+        ft::vector<std::string> vec;
+        vec.assign(25, "C++");
+        std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << std::endl;
+        vec.clear();
+        std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        for (int i = 0; i < vec.capacity(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << std::endl;
+    }
     return 0;
 }
