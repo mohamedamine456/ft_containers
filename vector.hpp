@@ -7,7 +7,6 @@ template < class T, class Allocator>
 class ft::vector
 {
     private:
-        // properties
         T*																	__sequence;
         Allocator															__allocator;
         std::size_t															__size;
@@ -48,19 +47,20 @@ class ft::vector
 				throw LengthError();
 			}
 		}
-        // template < class InputIterator >
-        // vector ( InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type() ) {						// constructor with iterators
-		// 	__size = ft::distance(first, last);
-        //     try {
-		// 		__sequence = __allocator.allocate(__size);
-		// 		for (int i = 0; first != last; i++, first++)
-        //             __sequence[i] = *first;
-        //         __capacity = __size;
+        template < class InputIterator >
+        vector ( InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
+                typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {						// constructor with iterators
+			__size = ft::distance(first, last);
+            try {
+				__sequence = __allocator.allocate(__size);
+				for (int i = 0; first != last; i++, first++)
+                    __sequence[i] = *first;
+                __capacity = __size;
                 
-		// 	} catch (std::exception &ex) {
-		// 		throw LengthError();
-		// 	}
-		// }
+			} catch (std::exception &ex) {
+				throw LengthError();
+			}
+		}
 
 		vector ( const vector& vec ) {
             *this = vec;
@@ -98,14 +98,18 @@ class ft::vector
 
         // (Iterators) rbegin & rend
         reverse_iterator		rbegin() {
-			// return reverse_iterator (__sequence);
+			return reverse_iterator (__sequence + __size);
 		}
         const_reverse_iterator	rbegin() const {
-			// return const_reverse_iterator (__sequence);
+			return const_reverse_iterator (__sequence + __size);
 		}
         
-        reverse_iterator		rend();
-        const_reverse_iterator	rend() const;
+        reverse_iterator		rend() {
+            return reverse_iterator(__sequence - 1);
+        }
+        const_reverse_iterator	rend() const {
+            return const_reverse_iterator(__sequence - 1);
+        }
 
         // (capacity) size & max_size & capacity
         size_type				size() const {
@@ -158,12 +162,20 @@ class ft::vector
 		}
 
         // (Element access) front
-        reference				front ( size_type n );
-        const_reference			front ( size_type n ) const;
+        reference				front () {
+            return __sequence[0];
+        }
+        const_reference			front () const {
+			return __sequence[0];
+		}
 
         // (Element access) back
-        reference				back ( size_type n );
-        const_reference			back ( size_type n ) const;
+        reference				back () {
+			return __sequence[__size - 1];
+		}
+        const_reference			back () const {
+			return __sequence[__size - 1];
+		}
 
         // (Modifiers) assign
         template < class InputIterator >
@@ -196,7 +208,9 @@ class ft::vector
 		}
 
         // (Modifiers) insert
-        iterator				insert( iterator position, const value_type& val );
+        iterator				insert( iterator position, const value_type& val ) {
+
+		}
         void					insert( iterator position, size_type n, const value_type& val );
         template < class InputIterator >
         void					insert( iterator position, InputIterator first, InputIterator last );
@@ -214,7 +228,9 @@ class ft::vector
 		}
 
         // (Allocator) get_allocator
-        allocator_type			get_allocator() const;
+        allocator_type			get_allocator() const {
+			return __allocator;
+		}
 
         // should add relational operators and swap function     
 };

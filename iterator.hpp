@@ -62,7 +62,7 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
             return *(*this + n);
         }
         typename ft::iterator_base<Category, T>::difference_type operator- (iterator<Category, T> sec) const {
-            return this->base() - sec.base();
+            return this->p - sec.p;
         }
         bool    operator== (iterator<Category, T> sec) {
             return this->p == sec.p;
