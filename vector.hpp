@@ -179,9 +179,20 @@ class ft::vector
 
         // (Modifiers) assign
         template < class InputIterator >
-        void					assign ( InputIterator first, InputIterator last );
+        void					assign ( InputIterator first, InputIterator last,
+			typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {
 
-        void					assign ( size_type n, const value_type& val );
+		}
+
+        void					assign ( size_type n, const value_type& val ) {
+			if (n > __capacity) {
+				__allocator.deallocate(__sequence, __capacity);
+				__capacity = n;
+				__sequence = __allocator.allocate(__capacity);
+			}
+			for (__size = 0; __size < n; __size++)
+				__sequence[__size] = val;
+		}
 
         // (Modifiers) push_back
         void					push_back( const value_type& val ) {

@@ -144,5 +144,44 @@ int main() {
         myvector.back() += 15;
         std::cout << "myvector.back() is now " << myvector.back() << '\n';
     }
+    {
+        std::vector<int> numbers;
+        numbers.assign(5, 3);
+        std::cout << numbers.capacity() << std::endl;
+        for (int i = 0; i < numbers.size(); i++)
+            std::cout << numbers[i] << " ";
+        std::cout << std::endl;
+        numbers.assign(6, 7);
+        std::cout << numbers.capacity() << std::endl;
+        for (int i = 0; i < numbers.size(); i++)
+            std::cout << numbers[i] << " ";
+        std::cout << std::endl;
+        numbers.assign(3, 2);
+        std::cout << numbers.capacity() << std::endl;
+        for (int i = 0; i < numbers.size(); i++)
+            std::cout << numbers[i] << " ";
+        std::cout << std::endl;
+        std::cout << numbers[4] << std::endl;
+    }
+    std::cout << std::endl;
+    {
+        ft::vector<int> numbers;
+        numbers.assign(5, 3);
+        std::cout << numbers.capacity() << std::endl;
+        for (int i = 0; i < numbers.size(); i++)
+            std::cout << numbers[i] << " ";
+        std::cout << std::endl;
+        numbers.assign(6, 7);
+        std::cout << numbers.capacity() << std::endl;
+        for (int i = 0; i < numbers.size(); i++)
+            std::cout << numbers[i] << " ";
+        std::cout << std::endl;
+        numbers.assign(3, 2);
+        std::cout << numbers.capacity() << std::endl;
+        for (int i = 0; i < numbers.size(); i++)
+            std::cout << numbers[i] << " ";
+        std::cout << std::endl;
+        std::cout << numbers[4] << std::endl;
+    }
     return 0;
 }
