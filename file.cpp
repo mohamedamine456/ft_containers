@@ -310,39 +310,73 @@ int main() {
     // std::cout << std::endl;
 
 
+    // {
+    //     std::vector<int>	vec(78, 5);
+	// 	std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+	// 	std::vector<int>::iterator it = vec.begin();
+	// 	it = it + 70;
+	// 	vec.insert(it, 45);
+	// 	std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+    // }
+
+	// std::cout << std::endl << std::endl;
+	// {
+    //     ft::vector<int>	vec(78, 5);
+	// 	std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+	// 	ft::vector<int>::iterator it = vec.begin();
+	// 	it = it + 70;
+	// 	vec.insert(it, 45);
+	// 	std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+    // }
+
     {
         std::vector<int>	vec(7, 5);
 		std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
+        // vec.push_back(8);
+        // std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
 		std::vector<int>::iterator it = vec.begin();
 		it++;
 		it++;
-		vec.insert(it, 45);
+		vec.insert(it, 8, 45);
 		std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
     }
-
-	std::cout << std::endl << std::endl;
+    std::cout << std::endl << std::endl;
 	{
         ft::vector<int>	vec(7, 5);
 		std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
+        // vec.push_back(8);
+        // std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
 		ft::vector<int>::iterator it = vec.begin();
 		it++;
 		it++;
-		vec.insert(it, 45);
+		vec.insert(it, 8, 45);
 		std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
     }
 
-    system("leaks a.out");
+    // system("leaks a.out");
     return 0;
 }

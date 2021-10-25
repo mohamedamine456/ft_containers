@@ -241,7 +241,14 @@ class ft::vector
 
         // (Modifiers) insert
         iterator				insert( iterator position, const value_type& val ) {
+			iterator	pos = this->begin();
+			int			pp = 0;
+			while (pos != position) {
+				pos++;
+				pp++;
+			}
 			if (__size == __capacity) {
+				size_type	__old_capacity = __capacity;
 				if (__capacity == 0)
 					__capacity += 1;
 				else
@@ -250,26 +257,47 @@ class ft::vector
 				for (int i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
 				}
-				__allocator.deallocate(__sequence, __capacity);
+				__allocator.deallocate(__sequence, __old_capacity);
 				__sequence = tmp;
 			}
+			pointer	tmp = __allocator.allocate(__capacity);
+			for (int i = 0; i + pp < __size; i++)
+				tmp[i] = __sequence[i + pp];
+			__sequence[pp] = val;
+			__size++;
+			for (int i = 0; i + pp < __size; i++)
+				__sequence[pp + i + 1] = tmp[i];
+			__allocator.deallocate(tmp, __capacity);
+			return iterator(__sequence);
+		}
+        void					insert( iterator position, size_type n, const value_type& val ) {
 			iterator	pos = this->begin();
 			int			pp = 0;
 			while (pos != position) {
 				pos++;
 				pp++;
 			}
+			if (__size + n > __capacity) {
+				size_type	__old_capacity;
+				__capacity = __size + n;
+				pointer		tmp = __allocator.allocate(__capacity);
+				for (int i = 0; i < __size; i++) {
+					tmp[i] = __sequence[i];
+				}
+				__allocator.deallocate(__sequence, __old_capacity);
+				__sequence = tmp;
+			}
 			pointer	tmp = __allocator.allocate(__capacity);
-			for ( int i = 0; i + pp < __size; i++)
+			for (int i = 0; i + pp < __size; i++) {
 				tmp[i] = __sequence[i + pp];
-			__sequence[pp] = val;
-			for (int i = 0; i + pp + 1 < __size; i++)
-				__sequence[pp + i + 1] = tmp[i];
+			}
+			for (int i = 0; i < n; i++) {
+				__sequence[i + pp] = val;
+			}
+			__size += n;
+			for (int i = 0; i + pp + n < __size; i++)
+				__sequence[i + pp + n + 1] = tmp[i];
 			__allocator.deallocate(tmp, __capacity);
-			return iterator(__sequence + pp);
-		}
-        void					insert( iterator position, size_type n, const value_type& val ) {
-
 		}
         template < class InputIterator >
         void					insert( iterator position, InputIterator first, InputIterator last,

@@ -16,7 +16,7 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         typename ft::iterator_base<Category, T>::pointer base() const {
             return __p;
         }
-        iterator& operator= ( const iterator& cp ) const {
+        iterator& operator= ( const iterator& cp ) {
             this->__p = cp.__p;
             return *this;
         } 
@@ -45,23 +45,23 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
             return &(operator*());
         }
         iterator operator+ ( typename ft::iterator_base<Category, T>::difference_type n ) const {
-            return iterator(__p - n);
-        }
-        iterator operator- ( typename ft::iterator_base<Category, T>::difference_type n ) const {
             return iterator(__p + n);
         }
+        iterator operator- ( typename ft::iterator_base<Category, T>::difference_type n ) const {
+            return iterator(__p - n);
+        }
         iterator& operator+= ( typename ft::iterator_base<Category, T>::difference_type n ) {
-            __p -= n;
+            __p += n;
             return *this;
         }
         iterator& operator-= ( typename ft::iterator_base<Category, T>::difference_type n ) {
-            __p += n;
+            __p -= n;
             return *this;
         }
         T operator[] ( typename ft::iterator_base<Category, T>::difference_type n ) const {
             return *(*this + n);
         }
-        typename ft::iterator_base<Category, T>::difference_type operator- (iterator<Category, T> sec) const {
+        typename ft::iterator_base<Category, T>::difference_type operator- (iterator<Category, T> sec) {
             return this->__p - sec.__p;
         }
 };
