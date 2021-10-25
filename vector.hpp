@@ -253,14 +253,14 @@ class ft::vector
 					__capacity += 1;
 				else
 					__capacity *= 2;
-				pointer		tmp = __allocator.allocate(__capacity);
+				T*		tmp = __allocator.allocate(__capacity);
 				for (int i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
 				}
 				__allocator.deallocate(__sequence, __old_capacity);
 				__sequence = tmp;
 			}
-			pointer	tmp = __allocator.allocate(__capacity);
+			T*	tmp = __allocator.allocate(__capacity);
 			for (int i = 0; i + pp < __size; i++)
 				tmp[i] = __sequence[i + pp];
 			__sequence[pp] = val;
@@ -271,9 +271,9 @@ class ft::vector
 			return iterator(__sequence);
 		}
         void					insert( iterator position, size_type n, const value_type& val ) {
+			std::cout << "ADDRESS:: " << &(*position) << std::endl;
 			iterator	pos = this->begin();
 			int			pp = 0;
-			std::cout << "POSITION: " << *position << std::endl;
 			while (pos != position) {
 				pos++;
 				pp++;
@@ -284,25 +284,29 @@ class ft::vector
 					__capacity *= 2;
 				else
 					__capacity = __size + n;
-				pointer		tmp = __allocator.allocate(__capacity);
+				T*		tmp = __allocator.allocate(__capacity);
 				for (int i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
+					__allocator.destroy(&__sequence[i]);
 				}
 				__allocator.deallocate(__sequence, __old_capacity);
 				__sequence = tmp;
 			}
-			pointer	tmp = __allocator.allocate(__capacity);
+			T*	tmp = __allocator.allocate(__capacity);
 			for (int i = 0; i + pp < __size; i++) {
 				tmp[i] = __sequence[i + pp];
+				__allocator.destroy(&__sequence[i + pp]);
 			}
 			for (int i = 0; i < n; i++) {
 				__sequence[i + pp] = val;
 			}
 			__size += n;
-			for (int i = 0; i + pp + n < __size; i++)
+			for (int i = 0; i + pp + n < __size; i++) {
 				__sequence[i + pp + n] = tmp[i];
+				__allocator.destroy(&tmp[i]);
+			}
 			__allocator.deallocate(tmp, __capacity);
-			position = iterator(__sequence + pp);
+			std::cout << "ADDRESS2:: " << &(*position) << std::endl;
 		}
         template < class InputIterator >
         void					insert( iterator position, InputIterator first, InputIterator last,

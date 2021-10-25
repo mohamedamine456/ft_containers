@@ -8,7 +8,7 @@ template < class Category, class T >
 class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T>
 {
     private:
-        typename ft::iterator_base<Category, T>::pointer	__p;
+        T*  __p;
     public:
         iterator () {}
         iterator ( T* x ) : __p(x) {}
@@ -42,7 +42,7 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
             return *__p;
         }
         typename ft::iterator_base<Category, T>::pointer operator-> () const {
-            return &(operator*());
+            return __p;
         }
         iterator operator+ ( typename ft::iterator_base<Category, T>::difference_type n ) const {
             return iterator(__p + n);
