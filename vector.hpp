@@ -69,14 +69,14 @@ class ft::vector
 
         // operator=
         vector&	operator= ( const vector& vec ) {
-            this->__sequence = vec.__sequence;
+			__allocator.deallocate(__sequence, this->__capacity);
+			this->__sequence = __allocator.allocate(vec.__size);
+            for (int i = 0; i < vec.__size; i++)
+				this->__sequence[i] = vec.__sequence[i];
             this->__size = vec.__size;
             this->__capacity = vec.__capacity;
+			return *this;
         }
-
-		// pointer					base() {
-		// 	return __sequence;
-		// }
 
         // (Iterators) begin & end
         iterator				begin() {
@@ -241,9 +241,28 @@ class ft::vector
 
         // (Modifiers) insert
         iterator				insert( iterator position, const value_type& val ) {
+			if (__size == __capacity) {
+				if (__capacity == 0)
+					__capacity += 1;
+				else
+					__capacity *= 2;
+				pointer		tmp = __allocator.allocate(__capacity);
+				for (int i = 0; i < __size; i++) {
+					tmp[i] = __sequence[i];
+				}
+				__allocator.deallocate(__capacity);
+				__sequence = tmp;
+			}
+			iterator	pos = this->begin();
+			int			pp = 0;
+			while (pos != position) {
+				pos++;
+				pp++;
+			}
+		}
+        void					insert( iterator position, size_type n, const value_type& val ) {
 
 		}
-        void					insert( iterator position, size_type n, const value_type& val );
         template < class InputIterator >
         void					insert( iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {

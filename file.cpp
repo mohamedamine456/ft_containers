@@ -121,153 +121,211 @@ int main() {
     //     vv.reserve(33);
     //     std::cout << "capacity: " << vv.capacity() << std::endl;
     // }
-    {
-        std::vector<int> myvector;
-        myvector.push_back(78);
-        myvector.push_back(16);
+    // {
+    //     std::vector<int> myvector;
+    //     myvector.push_back(78);
+    //     myvector.push_back(16);
 
-        // now front equals 78, and back 16
-        myvector.front() -= myvector.back();
-        std::cout << "myvector.front() is now " << myvector.front() << '\n';
-        myvector.back() += 15;
-        std::cout << "myvector.back() is now " << myvector.back() << '\n';
-    }
+    //     // now front equals 78, and back 16
+    //     myvector.front() -= myvector.back();
+    //     std::cout << "myvector.front() is now " << myvector.front() << '\n';
+    //     myvector.back() += 15;
+    //     std::cout << "myvector.back() is now " << myvector.back() << '\n';
+    // }
+
+    // {
+    //     ft::vector<int> myvector;
+    //     myvector.push_back(78);
+    //     myvector.push_back(16);
+
+    //     // now front equals 78, and back 16
+    //     myvector.front() -= myvector.back();
+    //     std::cout << "myvector.front() is now " << myvector.front() << '\n';
+    //     myvector.back() += 15;
+    //     std::cout << "myvector.back() is now " << myvector.back() << '\n';
+    // }
+    // {
+    //     std::vector<int> numbers;
+    //     numbers.assign(5, 3);
+    //     std::cout << numbers.capacity() << std::endl;
+    //     for (int i = 0; i < numbers.size(); i++)
+    //         std::cout << numbers[i] << " ";
+    //     std::cout << std::endl;
+    //     numbers.assign(6, 7);
+    //     std::cout << numbers.capacity() << std::endl;
+    //     for (int i = 0; i < numbers.size(); i++)
+    //         std::cout << numbers[i] << " ";
+    //     std::cout << std::endl;
+    //     numbers.assign(3, 2);
+    //     std::cout << numbers.capacity() << std::endl;
+    //     for (int i = 0; i < numbers.size(); i++)
+    //         std::cout << numbers[i] << " ";
+    //     std::cout << std::endl;
+    //     std::cout << numbers[4] << std::endl;
+
+    //     std::string extra(12, 'b');
+    //     numbers.assign(extra.begin(), extra.end());
+    //     std::cout << numbers.capacity() << std::endl;
+    //     for (int i = 0; i < numbers.size(); i++)
+    //         std::cout << numbers[i] << " ";
+    //     std::cout << std::endl;
+    // }
+    // std::cout << std::endl;
+    // {
+    //     ft::vector<int> numbers;
+    //     numbers.assign(5, 3);
+    //     std::cout << numbers.capacity() << std::endl;
+    //     for (int i = 0; i < numbers.size(); i++)
+    //         std::cout << numbers[i] << " ";
+    //     std::cout << std::endl;
+    //     numbers.assign(6, 7);
+    //     std::cout << numbers.capacity() << std::endl;
+    //     for (int i = 0; i < numbers.size(); i++)
+    //         std::cout << numbers[i] << " ";
+    //     std::cout << std::endl;
+    //     numbers.assign(3, 2);
+    //     std::cout << numbers.capacity() << std::endl;
+    //     for (int i = 0; i < numbers.size(); i++)
+    //         std::cout << numbers[i] << " ";
+    //     std::cout << std::endl;
+    //     std::cout << numbers[4] << std::endl;
+
+    //     std::string extra(12, 'b');
+    //     numbers.assign(extra.begin(), extra.end());
+    //     std::cout << numbers.capacity() << std::endl;
+    //     for (int i = 0; i < numbers.size(); i++)
+    //         std::cout << numbers[i] << " ";
+    //     std::cout << std::endl;
+    // }
+    // std::cout << std::endl << "STD::CLEAR:" << std::endl;
+    // {
+    //     std::vector<std::string> vec;
+    //     std::string *str = new std::string("C++");
+    //     vec.assign(25, *str);
+    //     std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+    //     delete str;
+    //     vec.clear();
+    //     std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.capacity(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+    // }
+    // std::cout << std::endl << "FT::CLEAR:" << std::endl;
+    // {
+    //     ft::vector<std::string> vec;
+    //     std::string *str = new std::string("C++");
+    //     vec.assign(25, *str);
+    //     std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+    //     delete str;
+    //     vec.clear();
+    //     std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.capacity(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+    // }
+    // std::cout << std::endl << "STD::relational operators:" << std::endl;
+    // {
+    //     std::vector<int> vec;
+    //     vec.assign(5,6);
+    //     std::vector<int> sec;
+    //     sec.assign(5,6);
+    //     std::cout << (vec == sec ? "equals" : "different") << std::endl;
+    //     sec.assign(5,7);
+    //     std::cout << (vec == sec ? "equals" : "different") << std::endl;
+    //     sec.assign(5,7);
+    //     std::cout << (vec != sec ? "different" : "equals") << std::endl;
+    //     sec.assign(5,5);
+    //     std::cout << (vec > sec ? "bigger" : "smaller") << std::endl;
+    //     sec.assign(5,8);
+    //     std::cout << (vec < sec ? "smaller" : "bigger") << std::endl;
+    //     sec.assign(5,5);
+    //     std::cout << (vec >= sec ? "bigger or equal" : "smaller or eqaul") << std::endl;
+    //     sec.assign(5,8);
+    //     std::cout << (vec <= sec ? "smaller or equal" : "bigger or eqaul") << std::endl;
+    // }
+    // std::cout << std::endl << "FT::relational operators:" << std::endl;
+    // {
+    //     ft::vector<int> vec;
+    //     vec.assign(5,6);
+    //     ft::vector<int> sec;
+    //     sec.assign(5,6);
+    //     std::cout << (vec == sec ? "equals" : "different") << std::endl;
+    //     sec.assign(5,7);
+    //     std::cout << (vec == sec ? "equals" : "different") << std::endl;
+    //     sec.assign(5,7);
+    //     std::cout << (vec != sec ? "different" : "equals") << std::endl;
+    //     sec.assign(5,5);
+    //     std::cout << (vec > sec ? "bigger" : "smaller") << std::endl;
+    //     sec.assign(5,8);
+    //     std::cout << (vec < sec ? "smaller" : "bigger") << std::endl;
+    //     sec.assign(5,5);
+    //     std::cout << (vec >= sec ? "bigger or equal" : "smaller or eqaul") << std::endl;
+    //     sec.assign(5,8);
+    //     std::cout << (vec <= sec ? "smaller or equal" : "bigger or eqaul") << std::endl;
+    // }
+
+    // std::vector<int> sec;
+    // {
+    //     std::vector<int> vec(7, 10);
+    //     sec = vec;
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+
+    //     std::cout << "SEC:: Capacity: " << sec.capacity() << ", Size: " << sec.size() << std::endl;
+    //     for (int i = 0; i < sec.size(); i++)
+    //         std::cout << sec[i] << " ";
+    //     std::cout << std::endl;
+    // }
+    // std::cout << "SEC:: Capacity: " << sec.capacity() << ", Size: " << sec.size() << std::endl;
+    // for (int i = 0; i < sec.size(); i++)
+    //     std::cout << sec[i] << " ";
+    // std::cout << std::endl;
+
+    // std::cout << std::endl << std::endl;
+    // ft::vector<int> tec;
+    // {
+    //     ft::vector<int> vec(7, 10);
+    //     tec = vec;
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << std::endl;
+
+    //     std::cout << "TEC:: Capacity: " << tec.capacity() << ", Size: " << tec.size() << std::endl;
+    //     for (int i = 0; i < tec.size(); i++)
+    //         std::cout << tec[i] << " ";
+    //     std::cout << std::endl;
+    // }
+    // std::cout << "TEC:: Capacity: " << tec.capacity() << ", Size: " << tec.size() << std::endl;
+    // for (int i = 0; i < tec.size(); i++)
+    //     std::cout << tec[i] << " ";
+    // std::cout << std::endl;
+
 
     {
-        ft::vector<int> myvector;
-        myvector.push_back(78);
-        myvector.push_back(16);
-
-        // now front equals 78, and back 16
-        myvector.front() -= myvector.back();
-        std::cout << "myvector.front() is now " << myvector.front() << '\n';
-        myvector.back() += 15;
-        std::cout << "myvector.back() is now " << myvector.back() << '\n';
-    }
-    {
-        std::vector<int> numbers;
-        numbers.assign(5, 3);
-        std::cout << numbers.capacity() << std::endl;
-        for (int i = 0; i < numbers.size(); i++)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
-        numbers.assign(6, 7);
-        std::cout << numbers.capacity() << std::endl;
-        for (int i = 0; i < numbers.size(); i++)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
-        numbers.assign(3, 2);
-        std::cout << numbers.capacity() << std::endl;
-        for (int i = 0; i < numbers.size(); i++)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
-        std::cout << numbers[4] << std::endl;
-
-        std::string extra(12, 'b');
-        numbers.assign(extra.begin(), extra.end());
-        std::cout << numbers.capacity() << std::endl;
-        for (int i = 0; i < numbers.size(); i++)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl;
-    {
-        ft::vector<int> numbers;
-        numbers.assign(5, 3);
-        std::cout << numbers.capacity() << std::endl;
-        for (int i = 0; i < numbers.size(); i++)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
-        numbers.assign(6, 7);
-        std::cout << numbers.capacity() << std::endl;
-        for (int i = 0; i < numbers.size(); i++)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
-        numbers.assign(3, 2);
-        std::cout << numbers.capacity() << std::endl;
-        for (int i = 0; i < numbers.size(); i++)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
-        std::cout << numbers[4] << std::endl;
-
-        std::string extra(12, 'b');
-        numbers.assign(extra.begin(), extra.end());
-        std::cout << numbers.capacity() << std::endl;
-        for (int i = 0; i < numbers.size(); i++)
-            std::cout << numbers[i] << " ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl << "STD::CLEAR:" << std::endl;
-    {
-        std::vector<std::string> vec;
-        std::string *str = new std::string("C++");
-        vec.assign(25, *str);
-        std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        std::vector<int>	vec(7, 5);
+		std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
-        delete str;
-        vec.clear();
-        std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
-        for (int i = 0; i < vec.capacity(); i++)
-            std::cout << vec[i] << " ";
-        std::cout << std::endl;
-    }
-    std::cout << std::endl << "FT::CLEAR:" << std::endl;
-    {
-        ft::vector<std::string> vec;
-        std::string *str = new std::string("C++");
-        vec.assign(25, *str);
-        std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+		std::vector<int>::iterator it = vec.begin();
+		it++;
+		it++;
+		vec.insert(it, 45);
+		std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << std::endl;
-        delete str;
-        vec.clear();
-        std::cout << "Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
-        for (int i = 0; i < vec.capacity(); i++)
-            std::cout << vec[i] << " ";
-        std::cout << std::endl;
     }
-    std::cout << std::endl << "STD::relational operators:" << std::endl;
-    {
-        std::vector<int> vec;
-        vec.assign(5,6);
-        std::vector<int> sec;
-        sec.assign(5,6);
-        std::cout << (vec == sec ? "equals" : "different") << std::endl;
-        sec.assign(5,7);
-        std::cout << (vec == sec ? "equals" : "different") << std::endl;
-        sec.assign(5,7);
-        std::cout << (vec != sec ? "different" : "equals") << std::endl;
-        sec.assign(5,5);
-        std::cout << (vec > sec ? "bigger" : "smaller") << std::endl;
-        sec.assign(5,8);
-        std::cout << (vec < sec ? "smaller" : "bigger") << std::endl;
-        sec.assign(5,5);
-        std::cout << (vec >= sec ? "bigger or equal" : "smaller or eqaul") << std::endl;
-        sec.assign(5,8);
-        std::cout << (vec <= sec ? "smaller or equal" : "bigger or eqaul") << std::endl;
-    }
-    std::cout << std::endl << "FT::relational operators:" << std::endl;
-    {
-        ft::vector<int> vec;
-        vec.assign(5,6);
-        ft::vector<int> sec;
-        sec.assign(5,6);
-        std::cout << (vec == sec ? "equals" : "different") << std::endl;
-        sec.assign(5,7);
-        std::cout << (vec == sec ? "equals" : "different") << std::endl;
-        sec.assign(5,7);
-        std::cout << (vec != sec ? "different" : "equals") << std::endl;
-        sec.assign(5,5);
-        std::cout << (vec > sec ? "bigger" : "smaller") << std::endl;
-        sec.assign(5,8);
-        std::cout << (vec < sec ? "smaller" : "bigger") << std::endl;
-        sec.assign(5,5);
-        std::cout << (vec >= sec ? "bigger or equal" : "smaller or eqaul") << std::endl;
-        sec.assign(5,8);
-        std::cout << (vec <= sec ? "smaller or equal" : "bigger or eqaul") << std::endl;
-    }
+
+    system("leaks a.out");
     return 0;
 }
