@@ -273,13 +273,17 @@ class ft::vector
         void					insert( iterator position, size_type n, const value_type& val ) {
 			iterator	pos = this->begin();
 			int			pp = 0;
+			std::cout << "POSITION: " << *position << std::endl;
 			while (pos != position) {
 				pos++;
 				pp++;
 			}
 			if (__size + n > __capacity) {
-				size_type	__old_capacity;
-				__capacity = __size + n;
+				size_type	__old_capacity = __capacity;
+				if (__size + n <= __capacity * 2)
+					__capacity *= 2;
+				else
+					__capacity = __size + n;
 				pointer		tmp = __allocator.allocate(__capacity);
 				for (int i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
@@ -296,13 +300,44 @@ class ft::vector
 			}
 			__size += n;
 			for (int i = 0; i + pp + n < __size; i++)
-				__sequence[i + pp + n + 1] = tmp[i];
+				__sequence[i + pp + n] = tmp[i];
 			__allocator.deallocate(tmp, __capacity);
+			position = iterator(__sequence + pp);
 		}
         template < class InputIterator >
         void					insert( iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {
-
+			int	n = ft::distance(first, last);
+			iterator	pos = this->begin();
+			int			pp = 0;
+			while (pos != position) {
+				pos++;
+				pp++;
+			}
+			if (__size + n > __capacity) {
+				size_type __old_capacity = __capacity;
+				if (__size + n <= __capacity * 2)
+					__capacity *= 2;
+				else
+					__capacity = __size + n;
+				pointer tmp = __allocator.allocate(__capacity);
+				for (int i = 0; i < __size; i++) {
+					tmp[i] = __sequence[i];
+				}
+				__allocator.deallocate(__sequence, __old_capacity);
+				__sequence = tmp;
+			}
+			pointer tmp = __allocator.allocate(__capacity);
+			for (int i = 0; i + pp < __size; i++) {
+				tmp[i] = __sequence[i + pp];
+			}
+			for (int i = 0; i < n && first != last; i++, first++) {
+				__sequence[i + pp] = *first;
+			}
+			__size += n;
+			for (int i = 0; i + pp + n < __size; i++) {
+				__sequence[i + pp + n + 1] = tmp[i];
+			}
 		}
 
         // (Modifiers) erase
