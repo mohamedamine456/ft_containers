@@ -256,6 +256,7 @@ class ft::vector
 				T*		tmp = __allocator.allocate(__capacity);
 				for (int i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
+					__allocator.destroy(&__sequence[i]);
 				}
 				__allocator.deallocate(__sequence, __old_capacity);
 				__sequence = tmp;
@@ -271,7 +272,6 @@ class ft::vector
 			return iterator(__sequence);
 		}
         void					insert( iterator position, size_type n, const value_type& val ) {
-			std::cout << "ADDRESS:: " << &(*position) << std::endl;
 			iterator	pos = this->begin();
 			int			pp = 0;
 			while (pos != position) {
@@ -285,28 +285,34 @@ class ft::vector
 				else
 					__capacity = __size + n;
 				T*		tmp = __allocator.allocate(__capacity);
-				for (int i = 0; i < __size; i++) {
+				for (int i = 0; i < pp; i++) {
 					tmp[i] = __sequence[i];
 					__allocator.destroy(&__sequence[i]);
+				}
+				for (int i = 0; i < n; i++)
+					tmp[i + pp] = val;
+				__size += n;
+				for (int i = 0; i + pp + n < __size; i++) {
+					tmp[i + pp + n] = __sequence[i + pp];
 				}
 				__allocator.deallocate(__sequence, __old_capacity);
 				__sequence = tmp;
 			}
-			T*	tmp = __allocator.allocate(__capacity);
-			for (int i = 0; i + pp < __size; i++) {
-				tmp[i] = __sequence[i + pp];
-				__allocator.destroy(&__sequence[i + pp]);
+			else {
+				T*		tmp = __allocator.allocate(__capacity);
+				for (int i = 0; i < pp; i++) {
+					tmp[i] = __sequence[i];
+					__allocator.destroy(&__sequence[i]);
+				}
+				for (int i = 0; i < n; i++)
+					tmp[i + pp] = val;
+				__size += n;
+				for (int i = 0; i + pp + n < __size; i++) {
+					tmp[i + pp + n] = __sequence[i + pp];
+				}
+				__allocator.deallocate(__sequence, __capacity);
+				__sequence = tmp;
 			}
-			for (int i = 0; i < n; i++) {
-				__sequence[i + pp] = val;
-			}
-			__size += n;
-			for (int i = 0; i + pp + n < __size; i++) {
-				__sequence[i + pp + n] = tmp[i];
-				__allocator.destroy(&tmp[i]);
-			}
-			__allocator.deallocate(tmp, __capacity);
-			std::cout << "ADDRESS2:: " << &(*position) << std::endl;
 		}
         template < class InputIterator >
         void					insert( iterator position, InputIterator first, InputIterator last,
