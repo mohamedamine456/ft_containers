@@ -326,6 +326,23 @@ int main() {
         std::cout << std::endl;
     }
 
+	std::cout << std::endl << std::endl;
+	{
+        ft::vector<int>	vec(7, 5);
+		std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << std::endl;
+		ft::vector<int>::iterator it = vec.begin();
+		it++;
+		it++;
+		vec.insert(it, 45);
+		std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << std::endl;
+    }
+
     system("leaks a.out");
     return 0;
 }

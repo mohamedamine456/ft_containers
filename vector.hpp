@@ -250,7 +250,7 @@ class ft::vector
 				for (int i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
 				}
-				__allocator.deallocate(__capacity);
+				__allocator.deallocate(__sequence, __capacity);
 				__sequence = tmp;
 			}
 			iterator	pos = this->begin();
@@ -259,6 +259,14 @@ class ft::vector
 				pos++;
 				pp++;
 			}
+			pointer	tmp = __allocator.allocate(__capacity);
+			for ( int i = 0; i + pp < __size; i++)
+				tmp[i] = __sequence[i + pp];
+			__sequence[pp] = val;
+			for (int i = 0; i + pp + 1 < __size; i++)
+				__sequence[pp + i + 1] = tmp[i];
+			__allocator.deallocate(tmp, __capacity);
+			return iterator(__sequence + pp);
 		}
         void					insert( iterator position, size_type n, const value_type& val ) {
 
