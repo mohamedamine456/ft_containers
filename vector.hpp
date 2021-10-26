@@ -71,7 +71,6 @@ class ft::vector
 
         // operator=
         vector&	operator= ( const vector& vec ) {
-			__allocator.deallocate(__sequence, this->__capacity);
 			this->__sequence = __allocator.allocate(vec.__size);
             for (int i = 0; i < vec.__size; i++)
 				this->__sequence[i] = vec.__sequence[i];
@@ -395,7 +394,11 @@ class ft::vector
 
         // (Modifiers) swap
         void					swap( vector &vec ) {
-			
+			vector<T> tmp = *this;
+			__allocator.deallocate(__sequence, __capacity);
+			*this = vec;
+			__allocator.deallocate(vec.__sequence, vec.__capacity);
+			vec = tmp;
 		}
 
         // (Modifiers) clear

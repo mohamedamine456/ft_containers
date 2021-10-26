@@ -602,6 +602,7 @@ int main() {
     //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
     // }
     {
+        std::cout << "STD: \n";
         std::vector<std::string> vec;
         std::vector<std::string> sec;
         std::string p[11] = {"AA", "DD" , "TT", "II", "OO" , "RR" , "QQ" , "SS", "PP", "LL", "UU"};
@@ -609,7 +610,7 @@ int main() {
             vec.push_back(p[i]);
         std::string d[5] = {"MM", "CC", "YY", "JJ", "FF"};
         for (int i = 0; i < 5; i++)
-            sec.push_back(p[i]);
+            sec.push_back(d[i]);
         std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
@@ -619,7 +620,22 @@ int main() {
             std::cout << sec[i] << " ";
         std::cout << "|" << std::endl;
         vec.swap(sec);
-        std::cout << "AFTER SWAP: \n\n";
+        std::cout << "AFTER SWAP: \n";
+        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << "|" << std::endl;
+        std::cout << "SEC:: Capacity: " << sec.capacity() << ", Size: " << sec.size() << std::endl;
+        for (int i = 0; i < sec.size(); i++)
+            std::cout << sec[i] << " ";
+        std::cout << "|" << std::endl;
+        std::vector<std::string>::iterator it = vec.begin();
+        it = it + 2;
+        vec.insert(it, p, p + 7);
+        it = sec.begin();
+        it = it + 2;
+        sec.insert(it, d, d + 3);
+        std::cout << "AFTER insert: \n";
         std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
@@ -629,6 +645,51 @@ int main() {
             std::cout << sec[i] << " ";
         std::cout << "|" << std::endl;
     }
+    // std::cout << "\n\n\n";
+    // {
+    //     std::cout << "FT: \n";
+    //     ft::vector<std::string> vec;
+    //     ft::vector<std::string> sec;
+    //     std::string p[11] = {"AA", "DD" , "TT", "II", "OO" , "RR" , "QQ" , "SS", "PP", "LL", "UU"};
+    //     for (int i = 0; i < 11; i++)
+    //         vec.push_back(p[i]);
+    //     std::string d[5] = {"MM", "CC", "YY", "JJ", "FF"};
+    //     for (int i = 0; i < 5; i++)
+    //         sec.push_back(d[i]);
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "SEC:: Capacity: " << sec.capacity() << ", Size: " << sec.size() << std::endl;
+    //     for (int i = 0; i < sec.size(); i++)
+    //         std::cout << sec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     vec.swap(sec);
+    //     std::cout << "AFTER SWAP: \n";
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "SEC:: Capacity: " << sec.capacity() << ", Size: " << sec.size() << std::endl;
+    //     for (int i = 0; i < sec.size(); i++)
+    //         std::cout << sec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     ft::vector<std::string>::iterator it = vec.begin();
+    //     it = it + 2;
+    //     vec.insert(it, p, p + 7);
+    //     it = sec.begin();
+    //     it = it + 2;
+    //     sec.insert(it, d, d + 3);
+    //     std::cout << "AFTER insert: \n";
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "SEC:: Capacity: " << sec.capacity() << ", Size: " << sec.size() << std::endl;
+    //     for (int i = 0; i < sec.size(); i++)
+    //         std::cout << sec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    // }
     // system("leaks a.out");
     return 0;
 }
