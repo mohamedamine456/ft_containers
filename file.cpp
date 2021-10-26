@@ -548,7 +548,59 @@ int main() {
     //         std::cout << vec[i] << " ";
     //     std::cout << "|" << std::endl;
     // }
-
+    {
+        std::vector<std::string> vec;
+        std::string p[11] = {"AA", "DD" , "TT", "II", "OO" , "RR" , "QQ" , "SS", "PP", "LL", "UU"};
+        for (int i = 0; i < 11; i++)
+            vec.push_back(p[i]);
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << "|" << std::endl;
+        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        std::vector<std::string>::iterator it = vec.begin();
+        it += 1;
+        vec.erase(it);
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << "|" << std::endl;
+        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        it = vec.begin();
+        it = it + 2;
+        std::vector<std::string>::iterator itl = vec.end();
+        itl -= 2;
+        vec.erase(it, itl);
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << "|" << std::endl;
+        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    }
+    std::cout << "\n\n";
+    {
+        ft::vector<std::string> vec;
+        std::string p[11] = {"AA", "DD" , "TT", "II", "OO" , "RR" , "QQ" , "SS", "PP", "LL", "UU"};
+        for (int i = 0; i < 11; i++)
+            vec.push_back(p[i]);
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << "|" << std::endl;
+        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        ft::vector<std::string>::iterator it = vec.begin();
+        it += 1;
+        vec.erase(it);
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << "|" << std::endl;
+        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+        it = vec.begin();
+        it = it + 2;
+        ft::vector<std::string>::iterator itl = vec.end();
+        itl -= 2;
+        vec.erase(it, itl);
+        for (int i = 0; i < vec.size(); i++)
+            std::cout << vec[i] << " ";
+        std::cout << "|" << std::endl;
+        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    }
     // system("leaks a.out");
     return 0;
 }

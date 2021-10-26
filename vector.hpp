@@ -212,7 +212,6 @@ class ft::vector
 			}
 			for (__size = 0; __size < n; __size++)
 				__sequence[__size] = val;
-				// __sequence[__size] = *(new value_type(val));
 		}
 
         // (Modifiers) push_back
@@ -225,20 +224,20 @@ class ft::vector
 				pointer		tmp = __allocator.allocate(__capacity);
 				for (int i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
-					// tmp[i]] = *(new value_type(__sequence[i]));
 				}
 				__allocator.deallocate(__sequence, __size);
 				__sequence = tmp;
 			}
 			__sequence[__size] = val;
-			// __sequence[__size] = *(new value_type(val));
 			__size++;
 		}
 
         // (Modifiers) pop_back
         void					pop_back() {
-			if (__size > 0)
+			if (__size > 0) {
+				__allocator.destroy(__size - 1);
 				__size--;
+			}
 		}
 
         // (Modifiers) insert
@@ -365,10 +364,33 @@ class ft::vector
 
         // (Modifiers) erase
         iterator				erase( iterator position ) {
-
+			iterator	pos = this->begin();
+			int	pp = 0;
+			while (pos != position) {
+				pos++;
+				pp++;
+			}
+			for (int i = pp; i + 1 < __size; i++) {
+				__allocator.destroy(__sequence + i);
+				__sequence[i] = __sequence[i + 1];
+			}
+			__size--;
+			return iterator(__sequence + pp);
 		}
         iterator				erase( iterator first, iterator last ) {
-
+			size_type n = ft::distance(first, last);
+			iterator	pos = this->begin();
+			int	pp = 0;
+			while (pos != first) {
+				pos++;
+				pp++;
+			}
+			for (int i = pp; i + n < __size; i++) {
+				__allocator.destroy(__sequence + i);
+				__sequence[i] = __sequence[i + n];
+			}
+			__size -= n;
+			return iterator(__sequence + pp);
 		}
 
         // (Modifiers) swap
@@ -376,7 +398,8 @@ class ft::vector
 
         // (Modifiers) clear
         void					clear() {
-			// __allocator.destroy(__sequence);
+			for (int i = 0; i < __size; i++)
+				__allocator.destroy(__sequence + i);
 			__size = 0;
 		}
 
