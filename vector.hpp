@@ -123,10 +123,21 @@ class ft::vector
         // (capacity) resize
         void					resize( size_type n, value_type val = value_type() ) {
 			if (n < __size) {
-				__size = n;
+				while (__size > n) {
+					__allocator.destroy(__sequence + __size - 1);
+					__size--;
+				}
 			}
 			else {
-
+				if (n <= __capacity) {
+					for (int i = __size; i < n; i++) {
+						__sequence[i] = val;
+					}
+					__size = n;
+				}
+				else {
+					this->insert(iterator(__sequence + __size), n - __size, val);
+				}
 			}
 		}
 
@@ -269,7 +280,7 @@ class ft::vector
 			for (int i = 0; i + pp < __size; i++)
 				__sequence[pp + i + 1] = tmp[i];
 			__allocator.deallocate(tmp, __capacity);
-			return iterator(__sequence);
+			return iterator(__sequence + pp);
 		}
         void					insert( iterator position, size_type n, const value_type& val ) {
 			iterator	pos = this->begin();
