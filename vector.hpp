@@ -394,7 +394,9 @@ class ft::vector
 		}
 
         // (Modifiers) swap
-        void					swap( vector &vec );
+        void					swap( vector &vec ) {
+			
+		}
 
         // (Modifiers) clear
         void					clear() {

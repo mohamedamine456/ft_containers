@@ -548,58 +548,86 @@ int main() {
     //         std::cout << vec[i] << " ";
     //     std::cout << "|" << std::endl;
     // }
+    // {
+    //     std::vector<std::string> vec;
+    //     std::string p[11] = {"AA", "DD" , "TT", "II", "OO" , "RR" , "QQ" , "SS", "PP", "LL", "UU"};
+    //     for (int i = 0; i < 11; i++)
+    //         vec.push_back(p[i]);
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     std::vector<std::string>::iterator it = vec.begin();
+    //     it += 1;
+    //     vec.erase(it);
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     it = vec.begin();
+    //     it = it + 2;
+    //     std::vector<std::string>::iterator itl = vec.end();
+    //     itl -= 2;
+    //     vec.erase(it, itl);
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    // }
+    // std::cout << "\n\n";
+    // {
+    //     ft::vector<std::string> vec;
+    //     std::string p[11] = {"AA", "DD" , "TT", "II", "OO" , "RR" , "QQ" , "SS", "PP", "LL", "UU"};
+    //     for (int i = 0; i < 11; i++)
+    //         vec.push_back(p[i]);
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     ft::vector<std::string>::iterator it = vec.begin();
+    //     it += 1;
+    //     vec.erase(it);
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    //     it = vec.begin();
+    //     it = it + 2;
+    //     ft::vector<std::string>::iterator itl = vec.end();
+    //     itl -= 2;
+    //     vec.erase(it, itl);
+    //     for (int i = 0; i < vec.size(); i++)
+    //         std::cout << vec[i] << " ";
+    //     std::cout << "|" << std::endl;
+    //     std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
+    // }
     {
         std::vector<std::string> vec;
+        std::vector<std::string> sec;
         std::string p[11] = {"AA", "DD" , "TT", "II", "OO" , "RR" , "QQ" , "SS", "PP", "LL", "UU"};
         for (int i = 0; i < 11; i++)
             vec.push_back(p[i]);
+        std::string d[5] = {"MM", "CC", "YY", "JJ", "FF"};
+        for (int i = 0; i < 5; i++)
+            sec.push_back(p[i]);
+        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << "|" << std::endl;
+        std::cout << "SEC:: Capacity: " << sec.capacity() << ", Size: " << sec.size() << std::endl;
+        for (int i = 0; i < sec.size(); i++)
+            std::cout << sec[i] << " ";
+        std::cout << "|" << std::endl;
+        vec.swap(sec);
+        std::cout << "AFTER SWAP: \n\n";
         std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
-        std::vector<std::string>::iterator it = vec.begin();
-        it += 1;
-        vec.erase(it);
         for (int i = 0; i < vec.size(); i++)
             std::cout << vec[i] << " ";
         std::cout << "|" << std::endl;
-        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
-        it = vec.begin();
-        it = it + 2;
-        std::vector<std::string>::iterator itl = vec.end();
-        itl -= 2;
-        vec.erase(it, itl);
-        for (int i = 0; i < vec.size(); i++)
-            std::cout << vec[i] << " ";
+        std::cout << "SEC:: Capacity: " << sec.capacity() << ", Size: " << sec.size() << std::endl;
+        for (int i = 0; i < sec.size(); i++)
+            std::cout << sec[i] << " ";
         std::cout << "|" << std::endl;
-        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
-    }
-    std::cout << "\n\n";
-    {
-        ft::vector<std::string> vec;
-        std::string p[11] = {"AA", "DD" , "TT", "II", "OO" , "RR" , "QQ" , "SS", "PP", "LL", "UU"};
-        for (int i = 0; i < 11; i++)
-            vec.push_back(p[i]);
-        for (int i = 0; i < vec.size(); i++)
-            std::cout << vec[i] << " ";
-        std::cout << "|" << std::endl;
-        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
-        ft::vector<std::string>::iterator it = vec.begin();
-        it += 1;
-        vec.erase(it);
-        for (int i = 0; i < vec.size(); i++)
-            std::cout << vec[i] << " ";
-        std::cout << "|" << std::endl;
-        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
-        it = vec.begin();
-        it = it + 2;
-        ft::vector<std::string>::iterator itl = vec.end();
-        itl -= 2;
-        vec.erase(it, itl);
-        for (int i = 0; i < vec.size(); i++)
-            std::cout << vec[i] << " ";
-        std::cout << "|" << std::endl;
-        std::cout << "VEC:: Capacity: " << vec.capacity() << ", Size: " << vec.size() << std::endl;
     }
     // system("leaks a.out");
     return 0;
