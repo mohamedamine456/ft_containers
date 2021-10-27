@@ -158,7 +158,7 @@ int main()
 		std::cout << std::endl;
 
 		//insert multi
-		it = vec.insert(it, 2, 300);
+		vec.insert(it, 2, 300);
 		for (std::vector<int>::iterator tt = vec.begin(); tt != vec.end(); tt++)
 			std::cout << *tt << " ";
 		std::cout << std::endl;
