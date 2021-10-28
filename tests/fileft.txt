@@ -64,7 +64,7 @@ Sum of the vector is: 113
 rbegin & rend: 
 
 5 4 3 2 1 
-2 3 4 5 5 
+1 2 3 4 5 
 
 reserve: 
 
@@ -76,7 +76,7 @@ Capacity changed from: 8 to: 16
 Capacity changed from: 16 to: 32
 Capacity changed from: 32 to: 64
 Capacity changed from: 64 to: 128
-USing reserve: 
+Using reserve: 
 Capacity changed from: 0 to: 100
 
 resize: 
