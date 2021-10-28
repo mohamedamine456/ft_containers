@@ -118,6 +118,7 @@ int main() {
         myvector.clear();
         std::cout << "capacity: " << myvector.capacity() << std::endl;
         std::cout << std::endl << myvector[4] << std::endl;
+        ft::vector<int>::iterator it = myvector.begin();
     }
     // {
     //     std::vector<int> myvector;

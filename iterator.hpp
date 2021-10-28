@@ -17,6 +17,7 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         typename ft::iterator_base<Category, T>::pointer base() const {
             return __p;
         }
+        virtual ~iterator();
         iterator& operator= ( const iterator& cp ) {
             this->__p = cp.__p;
             return *this;
@@ -101,9 +102,17 @@ bool    operator<= (ft::iterator<Category, T> fir, ft::iterator<Category, T> sec
 template< class Category, class T>
 ft::iterator<Category, T> operator+ (
     typename ft::iterator<Category, T>::difference_type n,
-    const ft::iterator<Category, T>& it)
+    ft::iterator<Category, T>& it)
 {
-    
+    return ft::iterator<Category, T>(it.base() + n);
+}
+
+template< class Category, class T>
+typename ft::iterator<Category, T>::difference_type operator- (
+    ft::iterator<Category, T>& fir,
+    ft::iterator<Category, T>& sec)
+{
+    return fir.base() - sec.base();
 }
 
 // reverse_iterator class
