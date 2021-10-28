@@ -12,7 +12,8 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
     public:
         iterator () {}
         iterator ( T* x ) : __p(x) {}
-        iterator ( const iterator& cp ) : __p(cp.__p) {}
+        template < class U>
+        iterator ( const iterator<ft::random_access_iterator_tag, U>& cp ) : __p(cp.__p) {}
         typename ft::iterator_base<Category, T>::pointer base() const {
             return __p;
         }
@@ -58,7 +59,7 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
             __p -= n;
             return *this;
         }
-        T operator[] ( typename ft::iterator_base<Category, T>::difference_type n ) const {
+        T &operator[] ( typename ft::iterator_base<Category, T>::difference_type n ) const {
             return *(*this + n);
         }
         typename ft::iterator_base<Category, T>::difference_type operator- (iterator<Category, T> sec) {
@@ -202,6 +203,13 @@ ft::reverse_iterator<Iterator> operator+ (
     const ft::reverse_iterator<Iterator>& it)
 {
     return ft::reverse_iterator<Iterator>(it.base() - n);
+}
+
+template < class Iterator >
+typename ft::reverse_iterator<Iterator>::difference_type operator- (
+    const ft::reverse_iterator<Iterator>& lhs,
+    const ft::reverse_iterator<Iterator>& rhs) {
+        lhs.base() - rhs.base();
 }
 
 // back_insert_iterator
@@ -424,3 +432,4 @@ bool ft::lexicographical_compare (InputIterator1 first1, InputIterator1 last1,
 }
 
 #endif
+
