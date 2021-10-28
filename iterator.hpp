@@ -98,6 +98,14 @@ bool    operator<= (ft::iterator<Category, T> fir, ft::iterator<Category, T> sec
     return fir.base() <= sec.base();
 }
 
+template< class Category, class T>
+ft::iterator<Category, T> operator+ (
+    typename ft::iterator<Category, T>::difference_type n,
+    const ft::iterator<Category, T>& it)
+{
+    
+}
+
 // reverse_iterator class
 template < class Iter >
 class ft::reverse_iterator: public ft::iterator_base<typename ft::iterator_traits<Iter>::iterator_category,
