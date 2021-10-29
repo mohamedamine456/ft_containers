@@ -229,7 +229,7 @@ template < class Iterator >
 typename ft::reverse_iterator<Iterator>::difference_type operator- (
     const ft::reverse_iterator<Iterator>& lhs,
     const ft::reverse_iterator<Iterator>& rhs) {
-        return lhs.base() - rhs.base();
+        return static_cast<typename ft::reverse_iterator<Iterator>::difference_type>(rhs.base() - lhs.base());
 }
 
 // back_insert_iterator
