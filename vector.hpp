@@ -122,6 +122,7 @@ class ft::vector
 		}
         size_type				max_size() const {
 			return std::numeric_limits<difference_type>::max();
+			// __allocator.max_size();
 		}
         size_type				capacity() const {
 			return this->__capacity;

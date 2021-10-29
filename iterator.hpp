@@ -29,19 +29,19 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
             ++__p;
             return *this;
         }
-        iterator& operator++ ( int ) {
-            iterator *tmp (this);
+        iterator operator++ ( int ) {
+            iterator tmp(*this);
             ++__p;
-            return *tmp;
+            return tmp;
         }
         iterator& operator-- () {
             --__p;
             return *this;
         }
-        iterator& operator-- ( int ) {
-            iterator *tmp (this);
+        iterator operator-- ( int ) {
+            iterator tmp(*this);
             --__p;
-            return *tmp;
+            return tmp;
         }
         typename ft::iterator_base<Category, T>::reference operator*() const {
             return *__p;
