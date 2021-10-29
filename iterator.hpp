@@ -17,7 +17,7 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         typename ft::iterator_base<Category, T>::pointer base() const {
             return __p;
         }
-        virtual ~iterator();
+        virtual ~iterator() {}
         T*  base() {
             return this->__p;
         }
@@ -138,7 +138,7 @@ class ft::reverse_iterator: public ft::iterator_base<typename ft::iterator_trait
         explicit reverse_iterator(iterator_type c): __current(c) {}
         template < class U >
         reverse_iterator(const reverse_iterator<U>& rv_iter): __current(rv_iter.base()) {}
-        
+        virtual ~reverse_iterator() {}
         Iter    base() const {
             return __current;
         }
