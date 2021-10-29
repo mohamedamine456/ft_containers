@@ -26,14 +26,16 @@ class ft::vector
         typedef std::size_t													size_type;
         // constructors
         explicit vector ( const allocator_type& alloc = allocator_type() ) {													// default constructor
-			__sequence = alloc.allocate(0);
+			(void)alloc;
+			__sequence = __allocator.allocate(0);
 			__capacity = 0;
 			__size = 0;
         }
         explicit vector ( size_type n, const value_type& val = value_type(), const allocator_type& alloc = allocator_type () ) {	// construct with range initialize
+			(void)alloc;
 			try {
-				__sequence = alloc.allocate(n);
-				for (int i = 0; i < n; i++)
+				__sequence = __allocator.allocate(n);
+				for (size_type i = 0; i < n; i++)
 					__sequence[i] = val;
 				__capacity = n;
 				__size = n;
@@ -44,10 +46,11 @@ class ft::vector
         template < class InputIterator >
         vector ( InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
                 typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {						// constructor with iterators
+			(void)alloc;
 			__size = ft::distance(first, last);
             try {
-				__sequence = alloc.allocate(__size);
-				for (int i = 0; first != last; i++, first++)
+				__sequence = __allocator.allocate(__size);
+				for (size_type i = 0; first != last; i++, first++)
                     __sequence[i] = *first;
                 __capacity = __size;
                 
@@ -62,7 +65,7 @@ class ft::vector
 
         // destructor
         ~vector() {
-			for (int i = 0; i < __size; i++)
+			for (size_type i = 0; i < __size; i++)
 				__allocator.destroy(__sequence + i);
             __allocator.deallocate(__sequence, __capacity);
             __size = 0;
@@ -72,7 +75,7 @@ class ft::vector
         // operator=
         vector&	operator= ( const vector& vec ) {
 			this->__sequence = __allocator.allocate(vec.__size);
-            for (int i = 0; i < vec.__size; i++)
+            for (size_type i = 0; i < vec.__size; i++)
 				this->__sequence[i] = vec.__sequence[i];
             this->__size = vec.__size;
             this->__capacity = vec.__capacity;
@@ -130,7 +133,7 @@ class ft::vector
 			}
 			else {
 				if (n <= __capacity) {
-					for (int i = __size; i < n; i++) {
+					for (size_type i = __size; i < n; i++) {
 						__sequence[i] = val;
 					}
 					__size = n;
@@ -232,7 +235,7 @@ class ft::vector
 				else
 					__capacity *= 2;
 				pointer		tmp = __allocator.allocate(__capacity);
-				for (int i = 0; i < __size; i++) {
+				for (size_type i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
 				}
 				__allocator.deallocate(__sequence, __size);
@@ -253,7 +256,7 @@ class ft::vector
         // (Modifiers) insert
         iterator				insert( iterator position, const value_type& val ) {
 			iterator	pos = this->begin();
-			int			pp = 0;
+			size_type	pp = 0;
 			while (pos != position) {
 				pos++;
 				pp++;
@@ -265,7 +268,7 @@ class ft::vector
 				else
 					__capacity *= 2;
 				T*		tmp = __allocator.allocate(__capacity);
-				for (int i = 0; i < __size; i++) {
+				for (size_type i = 0; i < __size; i++) {
 					tmp[i] = __sequence[i];
 					__allocator.destroy(&__sequence[i]);
 				}
@@ -284,7 +287,7 @@ class ft::vector
 		}
         void					insert( iterator position, size_type n, const value_type& val ) {
 			iterator	pos = this->begin();
-			int			pp = 0;
+			size_type	pp = 0;
 			while (pos != position) {
 				pos++;
 				pp++;
@@ -296,14 +299,14 @@ class ft::vector
 				else
 					__capacity = __size + n;
 				T*		tmp = __allocator.allocate(__capacity);
-				for (int i = 0; i < pp; i++) {
+				for (size_type i = 0; i < pp; i++) {
 					tmp[i] = __sequence[i];
 					__allocator.destroy(&__sequence[i]);
 				}
-				for (int i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 					tmp[i + pp] = val;
 				__size += n;
-				for (int i = 0; i + pp + n < __size; i++) {
+				for (size_type i = 0; i + pp + n < __size; i++) {
 					tmp[i + pp + n] = __sequence[i + pp];
 				}
 				__allocator.deallocate(__sequence, __old_capacity);
@@ -311,14 +314,14 @@ class ft::vector
 			}
 			else {
 				T*		tmp = __allocator.allocate(__capacity);
-				for (int i = 0; i < pp; i++) {
+				for (size_type i = 0; i < pp; i++) {
 					tmp[i] = __sequence[i];
 					__allocator.destroy(&__sequence[i]);
 				}
-				for (int i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 					tmp[i + pp] = val;
 				__size += n;
-				for (int i = 0; i + pp + n < __size; i++) {
+				for (size_type i = 0; i + pp + n < __size; i++) {
 					tmp[i + pp + n] = __sequence[i + pp];
 				}
 				__allocator.deallocate(__sequence, __capacity);
@@ -328,9 +331,9 @@ class ft::vector
         template < class InputIterator >
         void					insert( iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {
-			int	n = ft::distance(first, last);
+			size_type	n = ft::distance(first, last);
 			iterator	pos = this->begin();
-			int			pp = 0;
+			size_type	pp = 0;
 			while (pos != position) {
 				pos++;
 				pp++;
@@ -342,14 +345,14 @@ class ft::vector
 				else
 					__capacity = __size + n;
 				T*		tmp = __allocator.allocate(__capacity);
-				for (int i = 0; i < pp; i++) {
+				for (size_type i = 0; i < pp; i++) {
 					tmp[i] = __sequence[i];
 					__allocator.destroy(&__sequence[i]);
 				}
-				for (int i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 					tmp[i + pp] = *(first + i);
 				__size += n;
-				for (int i = 0; i + pp + n < __size; i++) {
+				for (size_type i = 0; i + pp + n < __size; i++) {
 					tmp[i + pp + n] = __sequence[i + pp];
 				}
 				__allocator.deallocate(__sequence, __old_capacity);
@@ -357,14 +360,14 @@ class ft::vector
 			}
 			else {
 				T*		tmp = __allocator.allocate(__capacity);
-				for (int i = 0; i < pp; i++) {
+				for (size_type i = 0; i < pp; i++) {
 					tmp[i] = __sequence[i];
 					__allocator.destroy(&__sequence[i]);
 				}
-				for (int i = 0; i < n; i++)
+				for (size_type i = 0; i < n; i++)
 					tmp[i + pp] = *(first + i);
 				__size += n;
-				for (int i = 0; i + pp + n < __size; i++) {
+				for (size_type i = 0; i + pp + n < __size; i++) {
 					tmp[i + pp + n] = __sequence[i + pp];
 				}
 				__allocator.deallocate(__sequence, __capacity);
@@ -375,12 +378,12 @@ class ft::vector
         // (Modifiers) erase
         iterator				erase( iterator position ) {
 			iterator	pos = this->begin();
-			int	pp = 0;
+			size_type	pp = 0;
 			while (pos != position) {
 				pos++;
 				pp++;
 			}
-			for (int i = pp; i + 1 < __size; i++) {
+			for (size_type i = pp; i + 1 < __size; i++) {
 				__allocator.destroy(__sequence + i);
 				__sequence[i] = __sequence[i + 1];
 			}
@@ -388,14 +391,14 @@ class ft::vector
 			return iterator(__sequence + pp);
 		}
         iterator				erase( iterator first, iterator last ) {
-			size_type n = ft::distance(first, last);
+			size_type	n = ft::distance(first, last);
 			iterator	pos = this->begin();
-			int	pp = 0;
+			size_type	pp = 0;
 			while (pos != first) {
 				pos++;
 				pp++;
 			}
-			for (int i = pp; i + n < __size; i++) {
+			for (size_type i = pp; i + n < __size; i++) {
 				__allocator.destroy(__sequence + i);
 				__sequence[i] = __sequence[i + n];
 			}
@@ -414,7 +417,7 @@ class ft::vector
 
         // (Modifiers) clear
         void					clear() {
-			for (int i = 0; i < __size; i++)
+			for (size_type i = 0; i < __size; i++)
 				__allocator.destroy(__sequence + i);
 			__size = 0;
 		}

@@ -13,11 +13,14 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         iterator () {}
         iterator ( T* x ) : __p(x) {}
         template < class U>
-        iterator ( const iterator<ft::random_access_iterator_tag, U>& cp ) : __p(cp.__p) {}
+        iterator ( const iterator<ft::random_access_iterator_tag, U>& cp ) : __p(cp.base()) {}
         typename ft::iterator_base<Category, T>::pointer base() const {
             return __p;
         }
         virtual ~iterator();
+        T*  base() {
+            return this->__p;
+        }
         iterator& operator= ( const iterator& cp ) {
             this->__p = cp.__p;
             return *this;
@@ -226,7 +229,7 @@ template < class Iterator >
 typename ft::reverse_iterator<Iterator>::difference_type operator- (
     const ft::reverse_iterator<Iterator>& lhs,
     const ft::reverse_iterator<Iterator>& rhs) {
-        lhs.base() - rhs.base();
+        return lhs.base() - rhs.base();
 }
 
 // back_insert_iterator
@@ -367,10 +370,10 @@ void	ft::advance(InputIterator &inputIterator, Distance n)
 }
 
 // distance function
-template < class It >
-typename ft::iterator_traits<It>::difference_type	_distance(It first, It last, ft::input_iterator_tag)
+template < class InputIterator >
+typename ft::iterator_traits<InputIterator>::difference_type	_distance(InputIterator first, InputIterator last, ft::input_iterator_tag)
 {
-	typename ft::iterator_traits<It>::difference_type result = 0;
+	typename ft::iterator_traits<InputIterator>::difference_type result = 0;
 
 	while (first != last) {
 		first++;
@@ -379,8 +382,8 @@ typename ft::iterator_traits<It>::difference_type	_distance(It first, It last, f
 	return (result);
 }
 
-template < class It >
-typename ft::iterator_traits<It>::difference_type	_distance(It first, It last, ft::random_access_iterator_tag)
+template < class InputIterator >
+typename ft::iterator_traits<InputIterator>::difference_type	_distance(InputIterator first, InputIterator last, ft::random_access_iterator_tag)
 {
 	return last - first;
 }
