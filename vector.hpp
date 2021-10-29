@@ -74,12 +74,16 @@ class ft::vector
 
         // operator=
         vector&	operator= ( const vector& vec ) {
-			this->__sequence = __allocator.allocate(vec.__size);
-            for (size_type i = 0; i < vec.__size; i++)
-				this->__sequence[i] = vec.__sequence[i];
-            this->__size = vec.__size;
-            this->__capacity = vec.__capacity;
-			return *this;
+			try {
+				this->__sequence = __allocator.allocate(vec.__size);
+				for (size_type i = 0; i < vec.__size; i++)
+					this->__sequence[i] = vec.__sequence[i];
+				this->__size = vec.__size;
+				this->__capacity = vec.__capacity;
+				return *this;
+			} catch (std::exception &ex) {
+				throw ft::LengthError("vector");
+			}
         }
 
         // (Iterators) begin & end
@@ -151,9 +155,13 @@ class ft::vector
 
         // (capacity) reserve
         void					reserve( size_type n ) {
-			if (n > __capacity) {
-				__capacity = n;
-				__sequence = __allocator.allocate(__capacity);
+			try {
+				if (n > __capacity) {
+					__capacity = n;
+					__sequence = __allocator.allocate(__capacity);
+				}
+			} catch (std::exception &ex) {
+				throw ft::LengthError("vector");
 			}
 		}
 
@@ -229,20 +237,24 @@ class ft::vector
 
         // (Modifiers) push_back
         void					push_back( const value_type& val ) {
-			if (__size == __capacity) {
-				if (__capacity == 0)
-					__capacity += 1;
-				else
-					__capacity *= 2;
-				pointer		tmp = __allocator.allocate(__capacity);
-				for (size_type i = 0; i < __size; i++) {
-					tmp[i] = __sequence[i];
+			try {
+				if (__size == __capacity) {
+					if (__capacity == 0)
+						__capacity += 1;
+					else
+						__capacity *= 2;
+					pointer		tmp = __allocator.allocate(__capacity);
+					for (size_type i = 0; i < __size; i++) {
+						tmp[i] = __sequence[i];
+					}
+					__allocator.deallocate(__sequence, __size);
+					__sequence = tmp;
 				}
-				__allocator.deallocate(__sequence, __size);
-				__sequence = tmp;
+				__sequence[__size] = val;
+				__size++;
+			} catch (std::exception &ex) {
+				throw ft::LengthError("vector");
 			}
-			__sequence[__size] = val;
-			__size++;
 		}
 
         // (Modifiers) pop_back
@@ -255,123 +267,135 @@ class ft::vector
 
         // (Modifiers) insert
         iterator				insert( iterator position, const value_type& val ) {
-			iterator	pos = this->begin();
-			size_type	pp = 0;
-			while (pos != position) {
-				pos++;
-				pp++;
-			}
-			if (__size == __capacity) {
-				size_type	__old_capacity = __capacity;
-				if (__capacity == 0)
-					__capacity += 1;
-				else
-					__capacity *= 2;
-				T*		tmp = __allocator.allocate(__capacity);
-				for (size_type i = 0; i < __size; i++) {
-					tmp[i] = __sequence[i];
-					__allocator.destroy(&__sequence[i]);
+			try {
+				iterator	pos = this->begin();
+				size_type	pp = 0;
+				while (pos != position) {
+					pos++;
+					pp++;
 				}
-				__allocator.deallocate(__sequence, __old_capacity);
-				__sequence = tmp;
+				if (__size == __capacity) {
+					size_type	__old_capacity = __capacity;
+					if (__capacity == 0)
+						__capacity += 1;
+					else
+						__capacity *= 2;
+					T*		tmp = __allocator.allocate(__capacity);
+					for (size_type i = 0; i < __size; i++) {
+						tmp[i] = __sequence[i];
+						__allocator.destroy(&__sequence[i]);
+					}
+					__allocator.deallocate(__sequence, __old_capacity);
+					__sequence = tmp;
+				}
+				T*	tmp = __allocator.allocate(__capacity);
+				for (int i = 0; i + pp < __size; i++)
+					tmp[i] = __sequence[i + pp];
+				__sequence[pp] = val;
+				__size++;
+				for (int i = 0; i + pp < __size; i++)
+					__sequence[pp + i + 1] = tmp[i];
+				__allocator.deallocate(tmp, __capacity);
+				return iterator(__sequence + pp);
+			} catch (std::exception &ex) {
+				throw ft::LengthError("vector");
 			}
-			T*	tmp = __allocator.allocate(__capacity);
-			for (int i = 0; i + pp < __size; i++)
-				tmp[i] = __sequence[i + pp];
-			__sequence[pp] = val;
-			__size++;
-			for (int i = 0; i + pp < __size; i++)
-				__sequence[pp + i + 1] = tmp[i];
-			__allocator.deallocate(tmp, __capacity);
-			return iterator(__sequence + pp);
 		}
         void					insert( iterator position, size_type n, const value_type& val ) {
-			iterator	pos = this->begin();
-			size_type	pp = 0;
-			while (pos != position) {
-				pos++;
-				pp++;
-			}
-			if (__size + n > __capacity) {
-				size_type	__old_capacity = __capacity;
-				if (__size + n <= __capacity * 2)
-					__capacity *= 2;
-				else
-					__capacity = __size + n;
-				T*		tmp = __allocator.allocate(__capacity);
-				for (size_type i = 0; i < pp; i++) {
-					tmp[i] = __sequence[i];
-					__allocator.destroy(&__sequence[i]);
+			try {
+				iterator	pos = this->begin();
+				size_type	pp = 0;
+				while (pos != position) {
+					pos++;
+					pp++;
 				}
-				for (size_type i = 0; i < n; i++)
-					tmp[i + pp] = val;
-				__size += n;
-				for (size_type i = 0; i + pp + n < __size; i++) {
-					tmp[i + pp + n] = __sequence[i + pp];
+				if (__size + n > __capacity) {
+					size_type	__old_capacity = __capacity;
+					if (__size + n <= __capacity * 2)
+						__capacity *= 2;
+					else
+						__capacity = __size + n;
+					T*		tmp = __allocator.allocate(__capacity);
+					for (size_type i = 0; i < pp; i++) {
+						tmp[i] = __sequence[i];
+						__allocator.destroy(&__sequence[i]);
+					}
+					for (size_type i = 0; i < n; i++)
+						tmp[i + pp] = val;
+					__size += n;
+					for (size_type i = 0; i + pp + n < __size; i++) {
+						tmp[i + pp + n] = __sequence[i + pp];
+					}
+					__allocator.deallocate(__sequence, __old_capacity);
+					__sequence = tmp;
 				}
-				__allocator.deallocate(__sequence, __old_capacity);
-				__sequence = tmp;
-			}
-			else {
-				T*		tmp = __allocator.allocate(__capacity);
-				for (size_type i = 0; i < pp; i++) {
-					tmp[i] = __sequence[i];
-					__allocator.destroy(&__sequence[i]);
+				else {
+					T*		tmp = __allocator.allocate(__capacity);
+					for (size_type i = 0; i < pp; i++) {
+						tmp[i] = __sequence[i];
+						__allocator.destroy(&__sequence[i]);
+					}
+					for (size_type i = 0; i < n; i++)
+						tmp[i + pp] = val;
+					__size += n;
+					for (size_type i = 0; i + pp + n < __size; i++) {
+						tmp[i + pp + n] = __sequence[i + pp];
+					}
+					__allocator.deallocate(__sequence, __capacity);
+					__sequence = tmp;
 				}
-				for (size_type i = 0; i < n; i++)
-					tmp[i + pp] = val;
-				__size += n;
-				for (size_type i = 0; i + pp + n < __size; i++) {
-					tmp[i + pp + n] = __sequence[i + pp];
-				}
-				__allocator.deallocate(__sequence, __capacity);
-				__sequence = tmp;
+			} catch (std::exception &ex) {
+				throw ft::LengthError("vector");
 			}
 		}
         template < class InputIterator >
         void					insert( iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {
-			size_type	n = ft::distance(first, last);
-			iterator	pos = this->begin();
-			size_type	pp = 0;
-			while (pos != position) {
-				pos++;
-				pp++;
-			}
-			if (__size + n > __capacity) {
-				size_type	__old_capacity = __capacity;
-				if (__size + n <= __capacity * 2)
-					__capacity *= 2;
-				else
-					__capacity = __size + n;
-				T*		tmp = __allocator.allocate(__capacity);
-				for (size_type i = 0; i < pp; i++) {
-					tmp[i] = __sequence[i];
-					__allocator.destroy(&__sequence[i]);
+			try {
+				size_type	n = ft::distance(first, last);
+				iterator	pos = this->begin();
+				size_type	pp = 0;
+				while (pos != position) {
+					pos++;
+					pp++;
 				}
-				for (size_type i = 0; i < n; i++)
-					tmp[i + pp] = *(first + i);
-				__size += n;
-				for (size_type i = 0; i + pp + n < __size; i++) {
-					tmp[i + pp + n] = __sequence[i + pp];
+				if (__size + n > __capacity) {
+					size_type	__old_capacity = __capacity;
+					if (__size + n <= __capacity * 2)
+						__capacity *= 2;
+					else
+						__capacity = __size + n;
+					T*		tmp = __allocator.allocate(__capacity);
+					for (size_type i = 0; i < pp; i++) {
+						tmp[i] = __sequence[i];
+						__allocator.destroy(&__sequence[i]);
+					}
+					for (size_type i = 0; i < n; i++)
+						tmp[i + pp] = *(first + i);
+					__size += n;
+					for (size_type i = 0; i + pp + n < __size; i++) {
+						tmp[i + pp + n] = __sequence[i + pp];
+					}
+					__allocator.deallocate(__sequence, __old_capacity);
+					__sequence = tmp;
 				}
-				__allocator.deallocate(__sequence, __old_capacity);
-				__sequence = tmp;
-			}
-			else {
-				T*		tmp = __allocator.allocate(__capacity);
-				for (size_type i = 0; i < pp; i++) {
-					tmp[i] = __sequence[i];
-					__allocator.destroy(&__sequence[i]);
+				else {
+					T*		tmp = __allocator.allocate(__capacity);
+					for (size_type i = 0; i < pp; i++) {
+						tmp[i] = __sequence[i];
+						__allocator.destroy(&__sequence[i]);
+					}
+					for (size_type i = 0; i < n; i++)
+						tmp[i + pp] = *(first + i);
+					__size += n;
+					for (size_type i = 0; i + pp + n < __size; i++) {
+						tmp[i + pp + n] = __sequence[i + pp];
+					}
+					__allocator.deallocate(__sequence, __capacity);
+					__sequence = tmp;
 				}
-				for (size_type i = 0; i < n; i++)
-					tmp[i + pp] = *(first + i);
-				__size += n;
-				for (size_type i = 0; i + pp + n < __size; i++) {
-					tmp[i + pp + n] = __sequence[i + pp];
-				}
-				__allocator.deallocate(__sequence, __capacity);
-				__sequence = tmp;
+			} catch (std::exception &ex) {
+				throw ft::LengthError("vector");
 			}
 		}
 
