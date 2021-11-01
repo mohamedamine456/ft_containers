@@ -461,6 +461,8 @@ class ft::vector
 		}
 };
 
+
+
 template < class U, class Alloc >
 bool	operator== (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
 	if (lhs.size() != rhs.size())

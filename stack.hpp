@@ -14,14 +14,17 @@ class ft::stack
 		typedef std::size_t													size_type;
 
 		// constructor
-		explicit stack( const container_type& ctnr = container_type() ) {	// default constructor
+		explicit stack( const container_type& ctnr = container_type() ): __container() {	// default constructor
 			(void)ctnr;
-			__container = container_type();
 		}
 		// destructor
-		virtual ~stack(
+		virtual ~stack() {
 
-		);
+		}
+
+		const container_type container() const {
+			return this->__container;
+		}
 
 		// Member functions
 		// empty
@@ -36,10 +39,10 @@ class ft::stack
 
 		// top
 		value_type&			top() {
-			__container.back();
+			return __container.back();
 		}
 		const value_type&	top() const {
-			__container.back();
+			return __container.back();
 		}
 
 		// push
@@ -51,9 +54,38 @@ class ft::stack
 		void				pop() {
 			__container.pop_back();
 		}
+};
 
-		// should add relational operators
-		
-	};
+// relational operators
+
+template < class T, class Container >
+bool operator== (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs) {
+	return lhs.container() == rhs.container();
+}
+
+template < class T, class Container >
+bool operator!= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs) {
+	return lhs.container() != rhs.container();
+}
+
+template < class T, class Container >
+bool operator< (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs) {
+	return lhs.container() < rhs.container();
+}
+
+template < class T, class Container >
+bool operator<= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs) {
+	return lhs.container() <= rhs.container();
+}
+
+template < class T, class Container >
+bool operator> (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs) {
+	return lhs.container() > rhs.container();
+}
+
+template < class T, class Container >
+bool operator>= (const ft::stack<T, Container> &lhs, const ft::stack<T, Container> &rhs) {
+	return lhs.container() >= rhs.container();
+}
 
 #endif
