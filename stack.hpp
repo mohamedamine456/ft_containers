@@ -15,9 +15,11 @@ class ft::stack
 
 		// constructor
 		explicit stack( const container_type& ctnr = container_type() ) {	// default constructor
+			(void)ctnr;
+			__container = container_type();
 		}
 		// destructor
-		~stack(
+		virtual ~stack(
 
 		);
 
@@ -34,10 +36,10 @@ class ft::stack
 
 		// top
 		value_type&			top() {
-			
+			__container.back();
 		}
 		const value_type&	top() const {
-
+			__container.back();
 		}
 
 		// push
