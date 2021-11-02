@@ -14,8 +14,7 @@ class ft::stack
 		typedef std::size_t													size_type;
 
 		// constructor
-		explicit stack( const container_type& ctnr = container_type() ): __container() {	// default constructor
-			(void)ctnr;
+		explicit stack( const container_type& ctnr = container_type() ): __container(ctnr) {	// default constructor	
 		}
 		// destructor
 		virtual ~stack() {
