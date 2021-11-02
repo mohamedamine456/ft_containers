@@ -730,7 +730,7 @@ int main() {
     // }
     
     {
-         std::string str, ft_str;
+        std::string str, ft_str;
         /*
          * var to store the size and the capacity
          */
@@ -741,18 +741,17 @@ int main() {
          */
         bool cond;
 
-        std::vector<std::string> v(20, "string");
-        ft::vector<std::string> ft_v(20, "string");
-        ft::vector<std::string>::iterator valid_it;
+        std::vector<std::string> v;
+        ft::vector<std::string> v1(300, "string");
+        ft::vector<std::string> ft_v;
 
-        v.reserve(100);
-        ft_v.reserve(100);
-        valid_it = ft_v.begin();
-        v.insert(v.begin() + 15, 70, "hello");
-        ft_v.insert(ft_v.begin() + 15, 70, "hello");
+        // v.insert(v.end(), v1.begin(), v1.end());
+        ft_v.insert(ft_v.end(), v1.begin(), v1.end());
+        ft_v.begin()->length();
 
         str.clear();
         ft_str.clear();
+
         s = v.size();
         ft_s = ft_v.size();
         c = v.capacity();
@@ -761,8 +760,8 @@ int main() {
             str += v[i];
         for (size_t i = 0; i < ft_v.size(); ++i)
             ft_str += ft_v[i];
-        cond = (cond && (str == ft_str) && (s == ft_s) && (c == ft_c) && (&(*valid_it) == &(*ft_v.begin())));
-        std::cout << str << "\n" << ft_str << "\n" << s << "\n" << ft_s << "\n" << c << "\n" << ft_c << "\n" << *valid_it << ", " << *ft_v.begin() << ", " << &(*valid_it) << ", " << &(*ft_v.begin()) << "\n";
+        cond = (cond && (str == ft_str) && (s == ft_s) && (c == ft_c));
+        std::cout << str << "\n\n\n" << ft_str << "\n\n\n" << s << "\n\n\n" << ft_s << "\n\n\n" << c << "\n" << ft_c << "\n";
     }
 
     // system("leaks a.out");

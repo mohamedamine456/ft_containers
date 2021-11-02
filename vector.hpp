@@ -364,6 +364,7 @@ class ft::vector
         void					insert( iterator position, InputIterator first, InputIterator last,
 				typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {
 			try {
+				iterator it (first);
 				size_type	n = ft::distance(first, last);
 				iterator	pos = this->begin();
 				size_type	pp = 0;
@@ -383,10 +384,11 @@ class ft::vector
 						__allocator.destroy(&__sequence[i]);
 					}
 					for (size_type i = 0; i < n; i++)
-						tmp[i + pp] = *(first + i);
+						tmp[i + pp] = *it++;
 					__size += n;
-					for (size_type i = 0; i + pp + n < __size; i++) {
-						tmp[i + pp + n] = __sequence[i + pp];
+					for (size_type i = pp + n; i < __size; i++) {
+						tmp[i] = __sequence[i - n];
+						__allocator.destroy(&__sequence[i - n]);
 					}
 					__allocator.deallocate(__sequence, __old_capacity);
 					__sequence = tmp;
@@ -398,8 +400,8 @@ class ft::vector
 					}
 
 					for (size_type i = 0; i < n; i++) {
-						__sequence[pp + i] = *first;
-						first++;
+						__sequence[pp + i] = *it;
+						it++;
 					}
 					__size += n;
 				}
