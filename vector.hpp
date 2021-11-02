@@ -276,7 +276,6 @@ class ft::vector
         // (Modifiers) insert
         iterator				insert( iterator position, const value_type& val ) {
 			try {
-				iterator tmp_iter(position);
 				iterator	pos = this->begin();
 				size_type	pp = 0;
 				while (pos != position) {
@@ -284,11 +283,13 @@ class ft::vector
 					pp++;
 				}
 				if (__size == __capacity) {
-					// size_type	__old_capacity = __capacity;
+					size_type	__old_capacity = __capacity;
 					if (__capacity == 0)
 						__capacity += 1;
-					else
+					else if (__capacity + 1 < __capacity * 2)
 						__capacity *= 2;
+					else
+						__capacity += 1;
 					T*		tmp = __allocator.allocate(__capacity);
 					for (size_type i = 0; i < pp; i++) {
 						tmp[i] = __sequence[i];
@@ -300,19 +301,19 @@ class ft::vector
 						tmp[i] = __sequence[i];
 						__allocator.destroy(&__sequence[i]);
 					}
-					// __allocator.deallocate(__sequence, __old_capacity);
+					__allocator.deallocate(__sequence, __old_capacity);
 					__sequence = tmp;
 				}
 				else
 				{
-					for (size_type i = pp; i < __size; i++) {
-						__sequence[i + 1] = __sequence[i];
-						__allocator.destroy(&__sequence[i]);
+					for (size_type i = pp + 1; i < __size + 1; i++) {
+						__sequence[i] = __sequence[i - 1];
+						__allocator.destroy(&__sequence[i - 1]);
 					}
 					__sequence[pp] = val;
 					__size++;
 				}
-				return tmp_iter;
+				return iterator(__sequence + pp);
 			} catch (std::exception &ex) {
 				throw ft::LengthError("vector");
 			}
