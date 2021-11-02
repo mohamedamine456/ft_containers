@@ -346,19 +346,15 @@ class ft::vector
 					__sequence = tmp;
 				}
 				else {
-					T*		tmp = __allocator.allocate(__capacity);
-					for (size_type i = 0; i < pp; i++) {
-						tmp[i] = __sequence[i];
-						__allocator.destroy(&__sequence[i]);
+					for (size_type i = pp + n; i < __size + n; i++) {
+						__sequence[i] = __sequence[i - n];
+						__allocator.destroy(&__sequence[i - n]);
 					}
-					for (size_type i = 0; i < n; i++)
-						tmp[i + pp] = val;
+
+					for (size_type i = 0; i < n; i++) {
+						__sequence[pp + i] = val;
+					}
 					__size += n;
-					for (size_type i = 0; i + pp + n < __size; i++) {
-						tmp[i + pp + n] = __sequence[i + pp];
-					}
-					__allocator.deallocate(__sequence, __capacity);
-					__sequence = tmp;
 				}
 			} catch (std::exception &ex) {
 				throw ft::LengthError("vector");
@@ -396,19 +392,16 @@ class ft::vector
 					__sequence = tmp;
 				}
 				else {
-					T*		tmp = __allocator.allocate(__capacity);
-					for (size_type i = 0; i < pp; i++) {
-						tmp[i] = __sequence[i];
-						__allocator.destroy(&__sequence[i]);
+					for (size_type i = pp + n; i < __size + n; i++) {
+						__sequence[i] = __sequence[i - n];
+						__allocator.destroy(&__sequence[i - n]);
 					}
-					for (size_type i = 0; i < n; i++)
-						tmp[i + pp] = *(first + i);
+
+					for (size_type i = 0; i < n; i++) {
+						__sequence[pp + i] = *first;
+						first++;
+					}
 					__size += n;
-					for (size_type i = 0; i + pp + n < __size; i++) {
-						tmp[i + pp + n] = __sequence[i + pp];
-					}
-					__allocator.deallocate(__sequence, __capacity);
-					__sequence = tmp;
 				}
 			} catch (std::exception &ex) {
 				throw ft::LengthError("vector");
