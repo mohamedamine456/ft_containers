@@ -121,8 +121,7 @@ class ft::vector
 			return this->__size;
 		}
         size_type				max_size() const {
-			return std::numeric_limits<difference_type>::max();
-			// __allocator.max_size();
+			return __allocator.max_size();
 		}
         size_type				capacity() const {
 			return this->__capacity;
@@ -176,9 +175,13 @@ class ft::vector
 
         // (Element access) at
         reference				at ( size_type n ) {
+			if (n > __size)
+				throw ft::OutOfRange("vector");
 			return *(this->__sequence + n);
 		}
         const_reference			at ( size_type n ) const {
+			if (n > __size)
+				throw ft::OutOfRange("vector");
 			return *(this->__sequence + n);
 		}
 

@@ -169,12 +169,21 @@ namespace ft {
 		private:
 			const char	*error;
 		public:
-			LengthError(const char *err) : error(err) {}
-		virtual const char * what() const throw() {
-			return error;
-		}
+			LengthError( const char *err ) : error(err) {}
+			virtual const char * what() const throw() {
+				return error;
+			}
 	};
 
+	class OutOfRange: public std::exception {
+		private:
+			const char *error;
+		public:
+			OutOfRange( const char *err ) : error(err) {}
+			virtual const char * what() const throw () {
+				return error;
+			}
+	};
 }
 
 #endif

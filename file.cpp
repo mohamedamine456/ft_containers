@@ -692,41 +692,97 @@ int main() {
     //         std::cout << sec[i] << " ";
     //     std::cout << "|" << std::endl;
     // }
+    // {
+    //     ft::vector<int> v(3, 4);
+    //     ft::vector<int>::iterator it, it1;
+    //     it = v.begin();
+    //     it1 = v.begin() + 1;
+    //     /*----------------------------------*/
+    //     /*------------ ft::vector ---------*/
+    //     ft::vector<int> my_v(3, 4);
+    //     ft::vector<int>::iterator my_it, my_it1, tmp;
+    //     my_it = my_v.begin();
+    //     my_it1 = my_v.begin() + 1;
+    //     my_it += 1;
+    //     my_it -= 1;
+    //     ++my_it;
+    //     --my_it;
+    //     tmp = my_it++;
+    //     std::cout << "FT: " <<  &(*my_it) << ", " << &(*tmp) << ", " <<  &(*my_it) << ", " << &(*my_it1) << "\n";
+    // }
+    // {
+    //     std::vector<int> v(3, 4);
+    //     std::vector<int>::iterator it, it1;
+    //     it = v.begin();
+    //     it1 = v.begin() + 1;
+    //     /*----------------------------------*/
+    //     /*------------ ft::vector ---------*/
+    //     std::vector<int> my_v(3, 4);
+    //     std::vector<int>::iterator my_it, my_it1, tmp;
+    //     my_it = my_v.begin();
+    //     my_it1 = my_v.begin() + 1;
+    //     my_it += 1;
+    //     my_it -= 1;
+    //     ++my_it;
+    //     --my_it;
+    //     tmp = my_it++;
+    //     std::cout << "STD: " <<  &(*my_it) << ", " << &(*tmp) << ", " <<  &(*my_it) << ", " << &(*my_it1) << "\n";
+    // }
     {
-        ft::vector<int> v(3, 4);
-        ft::vector<int>::iterator it, it1;
-        it = v.begin();
-        it1 = v.begin() + 1;
-        /*----------------------------------*/
-        /*------------ ft::vector ---------*/
-        ft::vector<int> my_v(3, 4);
-        ft::vector<int>::iterator my_it, my_it1, tmp;
-        my_it = my_v.begin();
-        my_it1 = my_v.begin() + 1;
-        my_it += 1;
-        my_it -= 1;
-        ++my_it;
-        --my_it;
-        tmp = my_it++;
-        std::cout << "FT: " <<  &(*my_it) << ", " << &(*tmp) << ", " <<  &(*my_it) << ", " << &(*my_it1) << "\n";
-    }
-    {
-        std::vector<int> v(3, 4);
-        std::vector<int>::iterator it, it1;
-        it = v.begin();
-        it1 = v.begin() + 1;
-        /*----------------------------------*/
-        /*------------ ft::vector ---------*/
-        std::vector<int> my_v(3, 4);
-        std::vector<int>::iterator my_it, my_it1, tmp;
-        my_it = my_v.begin();
-        my_it1 = my_v.begin() + 1;
-        my_it += 1;
-        my_it -= 1;
-        ++my_it;
-        --my_it;
-        tmp = my_it++;
-        std::cout << "STD: " <<  &(*my_it) << ", " << &(*tmp) << ", " <<  &(*my_it) << ", " << &(*my_it1) << "\n";
+        {
+            time_t start, end, diff;
+            /*------------------ std::vectors ---------------------*/
+            std::vector<std::string> v1(1e6, "string2");
+            std::cout << v1.at(1e6 - 1) << "\n";
+            /*------------------ ft::vectors ---------------------*/
+            ft::vector<std::string> ft_v1(1e6, "string2");
+            std::cout << ft_v1.at(1e6 - 1) << "\n";
+        }
+        /*------------------ std::vectors ---------------------*/
+        std::vector<std::string> v1(10, "string2");
+        std::vector<char> const v2(10, '9');
+        /*------------------ std::vectors ---------------------*/
+        std::vector<std::string> ft_v1(10, "string2");
+        std::vector<char> const ft_v2(10, '9');
+        /*
+         * Strings to store the results
+         */
+        std::string s1, s2, ft_s1, ft_s2;
+        // bool to check if an exception is throwed
+        bool exce_throwed = false;
+
+        try
+        {
+            ft_v1.at(20);
+            std::cout << ft_v1.at(20) << "\n";
+        }
+        catch (std::out_of_range const &e)
+        {
+            std::cout << e.what() << std::cout << "\n";
+            (void)e;
+            exce_throwed = true;
+        }
+        for (size_t i = 0; i < v1.size(); ++i)
+        {
+            if (i == v1.size() - 1)
+                v1.at(i) = "other";
+            s1 += v1.at(i);
+            // std::cout << s1 << "\n";
+        }
+
+        for (size_t i = 0; i < ft_v1.size(); ++i)
+        {
+            if (i == ft_v1.size() - 1)
+                ft_v1.at(i) = "other";
+            ft_s1 += ft_v1.at(i);
+            // std::cout << ft_s1 << "\n";
+        }
+
+        for (size_t i = 0; i < v2.size(); ++i)
+            s2 += v2.at(i);
+        for (size_t i = 0; i < ft_v2.size(); ++i)
+            ft_s2 += ft_v2.at(i);
+        // std::cout << ft_s2 << "\n";
     }
     // system("leaks a.out");
     return 0;
