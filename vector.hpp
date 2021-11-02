@@ -448,11 +448,24 @@ class ft::vector
 
         // (Modifiers) swap
         void					swap( vector &vec ) {
-			vector<T> tmp = *this;
-			__allocator.deallocate(__sequence, __capacity);
-			*this = vec;
-			__allocator.deallocate(vec.__sequence, vec.__capacity);
-			vec = tmp;
+			try {
+				T*			__tmp__sequence = vec.__sequence;
+				size_type	__tmp_cap = vec.__capacity;
+				size_type	__tmp_size = vec.__size;
+				allocator_type __tmp_alloc = vec.__allocator;
+
+				vec.__sequence = this->__sequence;
+				vec.__capacity = this->__capacity;
+				vec.__size = this->__size;
+				vec.__allocator = this->__allocator;
+
+				this->__sequence = __tmp__sequence;
+				this->__capacity = __tmp_cap;
+				this->__size = __tmp_size;
+				this->__allocator = __tmp_alloc;
+			} catch (std::exception &ex) {
+				throw ft::LengthError("vector");
+			}
 		}
 
         // (Modifiers) clear
@@ -494,12 +507,17 @@ bool	operator<= (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs
 
 template < class U, class Alloc >
 bool	operator> (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
-	return !(lhs < rhs);
+	return !(lhs < rhs) && (lhs != rhs);
 }
 
 template < class U, class Alloc >
 bool	operator>= (const ft::vector<U, Alloc>& lhs, const ft::vector<U, Alloc>&rhs) {
 	return (lhs > rhs || lhs == rhs);;
+}
+
+template < class U, class Alloc >
+void	swap ( ft::vector<U, Alloc> &lhs, ft::vector<U, Alloc> &rhs) {
+	lhs.swap(rhs);
 }
 
 #endif
