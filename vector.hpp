@@ -155,13 +155,17 @@ class ft::vector
 
         // (capacity) reserve
         void					reserve( size_type n ) {
-			try {
-				if (n > __capacity) {
-					__capacity = n;
-					__sequence = __allocator.allocate(__capacity);
-				}
-			} catch (std::exception &ex) {
+			if (n > this->max_size())
 				throw ft::LengthError("vector");
+			if (n > __capacity) {
+				T*	tmp = __allocator.allocate(n);
+				for (size_type i = 0; i < __size; i++) {
+					tmp[i] = __sequence[i];
+					__allocator.destroy(&__sequence[i]);
+				}
+				__allocator.deallocate(__sequence, __capacity);
+				__capacity = n;
+				__sequence = tmp;
 			}
 		}
 
@@ -303,7 +307,7 @@ class ft::vector
 				{
 					for (size_type i = pp; i < __size; i++) {
 						__sequence[i + 1] = __sequence[i];
-						// __allocator.destroy(&__sequence[i]);
+						__allocator.destroy(&__sequence[i]);
 					}
 					__sequence[pp] = val;
 					__size++;
