@@ -286,10 +286,8 @@ class ft::vector
 					size_type	__old_capacity = __capacity;
 					if (__capacity == 0)
 						__capacity += 1;
-					else if (__capacity + 1 < __capacity * 2)
-						__capacity *= 2;
 					else
-						__capacity += 1;
+						__capacity *= 2;
 					T*		tmp = __allocator.allocate(__capacity);
 					for (size_type i = 0; i < pp; i++) {
 						tmp[i] = __sequence[i];
@@ -298,8 +296,8 @@ class ft::vector
 					tmp[pp] = val;
 					__size++;
 					for (size_type i = pp + 1; i < __size; i++) {
-						tmp[i] = __sequence[i];
-						__allocator.destroy(&__sequence[i]);
+						tmp[i] = __sequence[i - 1];
+						__allocator.destroy(&__sequence[i - 1]);
 					}
 					__allocator.deallocate(__sequence, __old_capacity);
 					__sequence = tmp;
@@ -340,8 +338,9 @@ class ft::vector
 					for (size_type i = 0; i < n; i++)
 						tmp[i + pp] = val;
 					__size += n;
-					for (size_type i = 0; i + pp + n < __size; i++) {
-						tmp[i + pp + n] = __sequence[i + pp];
+					for (size_type i = pp + n; i < __size; i++) {
+						tmp[i] = __sequence[i - n];
+						__allocator.destroy(&__sequence[i - n]);
 					}
 					__allocator.deallocate(__sequence, __old_capacity);
 					__sequence = tmp;
