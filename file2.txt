@@ -1,120 +1,96 @@
-string
-string
-string
-string
-string
-string
-string
-string
-string
-string
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-hello
-string
-string
-string
-string
-string
-string
-string
-string
-string
-string
+assign & at: 
+124 124 124 124 124 
+500 124 300 124 100 
+
+back: 
+12 11 10 9 8 7 6 5 4 3 2 1 0 
+
+begin & end: 
+100 200 300 400 500 600 700 800 900 1000 1100 1200 1300 1400 1500 
+
+size & capacity & max_size: 
+size of vec: 34
+capacity of vec: 64
+max_size of vec: 4611686018427387903
+
+clear & empty
+vec is empty: No
+vec is empty: Yes
+
+erase: 
+
+Before erase: 
+100 100 100 100 100 100 100 
+After erase: 
+100 100 100 100 
+front: 
+vec.front() was: 45
+vec.front() now is: 31
+
+get_allocator: 
+
+The Allocated Array contains: 
+1 2 3 4 5 6 7 
+The Array deallocated
+
+insert: 
+
+100 100 100 
+200 100 100 100 
+300 300 200 100 100 100 
+300 300 400 400 200 100 100 100 
+501 502 503 300 300 400 400 200 100 100 100 
+
+operator=: 
+
+first contains: 
+21 21 21 21 21 
+second contains: 
+45 45 45 
+first contains: 
+
+second contains: 
+21 21 21 21 21 
+
+operator[]: 
+
+42 84 126 168 210 252 294 336 378 420 
+420 378 336 294 252 210 168 126 84 42 
+
+pop_back & push_back: 
+
+Sum of the vector is: 113
+
+rbegin & rend: 
+
+5 4 3 2 1 
+1 2 3 4 5 
+
+reserve: 
+
+Capacity changed from: 0 to: 1
+Capacity changed from: 1 to: 2
+Capacity changed from: 2 to: 4
+Capacity changed from: 4 to: 8
+Capacity changed from: 8 to: 16
+Capacity changed from: 16 to: 32
+Capacity changed from: 32 to: 64
+Capacity changed from: 64 to: 128
+Using reserve: 
+Capacity changed from: 0 to: 100
+
+resize: 
+
+42 84 126 168 210 300 300 300 0 0 0 0 
+
+swap: 
+
+Before Swap: 
+100 100 100 100 100 
+400 400 400 400 400 400 400 
+After Swap: 
+400 400 400 400 400 400 400 
+100 100 100 100 100 
+5
+10
+5

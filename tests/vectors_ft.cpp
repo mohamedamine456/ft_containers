@@ -342,13 +342,13 @@ int main()
 		try {
 			ft::vector<int> vec(5, 1);
 			std::cout << vec.capacity() << std::endl;
-			// vec.push_back(14);
-			// std::cout << vec.capacity() << std::endl;
-			// ft::vector<int> vv(5, 1);
-			// ft::vector<int>::iterator it = vv.begin();
-			// ft::vector<int>::iterator tt = vv.end();
-			// ft::vector<int> voc(it, tt);
-			// std::cout << voc.capacity() << std::endl;
+			vec.push_back(14);
+			std::cout << vec.capacity() << std::endl;
+			ft::vector<int> vv(5, 1);
+			ft::vector<int>::iterator it = vv.begin();
+			ft::vector<int>::iterator tt = vv.end();
+			ft::vector<int> voc(it, tt);
+			std::cout << voc.capacity() << std::endl;
 
 		} catch(std::exception &ex) {
 			std::cout << ex.what();
