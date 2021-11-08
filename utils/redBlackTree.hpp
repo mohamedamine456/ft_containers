@@ -16,6 +16,10 @@ class RedBlackTree {
 
         }
 
+        RedBlackTree(T key, U value) {
+            
+        }
+
         RedBlackTree(RedBlackTree &rbt) {
             *this = rbt;
         }
