@@ -25,10 +25,10 @@ int main()
         std::cout << "sum of the stack: " << sum << std::endl;
     }
     {
-        ft::stack<int , ft::vector<int> > stk;
+        std::stack<int , std::vector<int> > stk;
         for (int i = 0; i < 14; i++)
             stk.push((i + 1) * 37);
-        ft::stack<int , ft::vector<int> > sec = stk;
+        std::stack<int , std::vector<int> > sec = stk;
 
         std::cout << (stk == sec ? "Equal" : "Different") << std::endl;
     }
