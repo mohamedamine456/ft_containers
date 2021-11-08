@@ -1,7 +1,7 @@
 #ifndef PAIR_HPP
 #define PAIR_HPP
 
-#include "namespace.hpp"
+#include "../namespace.hpp"
 
 template < class T1, class T2 >
 struct ft::pair

@@ -1,7 +1,7 @@
 #ifndef ITERATOR_HPP
 #define ITERATOR_HPP
 
-#include "namespace.hpp"
+#include "../namespace.hpp"
 
 // iterator class
 template < class Category, class T >
