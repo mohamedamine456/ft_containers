@@ -15,10 +15,48 @@ class RedBlackTree {
         RedBlackTree() {
 
         }
+
         RedBlackTree(RedBlackTree &rbt) {
             *this = rbt;
         }
-        
-}
+
+        ~RedBlackTree();
+
+        RedBlackTree &operator= (RedBlackTree &rbt) {
+            return *this;
+        }
+
+        void    insert(RedBlackTree *node) {
+
+        }
+
+        void    delete(RedBlackTree *node) {
+
+        }
+
+        void    delete(T key) {
+
+        }
+
+        RedBlackTree    *successor() {
+
+        }
+
+        RedBlackTree    *predecessor() {
+
+        }
+
+        RedBlackTree    *search(T key) {
+
+        }
+
+        RedBlackTree    *minimum() {
+
+        }
+
+        RedBlackTree    *maximum() {
+
+        }
+};
 
 #endif
