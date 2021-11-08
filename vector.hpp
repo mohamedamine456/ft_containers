@@ -6,7 +6,7 @@
 template < class T, class Allocator>
 class ft::vector
 {
-    private:
+    protected:
         T*																	__sequence;
         Allocator															__allocator;
         std::size_t															__size;

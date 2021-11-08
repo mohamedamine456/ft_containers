@@ -6,7 +6,7 @@
 template < class T, class Container >
 class ft::stack
 {
-	private:
+	protected:
 		Container															__container;
 	public:
 		typedef T															value_type;
