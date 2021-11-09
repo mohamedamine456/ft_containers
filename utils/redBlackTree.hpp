@@ -1,14 +1,13 @@
 #ifndef REDBLACKTREE_HPP
 #define REDBLACKTREE_HPP
 
-#include <iostream>
+#include "pair.hpp"
 
 template < class K, class V, class Compare = std::less<K> >
 class RedBlackTree {
     private:
         bool			red;
-        K				key;
-        V				value;
+		ft::pair<K, V>	key_value;
         RedBlackTree	*leftChild;
         RedBlackTree	*rightChild;
         RedBlackTree	*parent;
@@ -45,7 +44,7 @@ class RedBlackTree {
         }
 
 		void	rightRotation() {
-			
+			RedBlackTree	tmp1, tmp2;
 		}
 
 		void	leftRotation() {
@@ -53,26 +52,28 @@ class RedBlackTree {
 		}
 
         RedBlackTree	successor() {
+			RedBlackTree	tmp1 = *this;
 			RedBlackTree	tmp;
-			if (this->rightChild != NULL)
-				return this->rightChild->minimum();
-			tmp = this->parent;
+			if (tmp1.rightChild != NULL)
+				return tmp1.rightChild->minimum();
+			tmp = tmp1.parent;
 			while (tmp != NULL && *this == tmp.rightChild)
 			{
-				this = tmp;
+				tmp1 = tmp;
 				tmp = tmp.parent;
 			}
 			return tmp;
         }
 
         RedBlackTree	predecessor() {
+			RedBlackTree	tmp1 = *this;
 			RedBlackTree	tmp;
-			if (this->leftChild != NULL)
-				return this->leftChild->minimum();
-			tmp = this->parent;
+			if (tmp1.leftChild != NULL)
+				return tmp1.leftChild->minimum();
+			tmp = tmp1.parent;
 			while (tmp != NULL && *this == tmp.leftChild)
 			{
-				this = tmp;
+				tmp1 = tmp;
 				tmp = tmp.parent;
 			}
 			return tmp;
