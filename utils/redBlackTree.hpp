@@ -45,22 +45,40 @@ class RedBlackTree {
         }
 
 		void	rightRotation() {
-
+			
 		}
 
 		void	leftRotation() {
 				
 		}
 
-        RedBlackTree    *successor(K key) {
-
+        RedBlackTree	successor() {
+			RedBlackTree	tmp;
+			if (this->rightChild != NULL)
+				return this->rightChild->minimum();
+			tmp = this->parent;
+			while (tmp != NULL && *this == tmp.rightChild)
+			{
+				this = tmp;
+				tmp = tmp.parent;
+			}
+			return tmp;
         }
 
-        RedBlackTree    *predecessor(K key) {
-
+        RedBlackTree	predecessor() {
+			RedBlackTree	tmp;
+			if (this->leftChild != NULL)
+				return this->leftChild->minimum();
+			tmp = this->parent;
+			while (tmp != NULL && *this == tmp.leftChild)
+			{
+				this = tmp;
+				tmp = tmp.parent;
+			}
+			return tmp;
         }
 
-        RedBlackTree    *search(K key) {
+        RedBlackTree	search(K key) {
 			RedBlackTree tmp = *this;
 			while (tmp != NULL)
 			{
@@ -74,14 +92,14 @@ class RedBlackTree {
 			return tmp;
         }
 
-        RedBlackTree    *minimum() {
+        RedBlackTree	minimum() {
 			RedBlackTree	tmp = *this;
 			while (tmp->leftChild != NULL)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
-        RedBlackTree    *maximum() {
+        RedBlackTree	maximum() {
 			RedBlackTree	tmp = *this;
 			while (tmp->rightChild != NULL)
 				tmp = tmp->rightChild;
