@@ -32,7 +32,7 @@ class RedBlackTree {
         }
 
         void    insert(RedBlackTree *node) {
-
+			
         }
 
         void    delete(RedBlackTree *node) {
