@@ -95,6 +95,10 @@ namespace ft {
 	template < class Iter >
 	class reverse_iterator;
 
+	// bidirectional_iterator
+	template < class Category, class T >
+	class bidirectional_iterator;
+
 	// equal
 	template < class InputIterator1, class InputIterator2 >
 	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2);

@@ -14,11 +14,8 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         iterator ( T* x ) : __p(x) {}
         template < class U>
         iterator ( const iterator<ft::random_access_iterator_tag, U>& cp ) : __p(cp.base()) {}
-        typename ft::iterator_base<Category, T>::pointer base() const {
-            return __p;
-        }
         virtual ~iterator() {}
-        T*  base() {
+        T*  base() const {
             return this->__p;
         }
         iterator& operator= ( const iterator& cp ) {
@@ -118,6 +115,65 @@ typename ft::iterator<Category, T>::difference_type operator- (
     return fir.base() - sec.base();
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
+// bidirectional_iterator
+template < class Category, class T >
+class ft::bidirectional_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag, T>
+{
+    private:
+        T*  __p;
+    public:
+        bidirectional_iterator () {}
+        bidirectional_iterator ( T* x ) : __p(x) {}
+        template < class U>
+        bidirectional_iterator ( const bidirectional_iterator<ft::bidirectional_iterator_tag, U>& cp ) : __p(cp.base()) {}
+        virtual ~bidirectional_iterator() {}
+        T*  base() const {
+            return this->__p;
+        }
+        bidirectional_iterator& operator= ( const bidirectional_iterator& cp ) {
+            this->__p = cp.__p;
+            return *this;
+        } 
+        bidirectional_iterator& operator++ () {
+            ++__p;
+            return *this;
+        }
+        bidirectional_iterator operator++ ( int ) {
+            bidirectional_iterator tmp(*this);
+            ++__p;
+            return tmp;
+        }
+        bidirectional_iterator& operator-- () {
+            --__p;
+            return *this;
+        }
+        bidirectional_iterator operator-- ( int ) {
+            bidirectional_iterator tmp(*this);
+            --__p;
+            return tmp;
+        }
+        typename ft::iterator_base<Category, T>::reference operator*() const {
+            return *__p;
+        }
+        typename ft::iterator_base<Category, T>::pointer operator-> () const {
+            return __p;
+        }
+};
+
+template< class Category, class T>
+bool    operator== (ft::bidirectional_iterator<Category, T> fir, ft::bidirectional_iterator<Category, T> sec) {
+    return fir.base() == sec.base();
+}
+
+template< class Category, class T>
+bool    operator!= (ft::bidirectional_iterator<Category, T> fir, ft::bidirectional_iterator<Category, T> sec) {
+    return fir.base() != sec.base();
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
 // reverse_iterator class
 template < class Iter >
 class ft::reverse_iterator: public ft::iterator_base<typename ft::iterator_traits<Iter>::iterator_category,
@@ -186,7 +242,6 @@ class ft::reverse_iterator: public ft::iterator_base<typename ft::iterator_trait
         }
 };
 
-
 // relational operators for reverse_iterator
 template < class Iterator >
 bool operator== ( const ft::reverse_iterator<Iterator>& lhs, const ft::reverse_iterator<Iterator>& rhs ) {
@@ -232,6 +287,8 @@ typename ft::reverse_iterator<Iterator>::difference_type operator- (
         return static_cast<typename ft::reverse_iterator<Iterator>::difference_type>(rhs.base() - lhs.base());
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
 // back_insert_iterator
 template < class Container >
 class ft::back_insert_iterator: public ft::iterator_base<ft::output_iterator_tag, void, void, void, void>
@@ -264,6 +321,8 @@ ft::back_insert_iterator< Container > ft::back_inserter (Container &c)
     return ft::back_insert_iterator<Container>(c);
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
 // front_insert_iterator
 template < class Container >
 class ft::front_insert_iterator: public ft::iterator_base<ft::output_iterator_tag, void, void, void, void>
@@ -294,6 +353,8 @@ template < class Container >
 ft::front_insert_iterator< Container > ft::front_inserter (Container &c) {
     return front_insert_iterator<Container>(c);
 }
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 // insert_iterator
 template < class Container >
@@ -327,8 +388,9 @@ ft::insert_iterator< Container > ft::inserter (Container &c, typename Container:
     return insert_iterator<Container>(c, iter);
 }
 
-// advance function
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
+// advance function
 template < class It >
 void    _advance(It &inputIterator,
     typename ft::iterator_traits<It>::difference_type n,
@@ -369,6 +431,8 @@ void	ft::advance(InputIterator &inputIterator, Distance n)
 	_advance(inputIterator, (typename ft::iterator_traits<InputIterator>::difference_type)(n) , typename ft::iterator_traits<InputIterator>::iterator_category());
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
 // distance function
 template < class InputIterator >
 typename ft::iterator_traits<InputIterator>::difference_type	_distance(InputIterator first, InputIterator last, ft::input_iterator_tag)
@@ -394,6 +458,8 @@ typename ft::iterator_traits<InputIterator>::difference_type	ft::distance(InputI
 	return _distance(first, last, typename ft::iterator_traits<InputIterator>::iterator_category());
 }
 
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+
 // equal
 template < class InputIterator1, class InputIterator2 >
 bool ft::equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2)
@@ -418,6 +484,8 @@ bool ft::equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 firs
     }
     return true;	
 }
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
 // lexicographical_compare
 template < class InputIterator1, class InputIterator2 >
