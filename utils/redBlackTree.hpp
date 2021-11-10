@@ -13,7 +13,7 @@ struct Node
 	Node<K, V>		*parent;
 };
 
-template < class K, class V, class Compare = std::less<K> >
+template < class K, class V>
 class RedBlackTree {
     private:
 		Node<K, V> *root;
@@ -34,6 +34,7 @@ class RedBlackTree {
         ~RedBlackTree();
 
         RedBlackTree &operator= (RedBlackTree &rbt) {
+			this->root = rbt.root;
             return *this;
         }
 
