@@ -3,14 +3,20 @@
 
 #include "pair.hpp"
 
+template < class K, class V >
+struct Node
+{
+	bool			red;
+	ft::pair<K, V>	data;
+	Node<K, V>		*leftChild;
+	Node<K, V>		*rightChild;
+	Node<K, V>		*parent;
+};
+
 template < class K, class V, class Compare = std::less<K> >
 class RedBlackTree {
     private:
-        bool			red;
-		ft::pair<K, V>	key_value;
-        RedBlackTree	*leftChild;
-        RedBlackTree	*rightChild;
-        RedBlackTree	*parent;
+		Node<K, V> *root;
 
     public:
         RedBlackTree() {
@@ -31,77 +37,77 @@ class RedBlackTree {
             return *this;
         }
 
-        void    insert(RedBlackTree *node) {
+        void    insertNode(Node<K, V> *node) {
 			
         }
 
-        void    delete(RedBlackTree *node) {
+        void    deleteNode(Node<K, V> *node) {
 
         }
 
-        void    delete(T key) {
+        void    deleteNode(K key) {
 
         }
 
 		void	rightRotation() {
-			RedBlackTree	tmp1, tmp2;
+
 		}
 
 		void	leftRotation() {
 				
 		}
 
-        RedBlackTree	successor() {
-			RedBlackTree	tmp1 = *this;
-			RedBlackTree	tmp;
-			if (tmp1.rightChild != NULL)
-				return tmp1.rightChild->minimum();
-			tmp = tmp1.parent;
-			while (tmp != NULL && *this == tmp.rightChild)
+        Node<K, V>	*successor(Node<K, V> *node) {
+			Node<K, V>	*tmp = node;
+			Node<K, V>	*tmp1;
+			if (tmp->rightChild != NULL)
+				return this->minimum(tmp->rightChild);
+			tmp1 = tmp->parent;
+			while (tmp1 != NULL && tmp == tmp1->rightChild)
 			{
-				tmp1 = tmp;
-				tmp = tmp.parent;
+				tmp = tmp1;
+				tmp1 = tmp1->parent;
 			}
-			return tmp;
+			return tmp1;
         }
 
-        RedBlackTree	predecessor() {
-			RedBlackTree	tmp1 = *this;
-			RedBlackTree	tmp;
-			if (tmp1.leftChild != NULL)
-				return tmp1.leftChild->minimum();
-			tmp = tmp1.parent;
-			while (tmp != NULL && *this == tmp.leftChild)
+        Node<K, V>	*predecessor(Node<K, V> *node) {
+			Node<K, V>	*tmp = node;
+			Node<K, V>	*tmp1;
+			if (tmp->leftChild != NULL)
+				return this->minimum(tmp->leftChild);
+			tmp1 = tmp->parent;
+			while (tmp1 != NULL && tmp == tmp1->leftChild)
 			{
-				tmp1 = tmp;
-				tmp = tmp.parent;
+				tmp = tmp1;
+				tmp1 = tmp1->parent;
 			}
-			return tmp;
+			return tmp1;
         }
 
-        RedBlackTree	search(K key) {
-			RedBlackTree tmp = *this;
+        Node<K, V>	*search(Node<K, V> *node, K key) {
+			Node<K, V>	*tmp = node;
 			while (tmp != NULL)
 			{
-				if (tmp.key == key)
+				if (tmp->data.key == key)
 					break ;
-				else if (tmp.key > key)
-					tmp = tmp.leftChild;
+				else if (tmp->data.key > key)
+					tmp = tmp->leftChild;
 				else
-					tmp = tmp.rightChild;
+					tmp = tmp->rightChild;
 			}
 			return tmp;
         }
 
-        RedBlackTree	minimum() {
-			RedBlackTree	tmp = *this;
+        Node<K, V>	*minimum(Node<K, V> *node) {
+			Node<K, V>	*tmp = node;
 			while (tmp->leftChild != NULL)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
-        RedBlackTree	maximum() {
-			RedBlackTree	tmp = *this;
+        Node<K, V>	*maximum(Node<K, V> *node) {
+			Node<K, V>	*tmp = node;
 			while (tmp->rightChild != NULL)
 				tmp = tmp->rightChild;
 			return tmp;
