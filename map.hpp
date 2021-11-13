@@ -2,6 +2,7 @@
 #define MAP_HPP
 
 #include "namespace.hpp"
+#include "utils/redBlackTree.hpp"
 
 template < class Key, class T, class Compare, class Allocator >
 class ft::map
@@ -11,6 +12,7 @@ class ft::map
 		
 		Allocator															__allocator;
 		size_t																__size;
+        RedBlackTree                                                        __rbtree;
     public:
         typedef Key															key_type;
         typedef T															mapped_type;
