@@ -166,7 +166,6 @@ class RedBlackTree {
 						rightRotation(tempS);
 						tempS = node->parent->rightChild;
 					}
-					tempS->red = 
 				}
 			}
         }
