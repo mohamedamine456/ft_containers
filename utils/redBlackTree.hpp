@@ -21,7 +21,7 @@ class RedBlackTree {
 
     public:
         RedBlackTree() {
-
+			this->root = nullptr;
         }
 
         RedBlackTree(K key, V value) {
@@ -32,7 +32,7 @@ class RedBlackTree {
             *this = rbt;
         }
 
-        ~RedBlackTree();
+        ~RedBlackTree() {}
 
         RedBlackTree &operator= (RedBlackTree &rbt) {
 			this->root = rbt.root;
@@ -71,7 +71,7 @@ class RedBlackTree {
 				if (node->parent == node->parent->parent->rightChild)
 				{
 					tmpU = node->parent->parent->leftChild;
-					if (tmpU.red == true) {
+					if (tmpU->red == true) {
 						tmpU->red = false;
 						node->parent->red = false;
 						node->parent->parent->red = true;
@@ -81,7 +81,7 @@ class RedBlackTree {
 						node = node->parent;
 						rightRotation(node);
 					}
-					node->parent.red = false;
+					node->parent->red = false;
 					node->parent->parent->red = true;
 					leftRotation(node->parent->parent);
 				}
@@ -97,7 +97,7 @@ class RedBlackTree {
 						node = node->parent;
 						leftRotation(node);
 					}
-					node->parent.red = false;
+					node->parent->red = false;
 					node->parent->parent->red = true;
 					rightRotation(node->parent->parent);
 				}
@@ -127,14 +127,14 @@ class RedBlackTree {
 					tmp = tmp->leftChild;
 					__alloc.destroy(tmp1);
 					__alloc.deallocate(tmp1);
-					tmp1 = nullptr
+					tmp1 = nullptr;
 				}
 				else if (tmp->rightChild == nullptr) {
 					tmp1 = tmp;
 					tmp = tmp->rightChild;
 					__alloc.destroy(tmp1);
 					__alloc.deallocate(tmp1);
-					tmp1 = nullptr
+					tmp1 = nullptr;
 				}
 				else {
 					tmp1 = minimum(tmp->rightChild);
@@ -145,7 +145,7 @@ class RedBlackTree {
 		}
 
         void    deleteNode(Node<K, V> *node) {
-			Node *tmpS;
+			Node<K, V> *tmpS;
 			BSTDelete(this->root, node->data.first);
 			while (node != this->root && node->red == false) {
 				if (node == node->parent->leftChild) {
@@ -181,7 +181,7 @@ class RedBlackTree {
 						tmpS = node->parent->leftChild;
 					}
 					if (tmpS->rightChild->red == false && tmpS->leftChild->red == false) {
-						tempS->red = true;
+						tmpS->red = true;
 						node = node->parent;
 					}
 					else {
