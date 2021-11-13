@@ -72,23 +72,23 @@ class RedBlackTree {
 				{
 					tmpU = node->parent->parent->leftChild;
 					if (tmpU.red == true) {
-						tmpU.red = false;
+						tmpU->red = false;
 						node->parent->red = false;
 						node->parent->parent->red = true;
 						node = node->parent->parent;
 					}
 					else if (node == node->parent->leftChild) {
 						node = node->parent;
-						leftRotation(node);
+						rightRotation(node);
 					}
 					node->parent.red = false;
 					node->parent->parent->red = true;
-					rightRotation(node->parent->parent);
+					leftRotation(node->parent->parent);
 				}
 				else {
 					tmpU = node->parent->parent->rightChild;
-					if (tmpU.red == true) {
-						tmpU.red = false;
+					if (tmpU->red == true) {
+						tmpU->red = false;
 						node->parent->red = false;
 						node->parent->parent->red = true;
 						node = node->parent->parent;
@@ -175,12 +175,42 @@ class RedBlackTree {
 			BSTDelete(this->root, key);
         }
 
-		void	rightRotation() {
+		void	rightRotation(Node<K, V> *node) {
+			Node<K, V>	*tmp = node->leftChild;
 
+			node->leftChild = tmp->rightChild;
+			if (tmp->rightChild != nullptr) {
+				tmp->rightChild->parent = node;
+			}
+			tmp->parent = node->parent;
+			if (node->parent == nullptr) {
+				this->root = tmp;
+			} else if (node == node->parent->rightChild) {
+				node->parent->rightChild = tmp;
+			} else {
+				node->parent->leftChild = tmp;
+			}
+			tmp->rightChild = node;
+			node->parent = tmp;
 		}
 
-		void	leftRotation() {
-				
+		void	leftRotation(Node<K, V> *node) {
+			Node<K, V> *tmp = node->rightChild;
+
+			node->rightChild = tmp->leftChild;
+			if (tmp->leftChild != nullptr) {
+				tmp->leftChild->parent = node;
+			}
+			tmp->parent = node->parent;
+			if (node->parent == nullptr) {
+				this->root = tmp;
+			} else if (node == node->parent->leftChild) {
+				node->parent->leftChild = tmp;
+			} else {
+				node->parent->rightChild = tmp;
+			}
+			tmp->leftChild = node;
+			node->parent = tmp;
 		}
 
         Node<K, V>	*successor(Node<K, V> *node) {
