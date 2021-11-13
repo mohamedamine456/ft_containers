@@ -147,27 +147,59 @@ class RedBlackTree {
         void    deleteNode(Node<K, V> *node) {
 			Node *tmpS;
 			BSTDelete(this->root, node->data.first);
-			whie (node != this->root && node->red == false) {
+			while (node != this->root && node->red == false) {
 				if (node == node->parent->leftChild) {
 					tmpS = node->parent->righChild;
 					if (tmpS->red == true) {
-						tmpS.red = false;
+						tmpS->red = false;
 						node->parent->red = true;
 						leftRotation(node->parent);
-						tmpS = node.parent.rightChild;
+						tmpS = node->parent->rightChild;
 					}
 					if (tmpS->leftChild->red == false && tmpS->rightChild->red == false) {
 						tmpS->red = true;
 						node = node->parent;
+					} else { 
+						if (tmpS->rightChild->red == false) {
+							tmpS->leftChild->red = false;
+							tmpS->red = true;
+							rightRotation(tmpS);
+							tmpS = node->parent->rightChild;
+						}
+						tmpS->red = node->parent->red;
+						node->parent->red = false;
+						node->rightChild->red = false;
+						leftRotation(node->parent);
+						node = this->root;
 					}
-					else if (tmpS->rightChild->red == false) {
-						tempS->leftChild->red = false;
-						tempS.red = true;
-						rightRotation(tempS);
-						tempS = node->parent->rightChild;
+				} else {
+					tmpS = node->parent->leftChild;
+					if (tmpS->red == true) {
+						tmpS->red = false;
+						node->parent->red = true;
+						rightRotation(node->parent);
+						tmpS = node->parent->leftChild;
+					}
+					if (tmpS->rightChild->red == false && tmpS->leftChild->red == false) {
+						tempS->red = true;
+						node = node->parent;
+					}
+					else {
+						if (tmpS->leftChild->red == false) {
+							tmpS->rightChild->red = false;
+							tmpS->red = true;
+							leftRotation(node->parent);
+							tmpS = node->parent->leftChild;
+						}
+						tmpS->red = node->parent->red;
+						node->parent->red = false;
+						node->leftChild->red = false;
+						rightRotation(node->paprent);
+						node = this->root;
 					}
 				}
 			}
+			node->red = false;
         }
 
         void    deleteNode(K key) {
