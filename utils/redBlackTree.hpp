@@ -66,7 +66,7 @@ class RedBlackTree {
 			Node<K, V>	*tmp = this->root;
 			Node<K, V>	*tmpU;
 
-			while (node->parent->red == true)
+			while (node->parent && node->parent->red == true)
 			{
 				if (node->parent == node->parent->parent->rightChild)
 				{
@@ -105,12 +105,12 @@ class RedBlackTree {
 			this->root->red = false;
         }
 
-		void	BSTDelete(Node<K,V> *node, K key) {
+		Node<K,V>	*BSTDelete(Node<K,V> *node, K key) {
 			Node<K, V>	*tmp = node;
 			Node<K, V>	*tmp1;
 
 			if (tmp == nullptr)
-				return ;
+				return node;
 			else if (key < tmp->data.first)
 				BSTDelete(tmp->leftChild, key);
 			else if (key > tmp->data.first)
@@ -119,29 +119,30 @@ class RedBlackTree {
 			{
 				if (tmp->leftChild == nullptr && tmp->rightChild == nullptr) {
 					__alloc.destroy(tmp);
-					__alloc.deallocate(tmp);
+					__alloc.deallocate(tmp, 1);
 					tmp = nullptr;
 				}
 				else if (tmp->leftChild == nullptr) {
 					tmp1 = tmp;
 					tmp = tmp->leftChild;
 					__alloc.destroy(tmp1);
-					__alloc.deallocate(tmp1);
+					__alloc.deallocate(tmp1, 1);
 					tmp1 = nullptr;
 				}
 				else if (tmp->rightChild == nullptr) {
 					tmp1 = tmp;
 					tmp = tmp->rightChild;
 					__alloc.destroy(tmp1);
-					__alloc.deallocate(tmp1);
+					__alloc.deallocate(tmp1, 1);
 					tmp1 = nullptr;
 				}
 				else {
 					tmp1 = minimum(tmp->rightChild);
 					tmp->data = tmp1->data;
-					tmp->rightChild = BSTDelete(tmp->rightChild, tmp1->data.key);
+					tmp->rightChild = BSTDelete(tmp->rightChild, tmp1->data.first);
 				}
-			}	
+			}
+			return node;
 		}
 
         void    deleteNode(Node<K, V> *node) {
@@ -149,7 +150,7 @@ class RedBlackTree {
 			BSTDelete(this->root, node->data.first);
 			while (node != this->root && node->red == false) {
 				if (node == node->parent->leftChild) {
-					tmpS = node->parent->righChild;
+					tmpS = node->parent->rightChild;
 					if (tmpS->red == true) {
 						tmpS->red = false;
 						node->parent->red = true;
@@ -194,7 +195,7 @@ class RedBlackTree {
 						tmpS->red = node->parent->red;
 						node->parent->red = false;
 						node->leftChild->red = false;
-						rightRotation(node->paprent);
+						rightRotation(node->parent);
 						node = this->root;
 					}
 				}
