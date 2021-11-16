@@ -39,6 +39,10 @@ class RedBlackTree {
             return *this;
         }
 
+		Node<K, V> *getRoot() const {
+			return this->root;
+		}
+
 		void	BSTInsertion(Node<K, V> *node) {
 			Node<K, V>	*tmp;
 			Node<K, V>	*tmp2;
@@ -71,7 +75,7 @@ class RedBlackTree {
 				if (node->parent == node->parent->parent->rightChild)
 				{
 					tmpU = node->parent->parent->leftChild;
-					if (tmpU->red == true) {
+					if (tmpU && tmpU->red == true) {
 						tmpU->red = false;
 						node->parent->red = false;
 						node->parent->parent->red = true;
@@ -79,11 +83,15 @@ class RedBlackTree {
 					}
 					else if (node == node->parent->leftChild) {
 						node = node->parent;
-						rightRotation(node);
+						leftRotation(node);
 					}
-					node->parent->red = false;
-					node->parent->parent->red = true;
-					leftRotation(node->parent->parent);
+					if (node->parent) {
+							node->parent->red = false;
+						if (node->parent->parent) {
+							node->parent->parent->red = true;
+							rightRotation(node->parent->parent);
+						}
+					}
 				}
 				else {
 					tmpU = node->parent->parent->rightChild;
@@ -95,11 +103,15 @@ class RedBlackTree {
 					}
 					else if (node == node->parent->rightChild) {
 						node = node->parent;
-						leftRotation(node);
+						rightRotation(node);
 					}
-					node->parent->red = false;
-					node->parent->parent->red = true;
-					rightRotation(node->parent->parent);
+					if (node->parent) {
+							node->parent->red = false;
+						if (node->parent->parent) {
+							node->parent->parent->red = true;
+							leftRotation(node->parent->parent);
+						}
+					}
 				}
 			}
 			this->root->red = false;
@@ -263,7 +275,7 @@ class RedBlackTree {
 			Node<K, V>	*tmp = node;
 			Node<K, V>	*tmp1;
 			if (tmp->leftChild != NULL)
-				return this->minimum(tmp->leftChild);
+				return this->maximum(tmp->leftChild);
 			tmp1 = tmp->parent;
 			while (tmp1 != NULL && tmp == tmp1->leftChild)
 			{
@@ -300,6 +312,19 @@ class RedBlackTree {
 				tmp = tmp->rightChild;
 			return tmp;
         }
+		void	printRBT() {
+			Node<K, V>	*min = minimum(this->root);
+			while (min != nullptr) {
+				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
+				min = successor(min);
+			}
+			std::cout << "\n";
+			min = maximum(this->root);
+			while (min != nullptr) {
+				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
+				min = predecessor(min);
+			}
+		}
 };
 
 #endif
