@@ -67,6 +67,38 @@ class RedBlackTree {
 			else
 				tmp2->rightChild = node;
 		}
+
+		void	rotate(Node<K, V>	*node) {
+			if (node == node->parent->leftChild) {
+				if (node->parent == node->parent->parent->leftChild) {
+					rightRotation(node->parent->parent);
+					node->red = true;
+					node->parent->red = false;
+					if (node->parent->rightChild)
+						node->parent->rightChild->red = true;
+					return ;
+				}
+				leftRotation(node->parent->parent);
+				node->red = false;
+				node->rightChild->red = true;
+				node->leftChild->red = true;
+			}
+			else {
+				if (node->parent == node->parent->parent->rightChild) {
+					leftRotation(node->parent->parent);
+					node->red = true;
+					node->parent->red = false;
+					if (node->parent->leftChild)
+						node->parent->leftChild->red = true;
+					return ;
+				}
+				leftRotation(node->parent->parent);
+				rightRotation(node->parent->parent);
+				node->red = false;
+				node->rightChild->red = true;
+				node->leftChild->red = true;
+			}
+		}
 		
         void    insertNode(Node<K, V> *node) {
 
@@ -81,42 +113,24 @@ class RedBlackTree {
 				if (node->parent == node->parent->parent->rightChild)
 				{
 					tmpU = node->parent->parent->leftChild;
-					if (tmpU && tmpU->red == true) {
+					if (tmpU == nullptr || tmpU->red == false) {
+						rotate(node);	 
+					} else if (tmpU != nullptr) {
 						tmpU->red = false;
-						node->parent->red = false;
 						node->parent->parent->red = true;
+						node->parent->red = false;
 						node = node->parent->parent;
-					}
-					else if (node == node->parent->leftChild) {
-						node = node->parent;
-						rightRotation(node);
-					}
-					if (node->parent) {
-							node->parent->red = false;
-						if (node->parent->parent) {
-							node->parent->parent->red = true;
-							leftRotation(node->parent->parent);
-						}
 					}
 				}
 				else {
 					tmpU = node->parent->parent->rightChild;
-					if (tmpU->red == true) {
+					if (tmpU == nullptr || tmpU->red == false) {
+						rotate(node);
+					} else if (tmpU != nullptr) {
 						tmpU->red = false;
-						node->parent->red = false;
 						node->parent->parent->red = true;
+						node->parent->red = false;
 						node = node->parent->parent;
-					}
-					else if (node == node->parent->rightChild) {
-						node = node->parent;
-						leftRotation(node);
-					}
-					if (node->parent) {
-							node->parent->red = false;
-						if (node->parent->parent) {
-							node->parent->parent->red = true;
-							rightRotation(node->parent->parent);
-						}
 					}
 				}
 			}
@@ -226,41 +240,51 @@ class RedBlackTree {
         }
 
 		void	rightRotation(Node<K, V> *node) {
-			Node<K, V>	*tmp = node->leftChild;
+			Node<K, V> *tmp = node->leftChild;
 
 			node->leftChild = tmp->rightChild;
-			if (tmp->rightChild != nullptr) {
-				tmp->rightChild->parent = node;
+			if (node->leftChild != nullptr) {
+				node->leftChild->parent = node;
 			}
-			tmp->parent = node->parent;
 			if (node->parent == nullptr) {
 				this->root = tmp;
-			} else if (node == node->parent->rightChild) {
-				node->parent->rightChild = tmp;
-			} else {
-				node->parent->leftChild = tmp;
+				tmp->parent = nullptr;
 			}
-			tmp->rightChild = node;
-			node->parent = tmp;
+			else {
+				tmp->parent = node->parent;
+				if (node == node->parent->rightChild) {
+					tmp->parent->rightChild = tmp;
+				}
+				else {
+					tmp->parent->leftChild = tmp;
+				}
+				tmp->rightChild = node;
+				node->parent = tmp;
+			}
 		}
 
 		void	leftRotation(Node<K, V> *node) {
 			Node<K, V> *tmp = node->rightChild;
 
 			node->rightChild = tmp->leftChild;
-			if (tmp->leftChild != nullptr) {
-				tmp->leftChild->parent = node;
+			if (node->rightChild != nullptr) {
+				node->rightChild->parent = node;
 			}
-			tmp->parent = node->parent;
 			if (node->parent == nullptr) {
 				this->root = tmp;
-			} else if (node == node->parent->leftChild) {
-				node->parent->leftChild = tmp;
-			} else {
-				node->parent->rightChild = tmp;
+				tmp->parent = nullptr;
 			}
-			tmp->leftChild = node;
-			node->parent = tmp;
+			else {
+				tmp->parent = node->parent;
+				if (node == node->parent->leftChild) {
+					tmp->parent->leftChild = tmp;
+				}
+				else {
+					tmp->parent->rightChild = tmp;
+				}
+				tmp->leftChild = node;
+				node->parent = tmp;
+			}
 		}
 
         Node<K, V>	*successor(Node<K, V> *node) {
@@ -337,7 +361,11 @@ class RedBlackTree {
 		////////////////////////////////////////////////
 
 		void	correctViolation(Node<K, V> *node) {
-			
+			if (node == node->parent->leftChild) {
+				if (node->parent->parent->rightChild == nullptr || node->parent->parent->rightChild->red == false) {
+
+				}
+			}
 		}
 
 		void	checkColor(Node<K, V> *node) {
