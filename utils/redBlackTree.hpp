@@ -13,15 +13,18 @@ struct Node
 	Node<K, V>		*parent;
 };
 
-template < class K, class V, class Allocator = std::allocator<Node<K, V> > >
+template < class K, class V, class Allocator = std::allocator<Node<K, V> >, class Compare = std::less<K> >
 class RedBlackTree {
     private:
 		Allocator	__alloc;
+		size_t		size;
 		Node<K, V> *root;
+		Compare comp;
 
     public:
         RedBlackTree() {
 			this->root = nullptr;
+			size = 0;
         }
 
         RedBlackTree(K key, V value) {
@@ -64,12 +67,15 @@ class RedBlackTree {
 			else
 				tmp2->rightChild = node;
 		}
-
+		
         void    insertNode(Node<K, V> *node) {
+
 			BSTInsertion(node);
 			Node<K, V>	*tmp = this->root;
 			Node<K, V>	*tmpU;
 
+			if (node == this->root)
+				return;
 			while (node->parent && node->parent->red == true)
 			{
 				if (node->parent == node->parent->parent->rightChild)
@@ -83,13 +89,13 @@ class RedBlackTree {
 					}
 					else if (node == node->parent->leftChild) {
 						node = node->parent;
-						leftRotation(node);
+						rightRotation(node);
 					}
 					if (node->parent) {
 							node->parent->red = false;
 						if (node->parent->parent) {
 							node->parent->parent->red = true;
-							rightRotation(node->parent->parent);
+							leftRotation(node->parent->parent);
 						}
 					}
 				}
@@ -103,13 +109,13 @@ class RedBlackTree {
 					}
 					else if (node == node->parent->rightChild) {
 						node = node->parent;
-						rightRotation(node);
+						leftRotation(node);
 					}
 					if (node->parent) {
 							node->parent->red = false;
 						if (node->parent->parent) {
 							node->parent->parent->red = true;
-							leftRotation(node->parent->parent);
+							rightRotation(node->parent->parent);
 						}
 					}
 				}
@@ -323,6 +329,49 @@ class RedBlackTree {
 			while (min != nullptr) {
 				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
 				min = predecessor(min);
+			}
+		}
+
+
+
+		////////////////////////////////////////////////
+
+		void	correctViolation(Node<K, V> *node) {
+			
+		}
+
+		void	checkColor(Node<K, V> *node) {
+			if (node == this->root)
+				return;
+			if (node->red == true && node->parent->red == true) {
+				correctViolation(node);
+			}
+			checkColor(node->parent);
+		}
+
+		void	insertNewNode(Node<K, V> *parent, Node<K, V> *node) {
+			if (comp(parent->data.first, node->data.first) > 0) {
+				if (parent->rightChild == nullptr) {
+					parent->rightChild = node;
+					node->parent = parent;
+				}
+				return insertNewNode(parent->rightChild, node);
+			}
+			if (parent->leftChild == nullptr) {
+				parent->leftChild = node;
+				node->parent = parent;
+			}
+			return insertNewNode(parent->leftChild, node);
+			checkColor(node);
+		}
+
+		void	insertNODE(Node<K, V> *node) {
+			if (this->root == nullptr) {
+				this->root = node;
+				this->root->red = false;
+			}
+			else {
+				insertNewNode(this->root, node);
 			}
 		}
 };
