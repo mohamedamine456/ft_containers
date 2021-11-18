@@ -228,14 +228,14 @@ class RedBlackTree {
 			tmp2 = tmp1;
 			bool color = tmp2->red;
 
-			if (tmp1->left == nullNode) {
+			if (tmp1->leftChild == nullNode) {
 				tmp3 = tmp1->rightChild;
 				deleteHelper(tmp1, tmp1->rightChild);
 			} else if (tmp1->rightChild == nullNode) {
 				tmp3 = tmp1->leftChild;
 				deleteHelper(tmp1, tmp1->leftChild);
 			} else {
-				tmp2 = minimum(tmp1->right);
+				tmp2 = minimum(tmp1->rightChild);
 				color = tmp2->red;
 				tmp3 = tmp2->rightChild;
 				if (tmp2->parent == tmp1) {
@@ -252,7 +252,7 @@ class RedBlackTree {
 			}
 			__alloc.destroy(tmp1);
 			__alloc.deallocate(tmp1, 1);
-			tmp1 = nullptr;
+			tmp1 = nullNode;
 			if (color == false) {
 				deleteFix(tmp3);
 			}
