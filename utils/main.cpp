@@ -13,6 +13,6 @@ int main() {
     for (int i = 0; i < 25; i++) {
         rbt.insertNode(nodes[i]);
     }
-    rbt.printRBT();
+    rbt.printRBT(rbt.getRoot(), "", true);
     std::cout << "Finished.\n";
 }

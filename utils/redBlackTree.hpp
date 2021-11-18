@@ -356,18 +356,22 @@ class RedBlackTree {
 			return tmp;
         }
 
-		void	printRBT() {
-			Node<K, V>	*min = minimum(this->root);
-			while (min != nullptr && min != nullNode) {
-				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
-				min = successor(min);
-			}
-			std::cout << "\n";
-			min = maximum(this->root);
-			while (min != nullptr && min != nullNode) {
-				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
-				min = predecessor(min);
-			}
+		void	printRBT(Node<K, V> *node, std::string pre, bool last) {
+			if (node != this->nullNode) {
+				std::cout << pre;
+				if (last) {
+					std::cout << "Right:----: ";
+					pre += "\t";
+				} else {
+					std::cout << "Left:-----: ";
+					pre += "|\t";
+				}
+
+				std::string color = node->red ? "RED" : "BLACK";
+				std::cout << "[" << node->data.first << ", " << node->data.second << "], (" << color << ")\n";
+				printRBT(node->leftChild, pre, false);
+				printRBT(node->rightChild, pre, true);
+	    	}
 		}
 };
 
