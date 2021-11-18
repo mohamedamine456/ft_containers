@@ -24,7 +24,7 @@ class RedBlackTree {
 
     public:
         RedBlackTree() {
-			nullNode = new Node<K, V>;
+			nullNode = __alloc.allocate(1);
 			nullNode->parent = nullptr;
 			nullNode->leftChild = nullptr;
 			nullNode->rightChild = nullptr;
@@ -54,6 +54,7 @@ class RedBlackTree {
 
 		Node<K, V>	*newNode(K key, V value) {
 			Node<K, V>	*node;
+			node = __alloc.allocate(1);
 			node->data = ft::make_pair(key, value);
 			node->red = true;
 			node->parent = nullptr;
