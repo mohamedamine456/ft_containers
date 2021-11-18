@@ -18,11 +18,17 @@ class RedBlackTree {
     private:
 		Allocator	__alloc;
 		size_t		size;
-		Node<K, V> *root;
-		Compare comp;
+		Node<K, V>	*root;
+		Node<K, V>	*nullNode;
+		Compare		comp;
 
     public:
         RedBlackTree() {
+			nullNode = new Node<K, V>;
+			nullNode->parent = nullptr;
+			nullNode->leftChild = nullptr;
+			nullNode->rightChild = nullptr;
+			nullNode->red = false;
 			this->root = nullptr;
 			size = 0;
         }
@@ -46,95 +52,91 @@ class RedBlackTree {
 			return this->root;
 		}
 
-		void	BSTInsertion(Node<K, V> *node) {
+		Node<K, V>	*newNode(K key, V value) {
+			Node<K, V>	*node;
+			node->data = ft::make_pair(key, value);
+			node->red = true;
+			node->parent = nullptr;
+			node->leftChild = nullNode;
+			node->rightChild = nullNode;
+			return (node);
+		}
+
+		void	fixInsert(Node<K, V> *node) {
 			Node<K, V>	*tmp;
-			Node<K, V>	*tmp2;
 
-			tmp2 = nullptr;
-			tmp = this->root;
-			while (tmp != nullptr) {
-				tmp2 = tmp;
-				if (node->data.first < tmp->data.first)
-					tmp = tmp->leftChild;
-				else
-					tmp = tmp->rightChild;
-			}
-			node->parent = tmp2;
-			if (tmp2 == nullptr)
-				this->root = node;
-			else if (node->data.first < tmp2->data.first)
-				tmp2->leftChild = node;
-			else
-				tmp2->rightChild = node;
-		}
-
-		void	rotate(Node<K, V>	*node) {
-			if (node == node->parent->leftChild) {
-				if (node->parent == node->parent->parent->leftChild) {
-					rightRotation(node->parent->parent);
-					node->red = true;
-					node->parent->red = false;
-					if (node->parent->rightChild)
-						node->parent->rightChild->red = true;
-					return ;
-				}
-				leftRotation(node->parent->parent);
-				node->red = false;
-				node->rightChild->red = true;
-				node->leftChild->red = true;
-			}
-			else {
-				if (node->parent == node->parent->parent->rightChild) {
-					leftRotation(node->parent->parent);
-					node->red = true;
-					node->parent->red = false;
-					if (node->parent->leftChild)
-						node->parent->leftChild->red = true;
-					return ;
-				}
-				leftRotation(node->parent->parent);
-				rightRotation(node->parent->parent);
-				node->red = false;
-				node->rightChild->red = true;
-				node->leftChild->red = true;
-			}
-		}
-		
-        void    insertNode(Node<K, V> *node) {
-
-			BSTInsertion(node);
-			Node<K, V>	*tmp = this->root;
-			Node<K, V>	*tmpU;
-
-			if (node == this->root)
+			if (node == this->root) {
+				this->root->red = false;
 				return;
-			while (node->parent && node->parent->red == true)
-			{
-				if (node->parent == node->parent->parent->rightChild)
-				{
-					tmpU = node->parent->parent->leftChild;
-					if (tmpU == nullptr || tmpU->red == false) {
-						rotate(node);	 
-					} else if (tmpU != nullptr) {
-						tmpU->red = false;
-						node->parent->parent->red = true;
+			}
+			while (node->parent->red == true) {
+				if (node->parent == node->parent->parent->rightChild) {
+					tmp = node->parent->parent->leftChild;
+					if (tmp->red == true) {
+						tmp->red = false;
 						node->parent->red = false;
+						node->parent->parent->red = true;
 						node = node->parent->parent;
+					} else {
+						if (node == node->parent->leftChild) {
+							node = node->parent;
+							rightRotation(node);
+						}
+						node->parent->red = false;
+						node->parent->parent->red = true;
+						leftRotation(node->parent->parent);
 					}
-				}
-				else {
-					tmpU = node->parent->parent->rightChild;
-					if (tmpU == nullptr || tmpU->red == false) {
-						rotate(node);
-					} else if (tmpU != nullptr) {
-						tmpU->red = false;
-						node->parent->parent->red = true;
+				} else {
+					tmp = node->parent->parent->rightChild;
+					if (tmp->red == true) {
+						tmp->red = false;
 						node->parent->red = false;
+						node->parent->parent->red = true;
 						node = node->parent->parent;
+					} else {
+						if (node == node->parent->rightChild) {
+							node = node->parent;
+							leftRotation(node);
+						}
+						node->parent->red = false;
+						node->parent->parent->red = true;
+						rightRotation(node->parent->parent);
 					}
 				}
 			}
 			this->root->red = false;
+		}
+		
+        void    insertNode(Node<K, V> *node) {
+			Node<K, V>	*tmpRoot = this->root;
+			Node<K, V>	*tmp = nullptr;
+
+			while (tmpRoot != nullNode) {
+				tmp = tmpRoot;
+				if (node->data.first < tmpRoot->data.first) {
+					tmpRoot = tmpRoot->leftChild;
+				} else {
+					tmpRoot = tmpRoot->rightChild;
+				}
+			}
+
+			node->parent = tmp;
+			if (tmp == nullptr) {
+				this->root = node;
+			} else if (node->data.first < tmp->data.first) {
+				tmp->leftChild = node;
+			} else {
+				tmp->rightChild = node;
+			}
+
+			if (node->parent == nullptr) {
+				node->red = false;
+				return ;
+			}
+			if (node->parent->parent == nullptr)
+			return ;
+
+			fixInsert(node);
         }
 
 		Node<K,V>	*BSTDelete(Node<K,V> *node, K key) {
@@ -243,57 +245,47 @@ class RedBlackTree {
 			Node<K, V> *tmp = node->leftChild;
 
 			node->leftChild = tmp->rightChild;
-			if (node->leftChild != nullptr) {
-				node->leftChild->parent = node;
+			if (node->leftChild != nullNode) {
+				tmp->rightChild->parent = node;
 			}
+			tmp->parent = node->parent;
 			if (node->parent == nullptr) {
-				this->root = tmp;
-				tmp->parent = nullptr;
+				this->root = node;
+			} else if (node == node->parent->rightChild) {
+				node->parent->rightChild = tmp;
+			} else {
+				node->parent->leftChild = tmp;
 			}
-			else {
-				tmp->parent = node->parent;
-				if (node == node->parent->rightChild) {
-					tmp->parent->rightChild = tmp;
-				}
-				else {
-					tmp->parent->leftChild = tmp;
-				}
-				tmp->rightChild = node;
-				node->parent = tmp;
-			}
+			tmp->rightChild = node;
+			node->parent = tmp;
 		}
 
 		void	leftRotation(Node<K, V> *node) {
 			Node<K, V> *tmp = node->rightChild;
 
 			node->rightChild = tmp->leftChild;
-			if (node->rightChild != nullptr) {
-				node->rightChild->parent = node;
+			if (tmp->leftChild != nullNode) {
+				tmp->leftChild->parent = node;
 			}
+			tmp->parent = node->parent;
 			if (node->parent == nullptr) {
 				this->root = tmp;
-				tmp->parent = nullptr;
+			} else if (node == node->parent->leftChild) {
+				node->parent->leftChild = tmp;
+			} else {
+				node->parent->rightChild = tmp;
 			}
-			else {
-				tmp->parent = node->parent;
-				if (node == node->parent->leftChild) {
-					tmp->parent->leftChild = tmp;
-				}
-				else {
-					tmp->parent->rightChild = tmp;
-				}
-				tmp->leftChild = node;
-				node->parent = tmp;
-			}
+			tmp->leftChild = node;
+			node->parent = tmp;
 		}
 
         Node<K, V>	*successor(Node<K, V> *node) {
 			Node<K, V>	*tmp = node;
 			Node<K, V>	*tmp1;
-			if (tmp->rightChild != NULL)
+			if (tmp->rightChild != nullNode)
 				return this->minimum(tmp->rightChild);
 			tmp1 = tmp->parent;
-			while (tmp1 != NULL && tmp == tmp1->rightChild)
+			while (tmp1 != nullNode && tmp == tmp1->rightChild)
 			{
 				tmp = tmp1;
 				tmp1 = tmp1->parent;
@@ -304,10 +296,10 @@ class RedBlackTree {
         Node<K, V>	*predecessor(Node<K, V> *node) {
 			Node<K, V>	*tmp = node;
 			Node<K, V>	*tmp1;
-			if (tmp->leftChild != NULL)
+			if (tmp->leftChild != nullNode)
 				return this->maximum(tmp->leftChild);
 			tmp1 = tmp->parent;
-			while (tmp1 != NULL && tmp == tmp1->leftChild)
+			while (tmp1 != nullNode && tmp == tmp1->leftChild)
 			{
 				tmp = tmp1;
 				tmp1 = tmp1->parent;
@@ -317,7 +309,7 @@ class RedBlackTree {
 
         Node<K, V>	*search(Node<K, V> *node, K key) {
 			Node<K, V>	*tmp = node;
-			while (tmp != NULL)
+			while (tmp != nullNode)
 			{
 				if (tmp->data.key == key)
 					break ;
@@ -331,75 +323,29 @@ class RedBlackTree {
 
         Node<K, V>	*minimum(Node<K, V> *node) {
 			Node<K, V>	*tmp = node;
-			while (tmp->leftChild != NULL)
+			while (tmp->leftChild != nullNode)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
         Node<K, V>	*maximum(Node<K, V> *node) {
 			Node<K, V>	*tmp = node;
-			while (tmp->rightChild != NULL)
+			while (tmp->rightChild != nullNode)
 				tmp = tmp->rightChild;
 			return tmp;
         }
+
 		void	printRBT() {
 			Node<K, V>	*min = minimum(this->root);
-			while (min != nullptr) {
+			while (min != nullNode) {
 				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
 				min = successor(min);
 			}
 			std::cout << "\n";
 			min = maximum(this->root);
-			while (min != nullptr) {
+			while (min != nullNode) {
 				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
 				min = predecessor(min);
-			}
-		}
-
-
-
-		////////////////////////////////////////////////
-
-		void	correctViolation(Node<K, V> *node) {
-			if (node == node->parent->leftChild) {
-				if (node->parent->parent->rightChild == nullptr || node->parent->parent->rightChild->red == false) {
-
-				}
-			}
-		}
-
-		void	checkColor(Node<K, V> *node) {
-			if (node == this->root)
-				return;
-			if (node->red == true && node->parent->red == true) {
-				correctViolation(node);
-			}
-			checkColor(node->parent);
-		}
-
-		void	insertNewNode(Node<K, V> *parent, Node<K, V> *node) {
-			if (comp(parent->data.first, node->data.first) > 0) {
-				if (parent->rightChild == nullptr) {
-					parent->rightChild = node;
-					node->parent = parent;
-				}
-				return insertNewNode(parent->rightChild, node);
-			}
-			if (parent->leftChild == nullptr) {
-				parent->leftChild = node;
-				node->parent = parent;
-			}
-			return insertNewNode(parent->leftChild, node);
-			checkColor(node);
-		}
-
-		void	insertNODE(Node<K, V> *node) {
-			if (this->root == nullptr) {
-				this->root = node;
-				this->root->red = false;
-			}
-			else {
-				insertNewNode(this->root, node);
 			}
 		}
 };
