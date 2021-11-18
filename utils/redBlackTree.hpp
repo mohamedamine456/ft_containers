@@ -33,10 +33,6 @@ class RedBlackTree {
 			size = 0;
         }
 
-        RedBlackTree(K key, V value) {
-            
-        }
-
         RedBlackTree(RedBlackTree &rbt) {
             *this = rbt;
         }
@@ -138,52 +134,12 @@ class RedBlackTree {
 			return ;
 
 			fixInsert(node);
-        }
-
-		Node<K,V>	*BSTDelete(Node<K,V> *node, K key) {
-			Node<K, V>	*tmp = node;
-			Node<K, V>	*tmp1;
-
-			if (tmp == nullptr)
-				return node;
-			else if (key < tmp->data.first)
-				BSTDelete(tmp->leftChild, key);
-			else if (key > tmp->data.first)
-				BSTDelete(tmp->rightChild, key);
-			else
-			{
-				if (tmp->leftChild == nullptr && tmp->rightChild == nullptr) {
-					__alloc.destroy(tmp);
-					__alloc.deallocate(tmp, 1);
-					tmp = nullptr;
-				}
-				else if (tmp->leftChild == nullptr) {
-					tmp1 = tmp;
-					tmp = tmp->leftChild;
-					__alloc.destroy(tmp1);
-					__alloc.deallocate(tmp1, 1);
-					tmp1 = nullptr;
-				}
-				else if (tmp->rightChild == nullptr) {
-					tmp1 = tmp;
-					tmp = tmp->rightChild;
-					__alloc.destroy(tmp1);
-					__alloc.deallocate(tmp1, 1);
-					tmp1 = nullptr;
-				}
-				else {
-					tmp1 = minimum(tmp->rightChild);
-					tmp->data = tmp1->data;
-					tmp->rightChild = BSTDelete(tmp->rightChild, tmp1->data.first);
-				}
-			}
-			return node;
 		}
 
-        void    deleteNode(Node<K, V> *node) {
-			Node<K, V> *tmpS;
-			BSTDelete(this->root, node->data.first);
-			while (node != this->root && node->red == false) {
+		void	deleteFix(Node<K, V> *node) {
+			Node<K, V>	*tmpS;
+
+			while (node != root && node->red == false) {
 				if (node == node->parent->leftChild) {
 					tmpS = node->parent->rightChild;
 					if (tmpS->red == true) {
@@ -195,16 +151,17 @@ class RedBlackTree {
 					if (tmpS->leftChild->red == false && tmpS->rightChild->red == false) {
 						tmpS->red = true;
 						node = node->parent;
-					} else { 
+					} else {
 						if (tmpS->rightChild->red == false) {
 							tmpS->leftChild->red = false;
 							tmpS->red = true;
 							rightRotation(tmpS);
 							tmpS = node->parent->rightChild;
 						}
+
 						tmpS->red = node->parent->red;
 						node->parent->red = false;
-						node->rightChild->red = false;
+						tmpS->rightChild->red = false;
 						leftRotation(node->parent);
 						node = this->root;
 					}
@@ -216,26 +173,89 @@ class RedBlackTree {
 						rightRotation(node->parent);
 						tmpS = node->parent->leftChild;
 					}
-					if (tmpS->rightChild->red == false && tmpS->leftChild->red == false) {
+					if (tmpS->rightChild->red == false && tmpS->rightChild->red == false) {
 						tmpS->red = true;
 						node = node->parent;
-					}
-					else {
+					} else {
 						if (tmpS->leftChild->red == false) {
 							tmpS->rightChild->red = false;
 							tmpS->red = true;
-							leftRotation(node->parent);
+							leftRotation(tmpS);
 							tmpS = node->parent->leftChild;
 						}
 						tmpS->red = node->parent->red;
 						node->parent->red = false;
-						node->leftChild->red = false;
+						tmpS->leftChild->red = false;
 						rightRotation(node->parent);
 						node = this->root;
 					}
 				}
 			}
 			node->red = false;
+		}
+
+		void	deleteHelper(Node<K, V> *a, Node<K, V> *b) {
+			if (a->parent == nullptr) {
+				this->root = b;
+			} else if (a == a->parent->leftChild) {
+				a->parent->leftChild = b;
+			} else {
+				a->parent->rightChild = b;
+			}
+			b->parent = a->parent;
+		}
+
+        void    deleteNode(Node<K, V> *node) {
+			Node<K, V>	*tmpNode = this->root;
+			Node<K, V>	*tmp1 = nullNode;
+			Node<K, V>	*tmp2 = nullNode;
+			Node<K, V>	*tmp3 = nullNode;
+
+			while (tmpNode != nullNode) {
+				if (tmpNode->data.first == node->data.first) {
+					tmp1 = tmpNode;
+				}
+				if (tmpNode->data.first <= node->data.first) {
+					tmpNode = tmpNode->rightChild;
+				} else {
+					tmpNode = tmpNode->leftChild;
+				}
+			}
+
+			if (tmp1 == nullNode) {
+				return;
+			}
+			tmp2 = tmp1;
+			bool color = tmp2->red;
+
+			if (tmp1->left == nullNode) {
+				tmp3 = tmp1->rightChild;
+				deleteHelper(tmp1, tmp1->rightChild);
+			} else if (tmp1->rightChild == nullNode) {
+				tmp3 = tmp1->leftChild;
+				deleteHelper(tmp1, tmp1->leftChild);
+			} else {
+				tmp2 = minimum(tmp1->right);
+				color = tmp2->red;
+				tmp3 = tmp2->rightChild;
+				if (tmp2->parent == tmp1) {
+					tmp3->parent = tmp2;
+				} else {
+					deleteHelper(tmp2, tmp2->rightChild);
+					tmp2->rightChild = tmp1->rightChild;
+					tmp2->rightChild->parent = tmp2;
+				}
+				deleteHelper(tmp1, tmp2);
+				tmp2->leftChild = tmp1->leftChild;
+				tmp2->leftChild->parent = tmp2;
+				tmp2->red = tmp1->red;
+			}
+			__alloc.destroy(tmp1);
+			__alloc.deallocate(tmp1, 1);
+			tmp1 = nullptr;
+			if (color == false) {
+				deleteFix(tmp3);
+			}
         }
 
         void    deleteNode(K key) {
