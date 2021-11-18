@@ -29,7 +29,7 @@ class RedBlackTree {
 			nullNode->leftChild = nullptr;
 			nullNode->rightChild = nullptr;
 			nullNode->red = false;
-			this->root = nullptr;
+			this->root = nullNode;
 			size = 0;
         }
 
