@@ -54,8 +54,8 @@ class RedBlackTree {
 			node->data = ft::make_pair(key, value);
 			node->red = true;
 			node->parent = nullptr;
-			node->leftChild = nullNode;
-			node->rightChild = nullNode;
+			node->leftChild = this->nullNode;
+			node->rightChild = this->nullNode;
 			return (node);
 		}
 
@@ -66,7 +66,7 @@ class RedBlackTree {
 				this->root->red = false;
 				return;
 			}
-			while (node->parent->red == true) {
+			while (node->parent != nullptr && node->parent->red == true) {
 				if (node->parent == node->parent->parent->rightChild) {
 					tmp = node->parent->parent->leftChild;
 					if (tmp->red == true) {
@@ -306,7 +306,7 @@ class RedBlackTree {
 			if (tmp->rightChild != nullNode)
 				return this->minimum(tmp->rightChild);
 			tmp1 = tmp->parent;
-			while (tmp1 != nullNode && tmp == tmp1->rightChild)
+			while (tmp1 != nullptr && tmp1 != nullNode && tmp == tmp1->rightChild)
 			{
 				tmp = tmp1;
 				tmp1 = tmp1->parent;
@@ -320,7 +320,7 @@ class RedBlackTree {
 			if (tmp->leftChild != nullNode)
 				return this->maximum(tmp->leftChild);
 			tmp1 = tmp->parent;
-			while (tmp1 != nullNode && tmp == tmp1->leftChild)
+			while (tmp1 != nullptr && tmp1 != nullNode && tmp == tmp1->leftChild)
 			{
 				tmp = tmp1;
 				tmp1 = tmp1->parent;
@@ -358,13 +358,13 @@ class RedBlackTree {
 
 		void	printRBT() {
 			Node<K, V>	*min = minimum(this->root);
-			while (min != nullNode) {
+			while (min != nullptr && min != nullNode) {
 				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
 				min = successor(min);
 			}
 			std::cout << "\n";
 			min = maximum(this->root);
-			while (min != nullNode) {
+			while (min != nullptr && min != nullNode) {
 				std::cout << "data( " << min->data.first << ", " << min->data.second << "), color: " << (min->red ? "red" : "black") << ", parent: " << min->parent << "\n";
 				min = predecessor(min);
 			}
