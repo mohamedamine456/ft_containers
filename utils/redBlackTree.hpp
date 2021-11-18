@@ -108,6 +108,7 @@ class RedBlackTree {
 			Node<K, V>	*tmpRoot = this->root;
 			Node<K, V>	*tmp = nullptr;
 
+			// where to insert
 			while (tmpRoot != nullNode) {
 				tmp = tmpRoot;
 				if (node->data.first < tmpRoot->data.first) {
@@ -117,6 +118,7 @@ class RedBlackTree {
 				}
 			}
 
+			// insert
 			node->parent = tmp;
 			if (tmp == nullptr) {
 				this->root = node;
@@ -126,6 +128,7 @@ class RedBlackTree {
 				tmp->rightChild = node;
 			}
 
+			// fix properties for simple
 			if (node->parent == nullptr) {
 				node->red = false;
 				return ;
@@ -133,6 +136,7 @@ class RedBlackTree {
 			if (node->parent->parent == nullptr)
 			return ;
 
+			// fix properties for complex
 			fixInsert(node);
 		}
 
