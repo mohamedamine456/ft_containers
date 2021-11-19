@@ -14,13 +14,9 @@ int main() {
         rbt.insertNode(nodes[i]);
     }
     rbt.printRBT(rbt.getRoot(), "", true);
-    std::cout << "DELETE: " << nodes[7]->data.first << "\n";
     rbt.deleteNode(nodes[7]);
-    std::cout << "DELETE: " << nodes[12]->data.first << "\n";
     rbt.deleteNode(nodes[12]);
-    std::cout << "DELETE: " << nodes[17]->data.first << "\n";
     rbt.deleteNode(nodes[17]);
-    std::cout << "DELETE: " << nodes[22]->data.first << "\n";
     rbt.deleteNode(nodes[22]);
     rbt.printRBT(rbt.getRoot(), "", true);
     std::cout << "Finished.\n";

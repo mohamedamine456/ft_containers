@@ -13,14 +13,13 @@ struct Node
 	Node<K, V>		*parent;
 };
 
-template < class K, class V, class Allocator = std::allocator<Node<K, V> >, class Compare = std::less<K> >
+template < class K, class V, class Allocator = std::allocator<Node<K, V> > >
 class RedBlackTree {
     private:
 		Allocator	__alloc;
 		size_t		size;
 		Node<K, V>	*root;
 		Node<K, V>	*nullNode;
-		Compare		comp;
 
     public:
         RedBlackTree() {
@@ -41,6 +40,9 @@ class RedBlackTree {
 
         RedBlackTree &operator= (RedBlackTree &rbt) {
 			this->root = rbt.root;
+			this->size = rbt.size;
+			this->nullNode = rbt.nullNode;
+			this->__alloc = rbt.__alloc;
             return *this;
         }
 
@@ -67,6 +69,7 @@ class RedBlackTree {
 				return;
 			}
 			while (node->parent != nullptr && node->parent->red == true) {
+				// parent is right child
 				if (node->parent == node->parent->parent->rightChild) {
 					tmp = node->parent->parent->leftChild;
 					if (tmp->red == true) {
@@ -75,6 +78,7 @@ class RedBlackTree {
 						node->parent->parent->red = true;
 						node = node->parent->parent;
 					} else {
+						// node is left child (line)
 						if (node == node->parent->leftChild) {
 							node = node->parent;
 							rightRotation(node);
@@ -83,7 +87,9 @@ class RedBlackTree {
 						node->parent->parent->red = true;
 						leftRotation(node->parent->parent);
 					}
-				} else {
+				}
+				// parent is left child 
+				else {
 					tmp = node->parent->parent->rightChild;
 					if (tmp->red == true) {
 						tmp->red = false;
@@ -91,6 +97,7 @@ class RedBlackTree {
 						node->parent->parent->red = true;
 						node = node->parent->parent;
 					} else {
+						// node is right child (line)
 						if (node == node->parent->rightChild) {
 							node = node->parent;
 							leftRotation(node);
