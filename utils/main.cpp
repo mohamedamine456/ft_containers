@@ -6,12 +6,20 @@
 int main() {
     RedBlackTree<int, int>  rbt;
     Node<int, int>          *nodes[25];
+    Node<int, int>          *tmpNode;
     std::allocator<Node<int , int> > alloc;
     for (int i = 0; i < 25; i ++) {
         nodes[i] = rbt.newNode((i + 1) * 13, (i + 1)* 37);
     }
     for (int i = 0; i < 25; i++) {
-        rbt.insertNode(nodes[i]);
+        if (rbt.insertNode(nodes[i]) == false) {
+            std::cout << "Key:" << nodes[i]->data.first << " already exists.\n";
+            break;
+        }
+    }
+    tmpNode = rbt.newNode(13, 75);
+    if (rbt.insertNode(tmpNode) == false) {
+        std::cout << "Key:" << tmpNode->data.first << " already exists.\n";
     }
     rbt.printRBT(rbt.getRoot(), "", true);
     rbt.deleteNode(nodes[7]);

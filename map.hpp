@@ -12,7 +12,7 @@ class ft::map
 		
 		Allocator																	__allocator;
 		size_t																		__size;
-        RedBlackTree                                                    			__rbtree;
+        RedBlackTree<Key, T, Allocator>                                                    			__rbtree;
     public: 
         typedef Key																	key_type;
         typedef T																	mapped_type;
@@ -70,50 +70,53 @@ class ft::map
 
         // (Iterators) begin & end
         iterator								begin() {
-
+            return iterator(__rbtree.minimum());
 		}
         const_iterator							begin() const {
-
+            return const_iterator(__rbtree.minimum());
 		}
 
         iterator								end() {
-
+            return iterator(__rbtree.maximum());
 		}
         const_iterator							end() const {
-
+            return const_iterator(__rbtree.maximum());
 		}
 
         // (Iterators) rbegin & rend
         reverse_iterator						rbegin() {
-
+            return reverse_iterator(__rbtree.maximum());
 		}
         const_reverse_iterator					rbegin() const {
-
+            return const_reverse_iterator(__rbtree.maximum());
 		}
 
         reverse_iterator						rend() {
-
+            return reverse_iterator(__rbtree.minimum());
 		}
         const_reverse_iterator					rend() const {
-
+            return const_reverse_iterator(__rbtree.minimum());
 		}
 
         // (Capacity) empty
         bool									empty() const {
-
+            if (__rbtree.getRoot() == __rbtree.getNullNode()) {
+                return true;
+            }
+            return false;
 		}
 
         // (Capacity) size & max_size
         size_type								size() const {
-
+            return this->__size;
 		}
         size_type								max_size() const {
-
+            return __allocator.max_size();
 		}
 
         // (Element access) operator[]
         mapped_type&							operator[] ( const key_type& k ) {
-
+            
 		}
 
         // (Modifiers) insert

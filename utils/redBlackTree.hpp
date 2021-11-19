@@ -50,6 +50,10 @@ class RedBlackTree {
 			return this->root;
 		}
 
+		Node<K, V> *getNullNode() const {
+			return this->nullNode;
+		}
+
 		Node<K, V>	*newNode(K key, V value) {
 			Node<K, V>	*node;
 			node = __alloc.allocate(1);
@@ -111,14 +115,16 @@ class RedBlackTree {
 			this->root->red = false;
 		}
 		
-        void    insertNode(Node<K, V> *node) {
+        bool	insertNode(Node<K, V> *node) {
 			Node<K, V>	*tmpRoot = this->root;
 			Node<K, V>	*tmp = nullptr;
 
 			// where to insert
 			while (tmpRoot != nullNode) {
 				tmp = tmpRoot;
-				if (node->data.first < tmpRoot->data.first) {
+				if (node->data.first == tmpRoot->data.first)
+					return false;
+				else if (node->data.first < tmpRoot->data.first) {
 					tmpRoot = tmpRoot->leftChild;
 				} else {
 					tmpRoot = tmpRoot->rightChild;
@@ -138,13 +144,14 @@ class RedBlackTree {
 			// fix properties for simple
 			if (node->parent == nullptr) {
 				node->red = false;
-				return ;
+				return true;
 			}
 			if (node->parent->parent == nullptr)
-			return ;
+				return true;
 
 			// fix properties for complex
 			fixInsert(node);
+			return true;
 		}
 
 		void	deleteFix(Node<K, V> *node) {
