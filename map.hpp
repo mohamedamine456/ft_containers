@@ -10,25 +10,25 @@ class ft::map
     private:
         // properties
 		
-		Allocator															__allocator;
-		size_t																__size;
-        RedBlackTree                                                        __rbtree;
-    public:
-        typedef Key															key_type;
-        typedef T															mapped_type;
-        typedef pair<const key_type, mapped_type>							value_type;
-        typedef	Compare														key_compare;
-        typedef Allocator													allocator_type;
-        typedef value_type&													reference;
-        typedef const value_type&											const_reference;
-        typedef typename allocator_type::pointer							pointer;
-        typedef typename allocator_type::const_pointer						const_pointer;
-        typedef ft::iterator<random_access_iterator_tag, T>					iterator;
-        typedef ft::iterator<random_access_iterator_tag, const	T>			const_iterator;
-        typedef ft::reverse_iterator<iterator>								reverse_iterator;
-        typedef ft::reverse_iterator<const_iterator>						const_reverse_iterator;
-        typedef typename ft::iterator_traits<iterator>::difference_type		difference_type;
-        typedef std::size_t													size_type;
+		Allocator																	__allocator;
+		size_t																		__size;
+        RedBlackTree                                                    			__rbtree;
+    public: 
+        typedef Key																	key_type;
+        typedef T																	mapped_type;
+        typedef ft::pair<const key_type, mapped_type>								value_type;
+        typedef	Compare																key_compare;
+        typedef Allocator															allocator_type;
+        typedef value_type&															reference;
+        typedef const value_type&													const_reference;
+        typedef typename allocator_type::pointer									pointer;
+        typedef typename allocator_type::const_pointer								const_pointer;
+        typedef ft::bidirectional_iterator<bidirectional_iterator_tag, T>			iterator;
+        typedef ft::bidirectional_iterator<bidirectional_iterator_tag, const T>		const_iterator;
+        typedef ft::reverse_iterator<iterator>										reverse_iterator;
+        typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
+        typedef typename ft::iterator_traits<iterator>::difference_type				difference_type;
+        typedef std::size_t															size_type;
         class value_compare {
             protected:
                 Compare comp;
