@@ -22,50 +22,7 @@ class RedBlackTree {
 		Node<K, V>	*root;
 		Node<K, V>	*nullNode;
 
-    public:
-        RedBlackTree() {
-			nullNode = __alloc.allocate(1);
-			nullNode->parent = nullptr;
-			nullNode->leftChild = nullptr;
-			nullNode->rightChild = nullptr;
-			nullNode->red = false;
-			this->root = nullNode;
-			__size = 0;
-        }
-
-        RedBlackTree(RedBlackTree &rbt) {
-            *this = rbt;
-        }
-
-        ~RedBlackTree() {}
-
-        RedBlackTree &operator= (RedBlackTree &rbt) {
-			this->root = rbt.root;
-			this->size = rbt.size;
-			this->nullNode = rbt.nullNode;
-			this->__alloc = rbt.__alloc;
-            return *this;
-        }
-
-		Node<K, V> *getRoot() const {
-			return this->root;
-		}
-
-		Node<K, V> *getNullNode() const {
-			return this->nullNode;
-		}
-
-		Node<K, V>	*newNode(K key, V value) {
-			Node<K, V>	*node;
-			node = __alloc.allocate(1);
-			node->data = ft::make_pair(key, value);
-			node->red = true;
-			node->parent = nullptr;
-			node->leftChild = this->nullNode;
-			node->rightChild = this->nullNode;
-			return (node);
-		}
-
+		// private function to fix rbt properties violation in the insert of new node
 		void	fixInsert(Node<K, V> *node) {
 			Node<K, V>	*tmp;
 
@@ -115,47 +72,8 @@ class RedBlackTree {
 			}
 			this->root->red = false;
 		}
-		
-        bool	insertNode(Node<K, V> *node) {
-			Node<K, V>	*tmpRoot = this->root;
-			Node<K, V>	*tmp = nullptr;
 
-			// where to insert
-			while (tmpRoot != nullNode) {
-				tmp = tmpRoot;
-				if (node->data.first == tmpRoot->data.first)
-					return false;
-				else if (comp(node->data.first, tmpRoot->data.first)) {
-					tmpRoot = tmpRoot->leftChild;
-				} else {
-					tmpRoot = tmpRoot->rightChild;
-				}
-			}
-
-			// insert
-			node->parent = tmp;
-			if (tmp == nullptr) {
-				this->root = node;
-			} else if (comp(node->data.first, tmp->data.first)) {
-				tmp->leftChild = node;
-			} else {
-				tmp->rightChild = node;
-			}
-
-			__size++;
-			// fix properties for simple
-			if (node->parent == nullptr) {
-				node->red = false;
-				return true;
-			}
-			if (node->parent->parent == nullptr)
-				return true;
-
-			// fix properties for complex
-			fixInsert(node);
-			return true;
-		}
-
+		// private function to fix rbt properties violation in the delete of a node
 		void	deleteFix(Node<K, V> *node) {
 			Node<K, V>	*tmpS;
 
@@ -225,6 +143,130 @@ class RedBlackTree {
 			b->parent = a->parent;
 		}
 
+		// bst right rotation on a node
+		void	rightRotation(Node<K, V> *node) {
+			Node<K, V> *tmp = node->leftChild;
+
+			node->leftChild = tmp->rightChild;
+			if (node->leftChild != nullNode) {
+				tmp->rightChild->parent = node;
+			}
+			tmp->parent = node->parent;
+			if (node->parent == nullptr) {
+				this->root = node;
+			} else if (node == node->parent->rightChild) {
+				node->parent->rightChild = tmp;
+			} else {
+				node->parent->leftChild = tmp;
+			}
+			tmp->rightChild = node;
+			node->parent = tmp;
+		}
+
+		// bst left rotation on a node
+		void	leftRotation(Node<K, V> *node) {
+			Node<K, V> *tmp = node->rightChild;
+
+			node->rightChild = tmp->leftChild;
+			if (tmp->leftChild != nullNode) {
+				tmp->leftChild->parent = node;
+			}
+			tmp->parent = node->parent;
+			if (node->parent == nullptr) {
+				this->root = tmp;
+			} else if (node == node->parent->leftChild) {
+				node->parent->leftChild = tmp;
+			} else {
+				node->parent->rightChild = tmp;
+			}
+			tmp->leftChild = node;
+			node->parent = tmp;
+		}
+	
+	public:
+        RedBlackTree() {
+			nullNode = __alloc.allocate(1);
+			nullNode->parent = nullptr;
+			nullNode->leftChild = nullptr;
+			nullNode->rightChild = nullptr;
+			nullNode->red = false;
+			this->root = nullNode;
+			__size = 0;
+        }
+
+        RedBlackTree(RedBlackTree &rbt) {
+            *this = rbt;
+        }
+
+        ~RedBlackTree() {}
+
+        RedBlackTree &operator= (RedBlackTree &rbt) {
+			this->root = rbt.root;
+			this->size = rbt.size;
+			this->nullNode = rbt.nullNode;
+			this->__alloc = rbt.__alloc;
+            return *this;
+        }
+
+		Node<K, V> *getRoot() const {
+			return this->root;
+		}
+
+		Node<K, V> *getNullNode() const {
+			return this->nullNode;
+		}
+
+		Node<K, V>	*newNode(K key, V value) {
+			Node<K, V>	*node;
+			node = __alloc.allocate(1);
+			node->data = ft::make_pair(key, value);
+			node->red = true;
+			node->parent = nullptr;
+			node->leftChild = this->nullNode;
+			node->rightChild = this->nullNode;
+			return (node);
+		}
+		
+        bool	insertNode(Node<K, V> *node) {
+			Node<K, V>	*tmpRoot = this->root;
+			Node<K, V>	*tmp = nullptr;
+
+			// where to insert
+			while (tmpRoot != nullNode) {
+				tmp = tmpRoot;
+				if (node->data.first == tmpRoot->data.first)
+					return false;
+				else if (comp(node->data.first, tmpRoot->data.first)) {
+					tmpRoot = tmpRoot->leftChild;
+				} else {
+					tmpRoot = tmpRoot->rightChild;
+				}
+			}
+
+			// insert
+			node->parent = tmp;
+			if (tmp == nullptr) {
+				this->root = node;
+			} else if (comp(node->data.first, tmp->data.first)) {
+				tmp->leftChild = node;
+			} else {
+				tmp->rightChild = node;
+			}
+
+			__size++;
+			// fix properties for simple
+			if (node->parent == nullptr) {
+				node->red = false;
+				return true;
+			}
+			if (node->parent->parent == nullptr)
+				return true;
+
+			// fix properties for complex
+			fixInsert(node);
+			return true;
+		}
+
         void    deleteNode(Node<K, V> *node) {
 			Node<K, V>	*tmpNode = this->root;
 			Node<K, V>	*tmp1 = nullNode;
@@ -280,46 +322,9 @@ class RedBlackTree {
         }
 
         void    deleteNode(K key) {
-			BSTDelete(this->root, key);
+			Node<K, V>	*node = searchNode(this->root, key);
+			deleteNode(node);
         }
-
-		void	rightRotation(Node<K, V> *node) {
-			Node<K, V> *tmp = node->leftChild;
-
-			node->leftChild = tmp->rightChild;
-			if (node->leftChild != nullNode) {
-				tmp->rightChild->parent = node;
-			}
-			tmp->parent = node->parent;
-			if (node->parent == nullptr) {
-				this->root = node;
-			} else if (node == node->parent->rightChild) {
-				node->parent->rightChild = tmp;
-			} else {
-				node->parent->leftChild = tmp;
-			}
-			tmp->rightChild = node;
-			node->parent = tmp;
-		}
-
-		void	leftRotation(Node<K, V> *node) {
-			Node<K, V> *tmp = node->rightChild;
-
-			node->rightChild = tmp->leftChild;
-			if (tmp->leftChild != nullNode) {
-				tmp->leftChild->parent = node;
-			}
-			tmp->parent = node->parent;
-			if (node->parent == nullptr) {
-				this->root = tmp;
-			} else if (node == node->parent->leftChild) {
-				node->parent->leftChild = tmp;
-			} else {
-				node->parent->rightChild = tmp;
-			}
-			tmp->leftChild = node;
-			node->parent = tmp;
-		}
 
         Node<K, V>	*successor(Node<K, V> *node) {
 			Node<K, V>	*tmp = node;
@@ -349,7 +354,7 @@ class RedBlackTree {
 			return tmp1;
         }
 
-        Node<K, V>	*search(Node<K, V> *node, K key) {
+        Node<K, V>	*searchNode(Node<K, V> *node, K key) {
 			Node<K, V>	*tmp = node;
 			while (tmp != nullNode)
 			{

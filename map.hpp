@@ -48,18 +48,23 @@ class ft::map
         // constructors
 		// default constructor
         explicit map( const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() ) {
-
+            (void)alloc;
+            (void)comp;
+            __size = 0;
         }
 
 		// range constructor
         template < class InputIterator >
         map ( InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() ) {
-
+            while (first!= last) {
+                __rbtree.insertNode(*first);
+                first++;
+            }
         }
 
 		// copy constructor
         map ( const map& mp ) {
-
+            *this = mp;
 		}
         // destructor
         ~map() {
@@ -68,7 +73,12 @@ class ft::map
 
         // operator=
         map& operator= ( const map& mp ) {
-
+            this->__rbtree = mp.__rbtree;
+            this->__size = mp.__size;
+            this->__value_compare = mp.__value_compare;
+            this->__key_comp = mp.__key_comp;
+            this->__allocator = mp.__allocator;
+            return *this;
 		}
 
         // (Iterators) begin & end
@@ -173,7 +183,10 @@ class ft::map
 
         // (Operations) count
         size_type								count( const key_type& k ) const {
-
+            Node<Key, T>    *node = __rbtree.searchNode(__rbtree.getRoot(), k);
+            if (node != __rbtree.nullNode())
+                return (1);
+            return (0);
 		}
 
         // (Operations) lower_bound & upper_bound
