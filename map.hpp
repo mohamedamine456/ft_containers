@@ -7,12 +7,6 @@
 template < class Key, class T, class Compare, class Allocator >
 class ft::map
 {
-    private:
-        // properties
-		
-		Allocator																	__allocator;
-		size_t																		__size;
-        RedBlackTree<Key, T, Allocator>                                                    			__rbtree;
     public: 
         typedef Key																	key_type;
         typedef T																	mapped_type;
@@ -41,6 +35,15 @@ class ft::map
                     return comp(x.first, y.first);
                 }
         };
+	private:
+		// attributes
+		
+		allocator_type																__allocator;
+		size_type																	__size;
+		RedBlackTree<Key, T, Compare, Allocator>									__rbtree;
+		key_compare																	__key_comp;
+		value_compare																__value_compare;
+	public:
 
         // constructors
 		// default constructor
@@ -116,7 +119,7 @@ class ft::map
 
         // (Element access) operator[]
         mapped_type&							operator[] ( const key_type& k ) {
-            
+
 		}
 
         // (Modifiers) insert

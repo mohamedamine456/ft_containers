@@ -13,11 +13,12 @@ struct Node
 	Node<K, V>		*parent;
 };
 
-template < class K, class V, class Allocator = std::allocator<Node<K, V> > >
+template < class K, class V, class Compare = std::less<K>, class Allocator = std::allocator<Node<K, V> > >
 class RedBlackTree {
     private:
 		Allocator	__alloc;
-		size_t		size;
+		size_t		__size;
+		Compare		comp;
 		Node<K, V>	*root;
 		Node<K, V>	*nullNode;
 
@@ -29,7 +30,7 @@ class RedBlackTree {
 			nullNode->rightChild = nullptr;
 			nullNode->red = false;
 			this->root = nullNode;
-			size = 0;
+			__size = 0;
         }
 
         RedBlackTree(RedBlackTree &rbt) {
@@ -124,7 +125,7 @@ class RedBlackTree {
 				tmp = tmpRoot;
 				if (node->data.first == tmpRoot->data.first)
 					return false;
-				else if (node->data.first < tmpRoot->data.first) {
+				else if (comp(node->data.first, tmpRoot->data.first)) {
 					tmpRoot = tmpRoot->leftChild;
 				} else {
 					tmpRoot = tmpRoot->rightChild;
@@ -135,12 +136,13 @@ class RedBlackTree {
 			node->parent = tmp;
 			if (tmp == nullptr) {
 				this->root = node;
-			} else if (node->data.first < tmp->data.first) {
+			} else if (comp(node->data.first, tmp->data.first)) {
 				tmp->leftChild = node;
 			} else {
 				tmp->rightChild = node;
 			}
 
+			__size++;
 			// fix properties for simple
 			if (node->parent == nullptr) {
 				node->red = false;
@@ -233,7 +235,7 @@ class RedBlackTree {
 				if (tmpNode->data.first == node->data.first) {
 					tmp1 = tmpNode;
 				}
-				if (tmpNode->data.first <= node->data.first) {
+				if (comp(tmpNode->data.first, node->data.first)) {
 					tmpNode = tmpNode->rightChild;
 				} else {
 					tmpNode = tmpNode->leftChild;
@@ -273,6 +275,7 @@ class RedBlackTree {
 			tmp1 = nullNode;
 			if (color == false) {
 				deleteFix(tmp3);
+				__size--;
 			}
         }
 
