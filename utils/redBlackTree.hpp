@@ -23,7 +23,7 @@ class RedBlackTree {
 		Node<K, V>	*nullNode;
 
 
-		void	rightChildFix(Node<K, V>	**node, Node<K, V> **tmp) {
+		void	rightChildFixInsert(Node<K, V>	**node, Node<K, V> **tmp) {
 			*tmp = (*node)->parent->parent->leftChild;
 			if ((*tmp)->red == true) {
 				(*tmp)->red = false;
@@ -42,7 +42,7 @@ class RedBlackTree {
 			}
 		}
 
-		void	leftChildFix(Node<K, V>	**node, Node<K, V> **tmp) {
+		void	leftChildFixInsert(Node<K, V>	**node, Node<K, V> **tmp) {
 			(*tmp) = (*node)->parent->parent->rightChild;
 			if ((*tmp)->red == true) {
 				(*tmp)->red = false;
@@ -71,14 +71,67 @@ class RedBlackTree {
 			while (node->parent != nullptr && node->parent->red == true) {
 				// parent is right child
 				if (node->parent == node->parent->parent->rightChild) {
-					rightChildFix(&node, &tmp);
+					rightChildFixInsert(&node, &tmp);
 				}
 				// parent is left child 
 				else {
-					leftChildFix(&node, &tmp);
+					leftChildFixInsert(&node, &tmp);
 				}
 			}
 			this->root->red = false;
+		}
+
+		void	leftChildFixDelete(Node<K, V>	**node, Node<K, V> **tmpS){
+			(*tmpS) = (*node)->parent->rightChild;
+			if ((*tmpS)->red == true) {
+				(*tmpS)->red = false;
+				(*node)->parent->red = true;
+				leftRotation((*node)->parent);
+				(*tmpS) = (*node)->parent->rightChild;
+			}
+			if ((*tmpS)->leftChild->red == false && (*tmpS)->rightChild->red == false) {
+				(*tmpS)->red = true;
+				(*node) = (*node)->parent;
+			} else {
+				if ((*tmpS)->rightChild->red == false) {
+					(*tmpS)->leftChild->red = false;
+					(*tmpS)->red = true;
+					rightRotation((*tmpS));
+					(*tmpS) = (*node)->parent->rightChild;
+				}
+
+				(*tmpS)->red = (*node)->parent->red;
+				(*node)->parent->red = false;
+				(*tmpS)->rightChild->red = false;
+				leftRotation((*node)->parent);
+				(*node) = this->root;
+			}
+		}
+
+		void	rightChildFixDelete(Node<K, V>	**node, Node<K, V> **tmpS) {
+			(*tmpS) = (*node)->parent->leftChild;
+			if ((*tmpS)->red == true) {
+				(*tmpS)->red = false;
+				(*node)->parent->red = true;
+				rightRotation((*node)->parent);
+				(*tmpS) = (*node)->parent->leftChild;
+			}
+			if ((*tmpS)->rightChild->red == false && (*tmpS)->rightChild->red == false) {
+				(*tmpS)->red = true;
+				(*node) = (*node)->parent;
+			} else {
+				if ((*tmpS)->leftChild->red == false) {
+					(*tmpS)->rightChild->red = false;
+					(*tmpS)->red = true;
+					leftRotation((*tmpS));
+					(*tmpS) = (*node)->parent->leftChild;
+				}
+				(*tmpS)->red = (*node)->parent->red;
+				(*node)->parent->red = false;
+				(*tmpS)->leftChild->red = false;
+				rightRotation((*node)->parent);
+				(*node) = this->root;
+			}
 		}
 
 		// private function to fix rbt properties violation in the delete of a node
@@ -87,54 +140,9 @@ class RedBlackTree {
 
 			while (node != root && node->red == false) {
 				if (node == node->parent->leftChild) {
-					tmpS = node->parent->rightChild;
-					if (tmpS->red == true) {
-						tmpS->red = false;
-						node->parent->red = true;
-						leftRotation(node->parent);
-						tmpS = node->parent->rightChild;
-					}
-					if (tmpS->leftChild->red == false && tmpS->rightChild->red == false) {
-						tmpS->red = true;
-						node = node->parent;
-					} else {
-						if (tmpS->rightChild->red == false) {
-							tmpS->leftChild->red = false;
-							tmpS->red = true;
-							rightRotation(tmpS);
-							tmpS = node->parent->rightChild;
-						}
-
-						tmpS->red = node->parent->red;
-						node->parent->red = false;
-						tmpS->rightChild->red = false;
-						leftRotation(node->parent);
-						node = this->root;
-					}
+					leftChildFixDelete(&node, &tmpS);
 				} else {
-					tmpS = node->parent->leftChild;
-					if (tmpS->red == true) {
-						tmpS->red = false;
-						node->parent->red = true;
-						rightRotation(node->parent);
-						tmpS = node->parent->leftChild;
-					}
-					if (tmpS->rightChild->red == false && tmpS->rightChild->red == false) {
-						tmpS->red = true;
-						node = node->parent;
-					} else {
-						if (tmpS->leftChild->red == false) {
-							tmpS->rightChild->red = false;
-							tmpS->red = true;
-							leftRotation(tmpS);
-							tmpS = node->parent->leftChild;
-						}
-						tmpS->red = node->parent->red;
-						node->parent->red = false;
-						tmpS->leftChild->red = false;
-						rightRotation(node->parent);
-						node = this->root;
-					}
+					rightChildFixDelete(&node, &tmpS);
 				}
 			}
 			node->red = false;
