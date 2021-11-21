@@ -22,6 +22,44 @@ class RedBlackTree {
 		Node<K, V>	*root;
 		Node<K, V>	*nullNode;
 
+
+		void	rightChildFix(Node<K, V>	**node, Node<K, V> **tmp) {
+			*tmp = (*node)->parent->parent->leftChild;
+			if ((*tmp)->red == true) {
+				(*tmp)->red = false;
+				(*node)->parent->red = false;
+				(*node)->parent->parent->red = true;
+				(*node) = (*node)->parent->parent;
+			} else {
+				// node is left child (line)
+				if ((*node) == (*node)->parent->leftChild) {
+					(*node) = (*node)->parent;
+					rightRotation((*node));
+				}
+				(*node)->parent->red = false;
+				(*node)->parent->parent->red = true;
+				leftRotation((*node)->parent->parent);
+			}
+		}
+
+		void	leftChildFix(Node<K, V>	**node, Node<K, V> **tmp) {
+			(*tmp) = (*node)->parent->parent->rightChild;
+			if ((*tmp)->red == true) {
+				(*tmp)->red = false;
+				(*node)->parent->red = false;
+				(*node)->parent->parent->red = true;
+				(*node) = (*node)->parent->parent;
+			} else {
+				// node is right child (line)
+				if ((*node) == (*node)->parent->rightChild) {
+					(*node) = (*node)->parent;
+					leftRotation((*node));
+				}
+				(*node)->parent->red = false;
+				(*node)->parent->parent->red = true;
+				rightRotation((*node)->parent->parent);
+			}
+		}
 		// private function to fix rbt properties violation in the insert of new node
 		void	fixInsert(Node<K, V> *node) {
 			Node<K, V>	*tmp;
@@ -33,41 +71,11 @@ class RedBlackTree {
 			while (node->parent != nullptr && node->parent->red == true) {
 				// parent is right child
 				if (node->parent == node->parent->parent->rightChild) {
-					tmp = node->parent->parent->leftChild;
-					if (tmp->red == true) {
-						tmp->red = false;
-						node->parent->red = false;
-						node->parent->parent->red = true;
-						node = node->parent->parent;
-					} else {
-						// node is left child (line)
-						if (node == node->parent->leftChild) {
-							node = node->parent;
-							rightRotation(node);
-						}
-						node->parent->red = false;
-						node->parent->parent->red = true;
-						leftRotation(node->parent->parent);
-					}
+					rightChildFix(&node, &tmp);
 				}
 				// parent is left child 
 				else {
-					tmp = node->parent->parent->rightChild;
-					if (tmp->red == true) {
-						tmp->red = false;
-						node->parent->red = false;
-						node->parent->parent->red = true;
-						node = node->parent->parent;
-					} else {
-						// node is right child (line)
-						if (node == node->parent->rightChild) {
-							node = node->parent;
-							leftRotation(node);
-						}
-						node->parent->red = false;
-						node->parent->parent->red = true;
-						rightRotation(node->parent->parent);
-					}
+					leftChildFix(&node, &tmp);
 				}
 			}
 			this->root->red = false;
