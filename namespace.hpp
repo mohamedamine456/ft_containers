@@ -99,6 +99,10 @@ namespace ft {
 	template < class Category, class T >
 	class bidirectional_iterator;
 
+	// map iterator
+	template < class Node >
+	class map_iterator;
+
 	// equal
 	template < class InputIterator1, class InputIterator2 >
 	bool equal (InputIterator1 first1, InputIterator1 last1, InputIterator2 first2);

@@ -176,14 +176,64 @@ bool    operator!= (ft::bidirectional_iterator<Category, T> fir, ft::bidirection
 // map iterator
 
 template <class Node>
-class map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iterator_tag, Node>
+class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iterator_tag, Node>
 {
+    private:
+        Node	*minimum(Node *node) {
+			Node	*tmp = node;
+			while (tmp->leftChild != nullNode)
+				tmp = tmp->leftChild;
+			return tmp;
+        }
+
+        Node	*maximum(Node *node) {
+			Node	*tmp = node;
+			while (tmp->rightChild != nullNode)
+				tmp = tmp->rightChild;
+			return tmp;
+        }
+        Node	*successor(Node *node) {
+			Node	*tmp = node;
+			Node	*tmp1;
+			if (tmp->rightChild != nullNode)
+				return this->minimum(tmp->rightChild);
+			tmp1 = tmp->parent;
+			while (tmp1 != nullptr && tmp1 != nullNode && tmp == tmp1->rightChild)
+			{
+				tmp = tmp1;
+				tmp1 = tmp1->parent;
+			}
+			return tmp1;
+        }
+
+        Node	*predecessor(Node *node) {
+			Node	*tmp = node;
+			Node	*tmp1;
+			if (tmp->leftChild != nullNode)
+				return this->maximum(tmp->leftChild);
+			tmp1 = tmp->parent;
+			while (tmp1 != nullptr && tmp1 != nullNode && tmp == tmp1->leftChild)
+			{
+				tmp = tmp1;
+				tmp1 = tmp1->parent;
+			}
+			return tmp1;
+        }
+
     public:
         map_iterator () {}
-        map_iterator (Node *node) {
-            
+        map_iterator (Node *node): ft::bididerctional_iterator(node) {}
+        template < class N >
+        map_iterator( const map_iterator<N> &mp_it ) : __p(mp_it.base()) {}
+        virtual ~map_iterator() {}
+
+        map_iterator    &operator= ( const map_iterator &mp_it ) {
+            this->__p = mp_it.__p;
+            return *this;
         }
-}
+
+
+};
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 
