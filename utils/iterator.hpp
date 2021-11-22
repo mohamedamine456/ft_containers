@@ -2,6 +2,7 @@
 #define ITERATOR_HPP
 
 #include "../namespace.hpp"
+#include "pair.hpp"
 #include "redBlackTree.hpp"
 
 // iterator class
@@ -273,7 +274,17 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
             return tmp;
         }
 
-		// ft::pair<Key, Value>
+		ft::pair<Key, Value>    operator*() const {
+            return this->__p->data;
+        }
+
+        // typename ft::pair<Key, Value>::first    operator->() const {
+        //     return this->__p->data.first;
+        // }
+
+        // typename ft::pair<Key, Value>::second    operator->() const {
+        //     return this->__p->data.second;
+        // }
 };
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
