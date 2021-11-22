@@ -42,7 +42,7 @@ class ft::map
 		
 		allocator_type																__allocator;
 		size_type																	__size;
-		RedBlackTree<key_type, mapped_type, Allocator>						__rbtree;
+		RedBlackTree<key_type, mapped_type, Compare>                              __rbtree;
 		key_compare																	__key_comp;
 		value_compare																__value_compare;
 	public:
@@ -56,10 +56,10 @@ class ft::map
         }
 
 		// range constructor
-        template < class InputIterator >
-        map ( InputIterator first, InputIterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() ) {
+        template < class Iterator >
+        map ( Iterator first, Iterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() ) {
             while (first!= last) {
-                __rbtree.insertNode(*first);
+                __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
                 first++;
             }
         }
