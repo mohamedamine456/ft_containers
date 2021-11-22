@@ -389,14 +389,14 @@ class RedBlackTree {
 
         Node<K, V>	*minimum(Node<K, V> *node) {
 			Node<K, V>	*tmp = node;
-			while (tmp->leftChild != nullNode)
+			while (tmp->leftChild != nullptr && tmp->leftChild != nullNode)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
         Node<K, V>	*maximum(Node<K, V> *node) {
 			Node<K, V>	*tmp = node;
-			while (tmp->rightChild != nullNode)
+			while (tmp->rightChild != nullptr && tmp->rightChild != nullNode)
 				tmp = tmp->rightChild;
 			return tmp;
         }

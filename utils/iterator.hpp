@@ -186,14 +186,14 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
 
         Node<Key, Value>	*minimum(Node<Key, Value> *node) {
 			Node<Key, Value>	*tmp = node;
-			while (tmp->leftChild != nullNode)
+			while (tmp->leftChild != nullptr && tmp->leftChild != nullNode)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
         Node<Key, Value>	*maximum(Node<Key, Value> *node) {
 			Node<Key, Value>	*tmp = node;
-			while (tmp->rightChild != nullNode)
+			while (tmp->rightChild != nullptr && tmp->rightChild != nullNode)
 				tmp = tmp->rightChild;
 			return tmp;
         }
