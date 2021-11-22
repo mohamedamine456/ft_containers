@@ -205,8 +205,12 @@ class ft::map
 		}
 
         // (Operations equal_range
-        pair< const_iterator, const_iterator>	equal_range( const key_type& k ) const;
-        pair<iterator, iterator>				equal_range( const key_type& k);
+        pair< const_iterator, const_iterator>	equal_range( const key_type& k ) const {
+
+        }
+        pair<iterator, iterator>				equal_range( const key_type& k) {
+            
+        }
 
         // (Allocator) get_allocator
         allocator_type							get_allocator() const {

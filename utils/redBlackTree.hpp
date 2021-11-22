@@ -22,7 +22,7 @@ class RedBlackTree {
 		Node<K, V>	*root;
 		Node<K, V>	*nullNode;
 
-
+		// fix violation if node is right child node (insert)
 		void	rightChildFixInsert(Node<K, V>	**node, Node<K, V> **tmp) {
 			*tmp = (*node)->parent->parent->leftChild;
 			if ((*tmp)->red == true) {
@@ -42,6 +42,7 @@ class RedBlackTree {
 			}
 		}
 
+		// fix violation if node is left child node (insert)
 		void	leftChildFixInsert(Node<K, V>	**node, Node<K, V> **tmp) {
 			(*tmp) = (*node)->parent->parent->rightChild;
 			if ((*tmp)->red == true) {
@@ -81,6 +82,7 @@ class RedBlackTree {
 			this->root->red = false;
 		}
 
+		// fix violation if node is left child node (delete)
 		void	leftChildFixDelete(Node<K, V>	**node, Node<K, V> **tmpS){
 			(*tmpS) = (*node)->parent->rightChild;
 			if ((*tmpS)->red == true) {
@@ -108,6 +110,7 @@ class RedBlackTree {
 			}
 		}
 
+		// fix violation if node is right child node (delete)
 		void	rightChildFixDelete(Node<K, V>	**node, Node<K, V> **tmpS) {
 			(*tmpS) = (*node)->parent->leftChild;
 			if ((*tmpS)->red == true) {

@@ -121,7 +121,7 @@ typename ft::iterator<Category, T>::difference_type operator- (
 template < class Category, class T >
 class ft::bidirectional_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag, T>
 {
-    private:
+    protected:
         T*  __p;
     public:
         bidirectional_iterator () {}
@@ -170,6 +170,19 @@ bool    operator== (ft::bidirectional_iterator<Category, T> fir, ft::bidirection
 template< class Category, class T>
 bool    operator!= (ft::bidirectional_iterator<Category, T> fir, ft::bidirectional_iterator<Category, T> sec) {
     return fir.base() != sec.base();
+}
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+// map iterator
+
+template <class Node>
+class map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iterator_tag, Node>
+{
+    public:
+        map_iterator () {}
+        map_iterator (Node *node) {
+            
+        }
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
@@ -285,107 +298,6 @@ typename ft::reverse_iterator<Iterator>::difference_type operator- (
     const ft::reverse_iterator<Iterator>& lhs,
     const ft::reverse_iterator<Iterator>& rhs) {
         return static_cast<typename ft::reverse_iterator<Iterator>::difference_type>(rhs.base() - lhs.base());
-}
-
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-// back_insert_iterator
-template < class Container >
-class ft::back_insert_iterator: public ft::iterator_base<ft::output_iterator_tag, void, void, void, void>
-{
-    protected:
-        Container *container;
-    public:
-        typedef Container container_type;
-        back_insert_iterator (Container &c) : container(c) {}
-        ft::back_insert_iterator<Container>& operator= (typename Container::const_reference value) {
-            container->push_back(value);
-            return (*this);
-        }
-        ft::back_insert_iterator<Container>& operator* () {
-            return *this;   
-        }
-        ft::back_insert_iterator<Container>& operator++() {
-            return (*this);
-        }
-        ft::back_insert_iterator<Container> operator++(int) {
-            return *this;
-        }
-        virtual ~back_insert_iterator() {}
-};
-
-// back_inserter
-template < class Container>
-ft::back_insert_iterator< Container > ft::back_inserter (Container &c)
-{
-    return ft::back_insert_iterator<Container>(c);
-}
-
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-// front_insert_iterator
-template < class Container >
-class ft::front_insert_iterator: public ft::iterator_base<ft::output_iterator_tag, void, void, void, void>
-{
-    protected:
-        Container *container;
-    public:
-        typedef Container container_type;
-        front_insert_iterator (Container &c): container(&c) {}
-        ft::front_insert_iterator<Container>& operator= (typename Container::const_reference value) {
-            container->push_front(value);
-            return *this;
-        }
-        ft::front_insert_iterator<Container>& operator* () {
-            return *this;
-        }
-        ft::front_insert_iterator<Container>& operator++ () {
-            return *this;
-        }
-        ft::front_insert_iterator<Container>& operator++(int) {
-            return *this;
-        }
-        virtual ~front_insert_iterator() {}
-};
-
-// front_inserter
-template < class Container >
-ft::front_insert_iterator< Container > ft::front_inserter (Container &c) {
-    return front_insert_iterator<Container>(c);
-}
-
-/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
-
-// insert_iterator
-template < class Container >
-class ft::insert_iterator: public ft::iterator_base<ft::output_iterator_tag, void, void,void, void>
-{
-    protected:
-        Container *container;
-        typename Container::iterator    iter;
-    public:
-        insert_iterator(Container &c, typename Container::iterator i) : container(c), iter(i) {}
-        ft::insert_iterator<Container>& operator= (typename Container::const_reference value) {
-            iter = container->insert(iter, value);
-            ++iter;
-            return *this;
-        }
-        ft::insert_iterator<Container>& operator* () {
-            return *this;
-        }
-        ft::insert_iterator<Container>& operator++ () {
-            return *this;
-        }
-        ft::insert_iterator<Container>& operator++(int) {
-            return *this;
-        }
-        virtual ~insert_iterator() {}
-};
-
-// inserter
-template < class Container >
-ft::insert_iterator< Container > ft::inserter (Container &c, typename Container::iterator iter) {
-    return insert_iterator<Container>(c, iter);
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
