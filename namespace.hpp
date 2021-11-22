@@ -100,7 +100,7 @@ namespace ft {
 	class bidirectional_iterator;
 
 	// map iterator
-	template < class Node >
+	template <class Key, class Value>
 	class map_iterator;
 
 	// equal
