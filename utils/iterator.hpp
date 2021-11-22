@@ -2,6 +2,7 @@
 #define ITERATOR_HPP
 
 #include "../namespace.hpp"
+#include "redBlackTree.hpp"
 
 // iterator class
 template < class Category, class T >
@@ -175,26 +176,29 @@ bool    operator!= (ft::bidirectional_iterator<Category, T> fir, ft::bidirection
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 // map iterator
 
-template <class Node>
-class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iterator_tag, Node>
+template <class Key, class Value>
+class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iterator_tag, Node< Key, Value > >
 {
     private:
-        Node	*minimum(Node *node) {
-			Node	*tmp = node;
+        Node<Key, Value>					*nullNode;
+        std::allocator< Node <Key,Value> >	__alloc;
+
+        Node<Key, Value>	*minimum(Node<Key, Value> *node) {
+			Node<Key, Value>	*tmp = node;
 			while (tmp->leftChild != nullNode)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
-        Node	*maximum(Node *node) {
-			Node	*tmp = node;
+        Node<Key, Value>	*maximum(Node<Key, Value> *node) {
+			Node<Key, Value>	*tmp = node;
 			while (tmp->rightChild != nullNode)
 				tmp = tmp->rightChild;
 			return tmp;
         }
-        Node	*successor(Node *node) {
-			Node	*tmp = node;
-			Node	*tmp1;
+        Node<Key, Value>	*successor(Node<Key, Value> *node) {
+			Node<Key, Value>	*tmp = node;
+			Node<Key, Value>	*tmp1;
 			if (tmp->rightChild != nullNode)
 				return this->minimum(tmp->rightChild);
 			tmp1 = tmp->parent;
@@ -206,9 +210,9 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
 			return tmp1;
         }
 
-        Node	*predecessor(Node *node) {
-			Node	*tmp = node;
-			Node	*tmp1;
+        Node<Key, Value>	*predecessor(Node<Key, Value> *node) {
+			Node<Key, Value>	*tmp = node;
+			Node<Key, Value>	*tmp1;
 			if (tmp->leftChild != nullNode)
 				return this->maximum(tmp->leftChild);
 			tmp1 = tmp->parent;
@@ -221,10 +225,25 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
         }
 
     public:
-        map_iterator () {}
-        map_iterator (Node *node): ft::bididerctional_iterator(node) {}
-        template < class N >
-        map_iterator( const map_iterator<N> &mp_it ) : __p(mp_it.base()) {}
+        map_iterator () {
+            nullNode = __alloc.allocate(1);
+			nullNode->parent = nullptr;
+			nullNode->leftChild = nullptr;
+			nullNode->rightChild = nullptr;
+			nullNode->red = false;
+        }
+        map_iterator (Node<Key, Value> *node) {
+			this->__p = node;
+            nullNode = __alloc.allocate(1);
+			nullNode->parent = nullptr;
+			nullNode->leftChild = nullptr;
+			nullNode->rightChild = nullptr;
+			nullNode->red = false;
+        }
+        template < class K, class V >
+        map_iterator( const map_iterator<K, V> &mp_it ){
+			this->__p = mp_it.base();
+		}
         virtual ~map_iterator() {}
 
         map_iterator    &operator= ( const map_iterator &mp_it ) {
@@ -232,7 +251,29 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
             return *this;
         }
 
+        map_iterator    &operator++() {
+            this->__p = successor(this->__p);
+            return *this;
+        }
 
+        map_iterator    operator++(int) {
+            map_iterator    tmp(*this);
+            this->__p = successor(this->__p);
+            return tmp;
+        }
+
+		map_iterator    &operator--() {
+            this->__p = predecessor(this->__p);
+            return *this;
+        }
+
+        map_iterator    operator--(int) {
+            map_iterator    tmp(*this);
+            this->__p = predecessor(this->__p);
+            return tmp;
+        }
+
+		// ft::pair<Key, Value>
 };
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
