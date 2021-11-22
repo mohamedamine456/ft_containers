@@ -226,6 +226,7 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
         }
 
     public:
+
         map_iterator () {
             nullNode = __alloc.allocate(1);
 			nullNode->parent = nullptr;
@@ -274,17 +275,13 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
             return tmp;
         }
 
-		ft::pair<Key, Value>    operator*() const {
+		ft::pair<Key, Value>	&operator*() const {
             return this->__p->data;
         }
 
-        // typename ft::pair<Key, Value>::first    operator->() const {
-        //     return this->__p->data.first;
-        // }
-
-        // typename ft::pair<Key, Value>::second    operator->() const {
-        //     return this->__p->data.second;
-        // }
+        typename ft::pair<Key, Value>    *operator->() const {
+            return &(this->__p->data);
+        }
 };
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
