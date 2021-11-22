@@ -3,6 +3,7 @@
 
 #include "namespace.hpp"
 #include "utils/redBlackTree.hpp"
+#include "utils/iterator.hpp"
 
 template < class Key, class T, class Compare, class Allocator >
 class ft::map
@@ -28,6 +29,7 @@ class ft::map
                 Compare comp;
                 value_compare (Compare c) : comp(c) {}	// constructor;
             public:
+                value_compare () {}
                 typedef bool			result_type;
                 typedef value_type		first_argumanet_type;
                 typedef value_type		second_argument_type;
@@ -40,7 +42,7 @@ class ft::map
 		
 		allocator_type																__allocator;
 		size_type																	__size;
-		RedBlackTree<Key, T, Compare, Allocator>									__rbtree;
+		RedBlackTree<key_type, mapped_type, Allocator>						__rbtree;
 		key_compare																	__key_comp;
 		value_compare																__value_compare;
 	public:
@@ -83,32 +85,32 @@ class ft::map
 
         // (Iterators) begin & end
         iterator								begin() {
-            return iterator(__rbtree.minimum());
+            return iterator(__rbtree.minimum(__rbtree.getRoot()));
 		}
         const_iterator							begin() const {
-            return const_iterator(__rbtree.minimum());
+            return const_iterator(__rbtree.minimum(__rbtree.getRoot()));
 		}
 
         iterator								end() {
-            return iterator(__rbtree.maximum());
+            return iterator(__rbtree.maximum(__rbtree.getRoot()));
 		}
         const_iterator							end() const {
-            return const_iterator(__rbtree.maximum());
+            return const_iterator(__rbtree.maximum(__rbtree.getRoot()));
 		}
 
         // (Iterators) rbegin & rend
         reverse_iterator						rbegin() {
-            return reverse_iterator(__rbtree.maximum());
+            return reverse_iterator(__rbtree.maximum(__rbtree.getRoot()));
 		}
         const_reverse_iterator					rbegin() const {
-            return const_reverse_iterator(__rbtree.maximum());
+            return const_reverse_iterator(__rbtree.maximum(__rbtree.getRoot()));
 		}
 
         reverse_iterator						rend() {
-            return reverse_iterator(__rbtree.minimum());
+            return reverse_iterator(__rbtree.minimum(__rbtree.getRoot()));
 		}
         const_reverse_iterator					rend() const {
-            return const_reverse_iterator(__rbtree.minimum());
+            return const_reverse_iterator(__rbtree.minimum(__rbtree.getRoot()));
 		}
 
         // (Capacity) empty
