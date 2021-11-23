@@ -10,9 +10,18 @@ int main() {
         }
 
         ft::map<int, int> mp(mpp.begin(), mpp.end());
-        ft::map<int, int>::iterator it;
+        mp.insert(ft::make_pair(13, 841));
+        mp.insert(ft::make_pair(15, 78));
+        ft::map<int, int>::iterator it = mp.begin();
+        it++;
+        it++;
+        mp.insert(it, ft::make_pair(45, 654));
+        mp[23] = 1450;
+        mp[25] = 784;
+        mp[25] = 1;
         for (it = mp.begin(); it != mp.end(); it++)
             std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
         std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
+        std::cout << "Size: " << mp.size() << std::endl;
     }
 }

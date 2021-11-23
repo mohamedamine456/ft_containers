@@ -58,6 +58,9 @@ class ft::map
 		// range constructor
         template < class Iterator >
         map ( Iterator first, Iterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() ) {
+            (void)comp;
+            (void)alloc;
+            __size = 0;
             while (first != last) {
                 Node<Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
                 if (tmp != __rbtree.getNullNode())
@@ -65,6 +68,7 @@ class ft::map
                 else
                     __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
                 first++;
+                __size++;
             }
         }
 
@@ -73,9 +77,7 @@ class ft::map
             *this = mp;
 		}
         // destructor
-        ~map() {
-
-		}
+        ~map() {}
 
         // operator=
         map& operator= ( const map& mp ) {
@@ -129,24 +131,54 @@ class ft::map
         size_type								size() const {
             return this->__size;
 		}
+
         size_type								max_size() const {
             return __allocator.max_size();
 		}
 
         // (Element access) operator[]
         mapped_type&							operator[] ( const key_type& k ) {
-
+            Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
+            if (tmp != __rbtree.getNullNode()) {
+                return tmp->data.second;
+            }
+            else {
+                tmp = __rbtree.newNode(k, 0);
+                __rbtree.insertNode(tmp);
+                __size++;
+                return tmp->data.second;
+            }
 		}
 
         // (Modifiers) insert
         ft::pair<iterator, bool>					insert( const value_type& val ) {
-            // __rbtree.insertNode(__rbtree.newNode(val.first, val.second));
-            // __size++;
-            // return ft::make_pair()
+            Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
+            if (tmp != __rbtree.getNullNode()) {
+                tmp->data.second = val.second;
+                return ft::make_pair(iterator(tmp), false);
+            }
+            else {
+                tmp = __rbtree.newNode(val.first, val.second);
+                __rbtree.insertNode(tmp);
+                __size++;
+                return ft::make_pair(iterator(tmp), true);
+            }
 		}
-        iterator								insert( iterator position, const value_type& val ) {
 
+        iterator								insert( iterator position, const value_type& val ) {
+            Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
+            if (tmp != __rbtree.getNullNode()) {
+                tmp->data.second = val.second;
+                return iterator(tmp);
+            }
+            else {
+                tmp = __rbtree.newNode(val.first, val.second);
+                __rbtree.insertNode(tmp);
+                __size++;
+                return iterator(tmp);
+            }
 		}
+
         template < class InputIterator >
         void									insert( InputIterator first, InputIterator last ) {
 
@@ -228,39 +260,39 @@ class ft::map
         // should add relational operators & swap
 };
 
-template < class Key, class T, class Compare, class Alloc >
-bool    operator== (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
+// template < class Key, class T, class Compare, class Alloc >
+// bool    operator== (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
 
-}
+// }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator!= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
+// template < class Key, class T, class Compare, class Alloc > 
+// bool    operator!= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
     
-}
+// }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator< (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
+// template < class Key, class T, class Compare, class Alloc > 
+// bool    operator< (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
     
-}
+// }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator<= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
+// template < class Key, class T, class Compare, class Alloc > 
+// bool    operator<= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
     
-}
+// }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator> (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
+// template < class Key, class T, class Compare, class Alloc > 
+// bool    operator> (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
     
-}
+// }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator>= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
+// template < class Key, class T, class Compare, class Alloc > 
+// bool    operator>= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
     
-}
+// }
 
-template < class Key, class T, class Compare, class Alloc >
-void swap(ft::map<Key, T, Compare, Alloc> &lhs, ft::map<Key, T, Compare, Alloc> &rhs) {
-    lhs.swap(rhs);
-}
+// template < class Key, class T, class Compare, class Alloc >
+// void swap(ft::map<Key, T, Compare, Alloc> &lhs, ft::map<Key, T, Compare, Alloc> &rhs) {
+//     lhs.swap(rhs);
+// }
 
 #endif
