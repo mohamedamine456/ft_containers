@@ -228,9 +228,9 @@ class RedBlackTree {
 
         ~RedBlackTree() {}
 
-        RedBlackTree &operator= (RedBlackTree &rbt) {
+        RedBlackTree &operator= (RedBlackTree const &rbt) {
 			this->root = rbt.root;
-			this->size = rbt.size;
+			this->__size = rbt.__size;
 			this->nullNode = rbt.nullNode;
 			this->__alloc = rbt.__alloc;
             return *this;
@@ -383,8 +383,9 @@ class RedBlackTree {
 			return tmp1;
         }
 
-        Node<K, V>	*searchNode(Node<K, V> *node, const K key) const {
-			Node<K, V>	*tmp = node;
+		template<class T, class U>
+        Node<T, U>	*searchNode(Node<T, U> *node, const K key) const {
+			Node<T, U>	*tmp = node;
 			while (tmp != nullNode)
 			{
 				if (tmp->data.first == key)
