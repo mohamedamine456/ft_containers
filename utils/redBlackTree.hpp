@@ -355,7 +355,7 @@ class RedBlackTree {
 			deleteNode(node);
         }
 
-        Node<K, V>	*successor(Node<K, V> *node) {
+        Node<K, V>	*successor(Node<K, V> *node) const {
 			Node<K, V>	*tmp = node;
 			Node<K, V>	*tmp1;
 			if (tmp->rightChild != nullNode)
@@ -369,7 +369,7 @@ class RedBlackTree {
 			return tmp1;
         }
 
-        Node<K, V>	*predecessor(Node<K, V> *node) {
+        Node<K, V>	*predecessor(Node<K, V> *node) const {
 			Node<K, V>	*tmp = node;
 			Node<K, V>	*tmp1;
 			if (tmp->leftChild != nullNode)
@@ -383,7 +383,7 @@ class RedBlackTree {
 			return tmp1;
         }
 
-        Node<K, V>	*searchNode(Node<K, V> *node, K key) {
+        Node<K, V>	*searchNode(Node<K, V> *node, const K key) const {
 			Node<K, V>	*tmp = node;
 			while (tmp != nullNode)
 			{
@@ -397,21 +397,21 @@ class RedBlackTree {
 			return tmp;
         }
 
-        Node<K, V>	*minimum(Node<K, V> *node) {
+        Node<K, V>	*minimum(Node<K, V> *node) const {
 			Node<K, V>	*tmp = node;
 			while (tmp->leftChild != nullptr && tmp->leftChild != nullNode)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
-        Node<K, V>	*maximum(Node<K, V> *node) {
+        Node<K, V>	*maximum(Node<K, V> *node) const {
 			Node<K, V>	*tmp = node;
 			while (tmp->rightChild != nullptr && tmp->rightChild != nullNode)
 				tmp = tmp->rightChild;
 			return tmp;
         }
 
-		void	printRBT(Node<K, V> *node, std::string pre, bool last) {
+		void	printRBT(Node<K, V> *node, std::string pre, bool last) const {
 			if (node != this->nullNode) {
 				std::cout << pre;
 				if (last) {

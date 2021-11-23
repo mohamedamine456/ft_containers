@@ -214,11 +214,23 @@ class ft::map
 		}
 
         // (Operations) find
-        iterator								find( const key_type& k ) {
-
-		}
+        // iterator								find( const key_type& k ) {
+        //     Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
+        //     if (tmp != __rbtree.getNullNode()) {
+        //         return iterator(tmp);
+        //     }
+        //     else {
+        //         return this->end();
+        //     }
+		// }
         const_iterator							find( const key_type& k ) const {
-
+            Node<const Key, const T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
+            if (tmp != __rbtree.getNullNode()) {
+                return const_iterator(tmp);
+            }
+            else {
+                this->end();
+            }
 		}
 
         // (Operations) count

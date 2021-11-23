@@ -22,6 +22,10 @@ int main() {
         for (it = mp.begin(); it != mp.end(); it++)
             std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
         std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
+
+        std::cout << "-----------------------------------------------------\n";
+        ft::map<int, int>::const_iterator itf = mp.find(25);
+        std::cout << "key: " << itf->first << ", value: " << itf->second << std::endl;
         std::cout << "Size: " << mp.size() << std::endl;
     }
 }
