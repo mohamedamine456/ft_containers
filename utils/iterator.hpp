@@ -137,7 +137,7 @@ class ft::bidirectional_iterator: public ft::iterator_base<ft::bidirectional_ite
         bidirectional_iterator& operator= ( const bidirectional_iterator& cp ) {
             this->__p = cp.__p;
             return *this;
-        } 
+        }
         bidirectional_iterator& operator++ () {
             ++__p;
             return *this;
@@ -177,8 +177,8 @@ bool    operator!= (ft::bidirectional_iterator<Category, T> fir, ft::bidirection
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 // map iterator
 
-template <class Key, class Value>
-class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iterator_tag, Node< Key, Value > >
+template <class Category, class Key, class Value>
+class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag, Node<Key, Value> >
 {
     private:
         Node<Key, Value>	*minimum(Node<Key, Value> *node) {
@@ -222,56 +222,63 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
 			return tmp1;
         }
 
+        // attributes
+        Node<Key, Value>  *__node;
+
     public:
 
-        map_iterator () {
-        }
+        map_iterator () {}
 		
-        map_iterator (Node<Key, Value> *node) {
-			this->__p = node;
-        }
+        map_iterator (Node<Key, Value> *node): __node(node) {}
 
         template < class K, class V >
-        map_iterator( map_iterator<K, V> const &mp_it ) {
-			this->__p = mp_it.base();
-		}
+        map_iterator( const map_iterator<ft::bidirectional_iterator_tag, K, V> &mp_it ): __node(mp_it.base()) {}
+
         virtual ~map_iterator() {}
 
         map_iterator    &operator= ( const map_iterator &mp_it ) {
-            this->__p = mp_it.__p;
+            this->__node = mp_it.__node;
             return *this;
         }
-
+        Node<Key, Value>    *base() const{
+            return this->__node;
+        }
         map_iterator    &operator++() {
-            this->__p = successor(this->__p);
+            this->__node = successor(this->__node);
             return *this;
         }
-
         map_iterator    operator++(int) {
             map_iterator    tmp(*this);
-            this->__p = successor(this->__p);
+            this->__node = successor(this->__node);
             return tmp;
         }
-
 		map_iterator    &operator--() {
-            this->__p = predecessor(this->__p);
+            this->__node = predecessor(this->__node);
             return *this;
         }
-
         map_iterator    operator--(int) {
             map_iterator    tmp(*this);
-            this->__p = predecessor(this->__p);
+            this->__node = predecessor(this->__node);
             return tmp;
         }
-
 		ft::pair<Key, Value>	&operator*() const {
-            return this->__p->data;
+            return this->__node->data;
         }
 
         typename ft::pair<Key, Value>    *operator->() const {
-            return &(this->__p->data);
+            return &(this->__node->data);
         }
 };
+
+template< class Category, class K, class V>
+bool    operator== (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Category, K, V> sec) {
+    return fir.base() == sec.base();
+}
+
+template< class Category, class K, class V >
+bool    operator!= (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Category, K, V> sec) {
+    return fir.base() != sec.base();
+}
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 

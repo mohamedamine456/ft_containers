@@ -18,8 +18,8 @@ class ft::map
         typedef const value_type&													const_reference;
         typedef typename allocator_type::pointer									pointer;
         typedef typename allocator_type::const_pointer								const_pointer;
-        typedef ft::map_iterator<Key, T>                                            iterator;
-        typedef ft::map_iterator<const Key, const T>                                const_iterator;
+        typedef ft::map_iterator<bidirectional_iterator_tag, Key, T>                                            iterator;
+        typedef ft::map_iterator<bidirectional_iterator_tag, const Key, const T>                                const_iterator;
         typedef ft::reverse_iterator<iterator>										reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
         typedef typename ft::iterator_traits<iterator>::difference_type				difference_type;
