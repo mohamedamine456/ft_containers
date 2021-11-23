@@ -21,18 +21,18 @@ int main() {
     if (rbt.insertNode(tmpNode) == false) {
         std::cout << "Key:" << tmpNode->data.first << " already exists.\n";
     }
-    for (Node<int ,int> *min = rbt.minimum(rbt.getRoot()); min != rbt.maximum(rbt.getRoot()); min = rbt.successor(min)) {
-        std::cout << "[" << min->data.first << ", " << min->data.second << "], (" << (min->red ? "RED" : "BLACK") << ")\n";
-    }
-    // rbt.printRBT(rbt.getRoot(), "", true);
+    // for (Node<int ,int> *min = rbt.minimum(rbt.getRoot()); min != rbt.maximum(rbt.getRoot()); min = rbt.successor(min)) {
+    //     std::cout << "[" << min->data.first << ", " << min->data.second << "], (" << (min->red ? "RED" : "BLACK") << ")\n";
+    // }
+    rbt.printRBT(rbt.getRoot(), "", true);
     rbt.deleteNode(nodes[7]);
     rbt.deleteNode(nodes[12]);
     rbt.deleteNode(nodes[17]);
     rbt.deleteNode(nodes[22]);
-    // rbt.printRBT(rbt.getRoot(), "", true);
-    std::cout << "---------------------------\n\n";
-    for (Node<int ,int> *min = rbt.minimum(rbt.getRoot()); min != rbt.maximum(rbt.getRoot()); min = rbt.successor(min)) {
-        std::cout << "[" << min->data.first << ", " << min->data.second << "], (" << (min->red ? "RED" : "BLACK") << ")\n";
-    }
+    rbt.printRBT(rbt.getRoot(), "", true);
+    // std::cout << "---------------------------\n\n";
+    // for (Node<int ,int> *min = rbt.minimum(rbt.getRoot()); min != rbt.maximum(rbt.getRoot()); min = rbt.successor(min)) {
+    //     std::cout << "[" << min->data.first << ", " << min->data.second << "], (" << (min->red ? "RED" : "BLACK") << ")\n";
+    // }
     std::cout << "Finished.\n";
 }

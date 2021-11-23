@@ -181,29 +181,26 @@ template <class Key, class Value>
 class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iterator_tag, Node< Key, Value > >
 {
     private:
-        Node<Key, Value>					*nullNode;
-        std::allocator< Node <Key,Value> >	__alloc;
-
         Node<Key, Value>	*minimum(Node<Key, Value> *node) {
 			Node<Key, Value>	*tmp = node;
-			while (tmp->leftChild != nullptr && tmp->leftChild != nullNode)
+			while (tmp->leftChild != nullptr && tmp->leftChild->empty != true)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
         Node<Key, Value>	*maximum(Node<Key, Value> *node) {
 			Node<Key, Value>	*tmp = node;
-			while (tmp->rightChild != nullptr && tmp->rightChild != nullNode)
+			while (tmp->rightChild != nullptr && tmp->rightChild->empty != true)
 				tmp = tmp->rightChild;
 			return tmp;
         }
         Node<Key, Value>	*successor(Node<Key, Value> *node) {
 			Node<Key, Value>	*tmp = node;
 			Node<Key, Value>	*tmp1;
-			if (tmp->rightChild != nullNode)
+			if (tmp->rightChild->empty != true)
 				return this->minimum(tmp->rightChild);
 			tmp1 = tmp->parent;
-			while (tmp1 != nullptr && tmp1 != nullNode && tmp == tmp1->rightChild)
+			while (tmp1 != nullptr && tmp1->empty != true && tmp == tmp1->rightChild)
 			{
 				tmp = tmp1;
 				tmp1 = tmp1->parent;
@@ -214,10 +211,10 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
         Node<Key, Value>	*predecessor(Node<Key, Value> *node) {
 			Node<Key, Value>	*tmp = node;
 			Node<Key, Value>	*tmp1;
-			if (tmp->leftChild != nullNode)
+			if (tmp->leftChild->empty != true)
 				return this->maximum(tmp->leftChild);
 			tmp1 = tmp->parent;
-			while (tmp1 != nullptr && tmp1 != nullNode && tmp == tmp1->leftChild)
+			while (tmp1 != nullptr && tmp1->empty != true && tmp == tmp1->leftChild)
 			{
 				tmp = tmp1;
 				tmp1 = tmp1->parent;
@@ -228,19 +225,9 @@ class ft::map_iterator: public ft::bidirectional_iterator<ft::bidirectional_iter
     public:
 
         map_iterator () {
-            nullNode = __alloc.allocate(1);
-			nullNode->parent = nullptr;
-			nullNode->leftChild = nullptr;
-			nullNode->rightChild = nullptr;
-			nullNode->red = false;
         }
         map_iterator (Node<Key, Value> *node) {
 			this->__p = node;
-            nullNode = __alloc.allocate(1);
-			nullNode->parent = nullptr;
-			nullNode->leftChild = nullptr;
-			nullNode->rightChild = nullptr;
-			nullNode->red = false;
         }
         template < class K, class V >
         map_iterator( const map_iterator<K, V> &mp_it ){

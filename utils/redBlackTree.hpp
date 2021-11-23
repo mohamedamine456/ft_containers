@@ -6,6 +6,7 @@
 template < class K, class V >
 struct Node
 {
+	bool			empty;
 	bool			red;
 	ft::pair<K, V>	data;
 	Node<K, V>		*leftChild;
@@ -205,6 +206,7 @@ class RedBlackTree {
 	public:
         RedBlackTree() {
 			nullNode = __alloc.allocate(1);
+			nullNode->empty = true;
 			nullNode->parent = nullptr;
 			nullNode->leftChild = nullptr;
 			nullNode->rightChild = nullptr;
@@ -239,6 +241,7 @@ class RedBlackTree {
 			Node<K, V>	*node;
 			node = __alloc.allocate(1);
 			node->data = ft::make_pair(key, value);
+			node->empty = false;
 			node->red = true;
 			node->parent = nullptr;
 			node->leftChild = this->nullNode;
@@ -413,7 +416,7 @@ class RedBlackTree {
 				}
 
 				std::string color = node->red ? "RED" : "BLACK";
-				std::cout << "[" << node->data.first << ", " << node->data.second << "], (" << color << ")\n";
+				std::cout << "[" << node->data.first << ", " << node->data.second << "], (" << color << "), " << (node->empty ? "EMPTY" : "FULL") << "\n";
 				printRBT(node->leftChild, pre, false);
 				printRBT(node->rightChild, pre, true);
 	    	}
