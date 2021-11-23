@@ -43,9 +43,9 @@ class ft::vector
 				throw ft::LengthError("vector");
 			}
 		}
-        template < class InputIterator >
-        vector ( InputIterator first, InputIterator last, const allocator_type &alloc = allocator_type(),
-                typename ft::enable_if<!(ft::is_integral<InputIterator>::value), InputIterator>::type* = NULL ) {						// constructor with iterators
+        template < class Iterator >
+        vector ( Iterator first, Iterator last, const allocator_type &alloc = allocator_type(),
+                typename ft::enable_if<!(ft::is_integral<Iterator>::value), Iterator>::type* = NULL ) {						// constructor with iterators
 			(void)alloc;
 			__size = ft::distance(first, last);
             try {

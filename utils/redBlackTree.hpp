@@ -22,6 +22,7 @@ class RedBlackTree {
 		Compare		comp;
 		Node<K, V>	*root;
 		Node<K, V>	*nullNode;
+		Node<K, V>	*endNode;
 
 		// fix violation if node is right child node (insert)
 		void	rightChildFixInsert(Node<K, V>	**node, Node<K, V> **tmp) {
@@ -211,6 +212,12 @@ class RedBlackTree {
 			nullNode->leftChild = nullptr;
 			nullNode->rightChild = nullptr;
 			nullNode->red = false;
+			endNode = __alloc.allocate(1);
+			endNode->empty = false;
+			endNode->parent = nullptr;
+			endNode->leftChild = nullNode;
+			endNode->rightChild = nullNode;
+			endNode->red = false;
 			this->root = nullNode;
 			__size = 0;
         }
@@ -380,9 +387,9 @@ class RedBlackTree {
 			Node<K, V>	*tmp = node;
 			while (tmp != nullNode)
 			{
-				if (tmp->data.key == key)
+				if (tmp->data.first == key)
 					break ;
-				else if (tmp->data.key > key)
+				else if (tmp->data.first > key)
 					tmp = tmp->leftChild;
 				else
 					tmp = tmp->rightChild;
@@ -416,7 +423,7 @@ class RedBlackTree {
 				}
 
 				std::string color = node->red ? "RED" : "BLACK";
-				std::cout << "[" << node->data.first << ", " << node->data.second << "], (" << color << "), " << (node->empty ? "EMPTY" : "FULL") << "\n";
+				std::cout << "[" << node->data.first << ", " << node->data.second << "], (" << color << "), " /*<< (node->empty ? "EMPTY" : "FULL")*/ << "\n";
 				printRBT(node->leftChild, pre, false);
 				printRBT(node->rightChild, pre, true);
 	    	}

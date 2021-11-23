@@ -58,8 +58,12 @@ class ft::map
 		// range constructor
         template < class Iterator >
         map ( Iterator first, Iterator last, const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() ) {
-            while (first!= last) {
-                __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
+            while (first != last) {
+                Node<Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
+                if (tmp != __rbtree.getNullNode())
+                    tmp->data.second = first->second;
+                else
+                    __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
                 first++;
             }
         }
@@ -135,8 +139,10 @@ class ft::map
 		}
 
         // (Modifiers) insert
-        pair<iterator, bool>					insert( const value_type& val ) {
-
+        ft::pair<iterator, bool>					insert( const value_type& val ) {
+            // __rbtree.insertNode(__rbtree.newNode(val.first, val.second));
+            // __size++;
+            // return ft::make_pair()
 		}
         iterator								insert( iterator position, const value_type& val ) {
 

@@ -10,9 +10,9 @@ int main() {
         }
 
         ft::map<int, int> mp(mpp.begin(), mpp.end());
-        ft::map<int, int>::iterator it = mp.begin();
-        for (ft::map<int, int>::iterator it = mp.begin(); it != mp.end(); it++)
+        ft::map<int, int>::iterator it;
+        for (it = mp.begin(); it != mp.end(); it++)
             std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
-        
+        std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
     }
 }
