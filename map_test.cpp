@@ -24,10 +24,10 @@ int main() {
         std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
 
         std::cout << "-----------------------------------------------------\n";
-        ft::map<int, int>::iterator itf = mp.find(25);
-        std::cout << "key: " << itf->first << ", value: " << itf->second << std::endl;
+        // ft::map<int, int>::iterator itf = mp.find(25);
+        // std::cout << "key: " << itf->first << ", value: " << itf->second << std::endl;
 
-        ft::map<int, int>::const_iterator itc = mp.find(25);
+        ft::map<int, int>::const_iterator itc = mp.find(52);
         std::cout << "key: " << itc->first << ", value: " << itc->second << std::endl;
         std::cout << "Size: " << mp.size() << std::endl;
     }
