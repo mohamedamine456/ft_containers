@@ -246,7 +246,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
             return this->__node;
         }
 
-        Node<Key, Value>    *base() const{
+        Node< const Key, const Value >    *base() const{
             return (Node<const Key, const Value> *)this->__node;
         }
         
@@ -277,14 +277,14 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         }
 };
 
-template< class Category, class K, class V>
-bool    operator== (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Category, K, V> sec) {
-    return fir.base() == sec.base();
+template< class Category, class K, class V, class U, class T>
+bool    operator== (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Category, U, T> sec) {
+    return (Node<const K, const V> *)(fir.base()) == (Node<const U, const T> *)(sec.base());
 }
 
-template< class Category, class K, class V >
-bool    operator!= (ft::map_iterator<Category, K, V> const fir, ft::map_iterator<Category, K, V> const sec) {
-    return fir.base() != sec.base();
+template< class Category, class K, class V, class U, class T >
+bool    operator!= (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Category, U, T> sec) {
+    return (Node<const K, const V> *)(fir.base()) != (Node<const U, const T> *)(sec.base());
 }
 
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
