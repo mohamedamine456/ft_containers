@@ -10,6 +10,11 @@ int main() {
             mpp.insert(std::make_pair((i + 1) * 13, (i + 1)* 37));
         }
 
+        std::map<int, int> mpp2;
+        for (int i = 0; i < 10; i++) {
+            mpp2.insert(std::make_pair((i + 20) * 13, (i + 20)* 37));
+        }
+
         ft::map<int, int> mp(mpp.begin(), mpp.end());
         mp.insert(ft::make_pair(13, 841));
         mp.insert(ft::make_pair(15, 78));
@@ -17,9 +22,12 @@ int main() {
         it++;
         it++;
         mp.insert(it, ft::make_pair(45, 654));
+        mp.insert(it, ft::make_pair(45, 456));
         mp[23] = 1450;
         mp[25] = 784;
         mp[25] = 1;
+
+        mp.insert(mpp2.begin(), mpp2.end());
         for (it = mp.begin(); it != mp.end(); it++)
             std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
         std::cout << "key: " << it->first << ", value: " << it->second << std::endl;

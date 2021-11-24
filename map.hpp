@@ -154,7 +154,6 @@ class ft::map
         ft::pair<iterator, bool>					insert( const value_type& val ) {
             Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
             if (tmp != __rbtree.getNullNode()) {
-                tmp->data.second = val.second;
                 return ft::make_pair(iterator(tmp), false);
             }
             else {
@@ -168,7 +167,6 @@ class ft::map
         iterator								insert( iterator position, const value_type& val ) {
             Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
             if (tmp != __rbtree.getNullNode()) {
-                tmp->data.second = val.second;
                 return iterator(tmp);
             }
             else {
@@ -181,7 +179,16 @@ class ft::map
 
         template < class InputIterator >
         void									insert( InputIterator first, InputIterator last ) {
-
+            InputIterator tmpIt(first);
+            while (tmpIt != last) {
+                Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), tmpIt->first);
+                if (tmp == __rbtree.getNullNode()) {
+                    tmp = __rbtree.newNode(tmpIt->first, tmpIt->second);
+                    __rbtree.insertNode(tmp);
+                    __size++;
+                }
+                tmpIt++;
+            }
 		}
 
         // (Modifiers) erase
