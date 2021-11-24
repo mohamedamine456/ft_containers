@@ -207,10 +207,10 @@ class ft::map
 
         // (Observers) key_comp & value_comp
         key_compare								key_comp() const {
-
+            return this->key_comp;
 		}
         value_compare							value_comp() const {
-
+            return this->value_comp;
 		}
 
         // (Operations) find
