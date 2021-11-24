@@ -232,7 +232,9 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         map_iterator (Node<Key, Value> *node): __node(node) {}
 
         template < class K, class V >
-        map_iterator( const map_iterator<ft::bidirectional_iterator_tag, K, V> &mp_it ): __node(mp_it.base()) {}
+        map_iterator( const map_iterator<ft::bidirectional_iterator_tag, K, V> &mp_it ) {
+            this->__node = (Node<const Key, const Value> *)(mp_it.base());
+        }
 
         virtual ~map_iterator() {}
 
@@ -243,6 +245,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         Node<Key, Value>    *base() const{
             return this->__node;
         }
+        
         map_iterator    &operator++() {
             this->__node = successor(this->__node);
             return *this;
@@ -276,7 +279,7 @@ bool    operator== (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Categ
 }
 
 template< class Category, class K, class V >
-bool    operator!= (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Category, K, V> sec) {
+bool    operator!= (ft::map_iterator<Category, K, V> const fir, ft::map_iterator<Category, K, V> const sec) {
     return fir.base() != sec.base();
 }
 

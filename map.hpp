@@ -94,14 +94,14 @@ class ft::map
             return iterator(__rbtree.minimum(__rbtree.getRoot()));
 		}
         const_iterator							begin() const {
-            return const_iterator(__rbtree.minimum(__rbtree.getRoot()));
+            return const_iterator((Node<const Key, const T> *)(__rbtree.minimum(__rbtree.getRoot())));
 		}
 
         iterator								end() {
             return iterator(__rbtree.maximum(__rbtree.getRoot()));
 		}
         const_iterator							end() const {
-            return const_iterator(__rbtree.maximum(__rbtree.getRoot()));
+            return const_iterator((Node<const Key, const T> *)(__rbtree.maximum(__rbtree.getRoot())));
 		}
 
         // (Iterators) rbegin & rend
@@ -109,14 +109,14 @@ class ft::map
             return reverse_iterator(__rbtree.maximum(__rbtree.getRoot()));
 		}
         const_reverse_iterator					rbegin() const {
-            return const_reverse_iterator(__rbtree.maximum(__rbtree.getRoot()));
+            return const_reverse_iterator((Node<const Key, const T> *)(__rbtree.maximum(__rbtree.getRoot())));
 		}
 
         reverse_iterator						rend() {
             return reverse_iterator(__rbtree.minimum(__rbtree.getRoot()));
 		}
         const_reverse_iterator					rend() const {
-            return const_reverse_iterator(__rbtree.minimum(__rbtree.getRoot()));
+            return const_reverse_iterator((Node<const Key, const T> *)(__rbtree.minimum(__rbtree.getRoot())));
 		}
 
         // (Capacity) empty
@@ -224,12 +224,12 @@ class ft::map
             }
 		}
         const_iterator							find( const key_type& k ) const {
-            Node<const Key, const T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
-            if (tmp != __rbtree.getNullNode()) {
+            Node<const Key, const T>    *tmp = (Node<const Key, const T> *)(__rbtree.searchNode(__rbtree.getRoot(), k));
+            if (tmp != (Node<const Key, const T> *)(__rbtree.getNullNode())) {
                 return const_iterator(tmp);
             }
             else {
-                this->end();
+                return this->end();
             }
 		}
 
