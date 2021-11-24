@@ -300,10 +300,10 @@ class ft::reverse_iterator: public ft::iterator_base<typename ft::iterator_trait
     protected:
         Iter    __current;
     public:
-        typedef Iter                                            iterator_type;
-        typedef typename ft::iterator_traits<Iter>::reference       reference;
-        typedef typename ft::iterator_traits<Iter>::difference_type difference_type;
-        typedef typename ft::iterator_traits<Iter>::pointer         pointer;
+        typedef Iter												iterator_type;
+        typedef typename ft::iterator_traits<Iter>::reference		reference;
+        typedef typename ft::iterator_traits<Iter>::difference_type	difference_type;
+        typedef typename ft::iterator_traits<Iter>::pointer			pointer;
 
         reverse_iterator(): __current() {}
         explicit reverse_iterator(iterator_type c): __current(c) {}
@@ -318,7 +318,9 @@ class ft::reverse_iterator: public ft::iterator_base<typename ft::iterator_trait
             return *--tmp;
         }
         pointer operator-> () const {
-            return &(operator*());
+			// Iter tmp = __current;
+            // return &(*--tmp);
+			return &(operator*());
         }
         reverse_iterator& operator++ () {
             --__current;
