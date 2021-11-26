@@ -42,7 +42,7 @@ class ft::map
 		
 		allocator_type																__allocator;
 		size_type																	__size;
-		RedBlackTree<key_type, mapped_type, Compare>                              __rbtree;
+		RedBlackTree<key_type, mapped_type, Compare>								__rbtree;
 		key_compare																	__key_comp;
 		value_compare																__value_compare;
 	public:
@@ -216,10 +216,10 @@ class ft::map
 
         // (Observers) key_comp & value_comp
         key_compare								key_comp() const {
-            return this->key_comp;
+            return this->__key_comp;
 		}
         value_compare							value_comp() const {
-            return this->value_comp;
+            return this->__value_compare;
 		}
 
         // (Operations) find
@@ -245,7 +245,7 @@ class ft::map
         // (Operations) count
         size_type								count( const key_type& k ) const {
             Node<Key, T>    *node = __rbtree.searchNode(__rbtree.getRoot(), k);
-            if (node != __rbtree.nullNode())
+            if (node != __rbtree.getNullNode())
                 return (1);
             return (0);
 		}

@@ -21,6 +21,7 @@ int main() {
         ft::map<int, int>::iterator it = mp.begin();
         it++;
         it++;
+        --it;
         mp.insert(it, ft::make_pair(45, 654));
         mp.insert(it, ft::make_pair(45, 456));
         mp[23] = 1450;
@@ -39,5 +40,8 @@ int main() {
         ft::map<int, int>::const_iterator itc = mp.find(25);
         std::cout << "key: " << itc->first << ", value: " << itc->second << std::endl;
         std::cout << "Size: " << mp.size() << std::endl;
+
+        ft::map<int, int>::reverse_iterator rit = mp.rbegin();
+        std::cout << "key: " << rit->first << ", value: " << rit->second << std::endl;
     }
 }

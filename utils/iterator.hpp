@@ -227,6 +227,12 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
 
     public:
 
+        typedef		std::ptrdiff_t          		difference_type;
+        typedef		ft::pair<Key, Value>    		value_type;
+        typedef		ft::pair<Key, Value>*			pointer;
+		typedef		ft::pair<Key, Value>&			reference;
+		typedef		ft::bidirectional_iterator_tag	iterator_category;
+
         map_iterator () {}
 		
         map_iterator (Node<Key, Value> *node): __node(node) {}
@@ -315,11 +321,9 @@ class ft::reverse_iterator: public ft::iterator_base<typename ft::iterator_trait
         }
         reference operator*() const {
             Iter tmp = __current;
-            return *--tmp;
+            return *(--tmp);
         }
         pointer operator-> () const {
-			// Iter tmp = __current;
-            // return &(*--tmp);
 			return &(operator*());
         }
         reverse_iterator& operator++ () {
