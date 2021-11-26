@@ -91,32 +91,32 @@ class ft::map
 
         // (Iterators) begin & end
         iterator								begin() {
-            return iterator(__rbtree.minimum(__rbtree.getRoot()));
+            return iterator(__rbtree.minimum(__rbtree.getRoot()), __rbtree.getRoot());
 		}
         const_iterator							begin() const {
-            return const_iterator((Node<const Key, const T> *)(__rbtree.minimum(__rbtree.getRoot())));
+            return const_iterator((Node<const Key, const T> *)(__rbtree.minimum(__rbtree.getRoot())), __rbtree.getRoot());
 		}
 
         iterator								end() {
-            return iterator(__rbtree.maximum(__rbtree.getRoot()));
+            return iterator(__rbtree.maximum(__rbtree.getRoot()), __rbtree.getRoot());
 		}
         const_iterator							end() const {
-            return const_iterator((Node<const Key, const T> *)(__rbtree.maximum(__rbtree.getRoot())));
+            return const_iterator((Node<const Key, const T> *)(__rbtree.maximum(__rbtree.getRoot())), __rbtree.getRoot());
 		}
 
         // (Iterators) rbegin & rend
         reverse_iterator						rbegin() {
-            return reverse_iterator(__rbtree.maximum(__rbtree.getRoot()));
+            return reverse_iterator(end());
 		}
         const_reverse_iterator					rbegin() const {
-            return const_reverse_iterator((Node<const Key, const T> *)(__rbtree.maximum(__rbtree.getRoot())));
+            return const_reverse_iterator(end());
 		}
 
         reverse_iterator						rend() {
-            return reverse_iterator(__rbtree.minimum(__rbtree.getRoot()));
+            return reverse_iterator(begin());
 		}
         const_reverse_iterator					rend() const {
-            return const_reverse_iterator((Node<const Key, const T> *)(__rbtree.minimum(__rbtree.getRoot())));
+            return const_reverse_iterator(begin());
 		}
 
         // (Capacity) empty
@@ -154,13 +154,13 @@ class ft::map
         ft::pair<iterator, bool>					insert( const value_type& val ) {
             Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
             if (tmp != __rbtree.getNullNode()) {
-                return ft::make_pair(iterator(tmp), false);
+                return ft::make_pair(iterator(tmp, __rbtree.getRoot()), false);
             }
             else {
                 tmp = __rbtree.newNode(val.first, val.second);
                 __rbtree.insertNode(tmp);
                 __size++;
-                return ft::make_pair(iterator(tmp), true);
+                return ft::make_pair(iterator(tmp, __rbtree.getRoot()), true);
             }
 		}
 
@@ -168,13 +168,13 @@ class ft::map
             (void)position;
             Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
             if (tmp != __rbtree.getNullNode()) {
-                return iterator(tmp);
+                return iterator(tmp, __rbtree.getRoot());
             }
             else {
                 tmp = __rbtree.newNode(val.first, val.second);
                 __rbtree.insertNode(tmp);
                 __size++;
-                return iterator(tmp);
+                return iterator(tmp, __rbtree.getRoot());
             }
 		}
 
@@ -226,7 +226,7 @@ class ft::map
         iterator								find( const key_type& k ) {
             Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
             if (tmp != __rbtree.getNullNode()) {
-                return iterator(tmp);
+                return iterator(tmp, __rbtree.getRoot());
             }
             else {
                 return this->end();
@@ -235,7 +235,7 @@ class ft::map
         const_iterator							find( const key_type& k ) const {
             Node<const Key, const T>    *tmp = (Node<const Key, const T> *)(__rbtree.searchNode(__rbtree.getRoot(), k));
             if (tmp != (Node<const Key, const T> *)(__rbtree.getNullNode())) {
-                return const_iterator(tmp);
+                return const_iterator(tmp, __rbtree.getRoot());
             }
             else {
                 return this->end();

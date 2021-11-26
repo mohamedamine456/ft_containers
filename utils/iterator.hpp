@@ -223,7 +223,8 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         }
 
         // attributes
-        Node<Key, Value>  *__node;
+        Node<Key, Value>	*__node;
+		Node<Key, Value>	*__root;
 
     public:
 
@@ -235,7 +236,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
 
         map_iterator () {}
 		
-        map_iterator (Node<Key, Value> *node): __node(node) {}
+        map_iterator (Node<Key, Value> *node, Node<Key, Value> *root): __node(node), __root(root) {}
 
         template < class K, class V >
         map_iterator( const map_iterator<ft::bidirectional_iterator_tag, K, V> &mp_it ) {
