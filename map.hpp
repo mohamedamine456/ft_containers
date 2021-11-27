@@ -18,7 +18,7 @@ class ft::map
         typedef const value_type&													const_reference;
         typedef typename allocator_type::pointer									pointer;
         typedef typename allocator_type::const_pointer								const_pointer;
-        typedef ft::map_iterator<bidirectional_iterator_tag, Key, T>				iterator;
+        typedef ft::map_iterator<bidirectional_iterator_tag, const Key, T>			iterator;
         typedef ft::map_iterator<bidirectional_iterator_tag, const Key, const T>	const_iterator;
         typedef ft::reverse_iterator<iterator>										reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
@@ -27,7 +27,7 @@ class ft::map
         class value_compare {
             protected:
                 Compare comp;
-                value_compare (Compare c) : comp(c) {}	// constructor;
+                value_compare (Compare c) : comp(c) {}
             public:
                 value_compare () {}
                 typedef bool			result_type;
@@ -94,7 +94,7 @@ class ft::map
             return iterator(__rbtree.minimum(__rbtree.getRoot()), __rbtree.getRoot());
 		}
         const_iterator							begin() const {
-            return const_iterator((Node<const Key, const T> *)(__rbtree.minimum(__rbtree.getRoot())), __rbtree.getRoot());
+            return const_iterator(__rbtree.minimum(__rbtree.getRoot()), __rbtree.getRoot());
 		}
 
         iterator								end() {
@@ -152,12 +152,12 @@ class ft::map
 
         // (Modifiers) insert
         ft::pair<iterator, bool>					insert( const value_type& val ) {
-            Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
-            if (tmp != __rbtree.getNullNode()) {
-                return ft::make_pair(iterator(tmp, __rbtree.getRoot()), false);
+            Node<const Key, T>    *tmp = (Node<const Key, T>*)__rbtree.searchNode(__rbtree.getRoot(), val.first);
+            if (tmp != (Node<const Key, T>*)__rbtree.getNullNode()) {
+                return ft::make_pair(iterator(tmp, (Node<const Key, T>*)__rbtree.getRoot()), false);
             }
             else {
-                tmp = __rbtree.newNode(val.first, val.second);
+                tmp = (Node<const Key, T>*)__rbtree.newNode(val.first, val.second);
                 __rbtree.insertNode(tmp);
                 __size++;
                 return ft::make_pair(iterator(tmp, __rbtree.getRoot()), true);

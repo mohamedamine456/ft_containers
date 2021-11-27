@@ -8,10 +8,10 @@ struct Node
 {
 	bool			empty;
 	bool			red;
-	ft::pair<K, V>	data;
-	Node<K, V>		*leftChild;
-	Node<K, V>		*rightChild;
-	Node<K, V>		*parent;
+	ft::pair<const K, V>	data;
+	Node<const K, V>		*leftChild;
+	Node<const K, V>		*rightChild;
+	Node<const K, V>		*parent;
 };
 
 template < class K, class V, class Compare = std::less<K>, class Allocator = std::allocator<Node<K, V> > >
@@ -20,12 +20,11 @@ class RedBlackTree {
 		Allocator	__alloc;
 		size_t		__size;
 		Compare		comp;
-		Node<K, V>	*root;
-		Node<K, V>	*nullNode;
-		Node<K, V>	*endNode;
+		Node<const K, V>	*root;
+		Node<const K, V>	*nullNode;
 
 		// fix violation if node is right child node (insert)
-		void	rightChildFixInsert(Node<K, V>	**node, Node<K, V> **tmp) {
+		void	rightChildFixInsert(Node<const K, V>	**node, Node<K, V> **tmp) {
 			*tmp = (*node)->parent->parent->leftChild;
 			if ((*tmp)->red == true) {
 				(*tmp)->red = false;
@@ -45,7 +44,7 @@ class RedBlackTree {
 		}
 
 		// fix violation if node is left child node (insert)
-		void	leftChildFixInsert(Node<K, V>	**node, Node<K, V> **tmp) {
+		void	leftChildFixInsert(Node<const K, V>	**node, Node<K, V> **tmp) {
 			(*tmp) = (*node)->parent->parent->rightChild;
 			if ((*tmp)->red == true) {
 				(*tmp)->red = false;
@@ -64,8 +63,8 @@ class RedBlackTree {
 			}
 		}
 		// private function to fix rbt properties violation in the insert of new node
-		void	fixInsert(Node<K, V> *node) {
-			Node<K, V>	*tmp;
+		void	fixInsert(Node<const K, V> *node) {
+			Node<const K, V>	*tmp;
 
 			if (node == this->root) {
 				this->root->red = false;
@@ -85,7 +84,7 @@ class RedBlackTree {
 		}
 
 		// fix violation if node is left child node (delete)
-		void	leftChildFixDelete(Node<K, V>	**node, Node<K, V> **tmpS){
+		void	leftChildFixDelete(Node<const K, V>	**node, Node<const K, V> **tmpS){
 			(*tmpS) = (*node)->parent->rightChild;
 			if ((*tmpS)->red == true) {
 				(*tmpS)->red = false;
@@ -113,7 +112,7 @@ class RedBlackTree {
 		}
 
 		// fix violation if node is right child node (delete)
-		void	rightChildFixDelete(Node<K, V>	**node, Node<K, V> **tmpS) {
+		void	rightChildFixDelete(Node<const K, V>	**node, Node<const K, V> **tmpS) {
 			(*tmpS) = (*node)->parent->leftChild;
 			if ((*tmpS)->red == true) {
 				(*tmpS)->red = false;
@@ -140,8 +139,8 @@ class RedBlackTree {
 		}
 
 		// private function to fix rbt properties violation in the delete of a node
-		void	deleteFix(Node<K, V> *node) {
-			Node<K, V>	*tmpS;
+		void	deleteFix(Node<const K, V> *node) {
+			Node<const K, V>	*tmpS;
 
 			while (node != root && node->red == false) {
 				if (node == node->parent->leftChild) {
@@ -153,7 +152,7 @@ class RedBlackTree {
 			node->red = false;
 		}
 
-		void	deleteHelper(Node<K, V> *a, Node<K, V> *b) {
+		void	deleteHelper(Node<const K, V> *a, Node<const K, V> *b) {
 			if (a->parent == nullptr) {
 				this->root = b;
 			} else if (a == a->parent->leftChild) {
@@ -165,8 +164,8 @@ class RedBlackTree {
 		}
 
 		// bst right rotation on a node
-		void	rightRotation(Node<K, V> *node) {
-			Node<K, V> *tmp = node->leftChild;
+		void	rightRotation(Node<const K, V> *node) {
+			Node<const K, V> *tmp = node->leftChild;
 
 			node->leftChild = tmp->rightChild;
 			if (node->leftChild != nullNode) {
@@ -185,8 +184,8 @@ class RedBlackTree {
 		}
 
 		// bst left rotation on a node
-		void	leftRotation(Node<K, V> *node) {
-			Node<K, V> *tmp = node->rightChild;
+		void	leftRotation(Node<const K, V> *node) {
+			Node<const K, V> *tmp = node->rightChild;
 
 			node->rightChild = tmp->leftChild;
 			if (tmp->leftChild != nullNode) {
@@ -212,12 +211,6 @@ class RedBlackTree {
 			nullNode->leftChild = nullptr;
 			nullNode->rightChild = nullptr;
 			nullNode->red = false;
-			endNode = __alloc.allocate(1);
-			endNode->empty = false;
-			endNode->parent = nullptr;
-			endNode->leftChild = nullNode;
-			endNode->rightChild = nullNode;
-			endNode->red = false;
 			this->root = nullNode;
 			__size = 0;
         }
@@ -236,16 +229,16 @@ class RedBlackTree {
             return *this;
         }
 
-		Node<K, V> *getRoot() const {
+		Node<const K, V> *getRoot() const {
 			return this->root;
 		}
 
-		Node<K, V> *getNullNode() const {
+		Node<const K, V> *getNullNode() const {
 			return this->nullNode;
 		}
 
-		Node<K, V>	*newNode(K key, V value) {
-			Node<K, V>	*node;
+		Node<const K, V>	*newNode(const K key, V value) {
+			Node<const K, V>	*node;
 			node = __alloc.allocate(1);
 			node->data = ft::make_pair(key, value);
 			node->empty = false;
@@ -256,9 +249,9 @@ class RedBlackTree {
 			return (node);
 		}
 		
-        bool	insertNode(Node<K, V> *node) {
-			Node<K, V>	*tmpRoot = this->root;
-			Node<K, V>	*tmp = nullptr;
+        bool	insertNode(Node<const K, V> *node) {
+			Node<const K, V>	*tmpRoot = this->root;
+			Node<const K, V>	*tmp = nullptr;
 
 			// where to insert
 			while (tmpRoot != nullNode) {
@@ -296,11 +289,11 @@ class RedBlackTree {
 			return true;
 		}
 
-        void    deleteNode(Node<K, V> *node) {
-			Node<K, V>	*tmpNode = this->root;
-			Node<K, V>	*tmp1 = nullNode;
-			Node<K, V>	*tmp2 = nullNode;
-			Node<K, V>	*tmp3 = nullNode;
+        void    deleteNode(Node<const K, V> *node) {
+			Node<const K, V>	*tmpNode = this->root;
+			Node<const K, V>	*tmp1 = nullNode;
+			Node<const K, V>	*tmp2 = nullNode;
+			Node<const K, V>	*tmp3 = nullNode;
 
 			while (tmpNode != nullNode) {
 				if (tmpNode->data.first == node->data.first) {
@@ -350,14 +343,14 @@ class RedBlackTree {
 			}
         }
 
-        void    deleteNode(K key) {
-			Node<K, V>	*node = searchNode(this->root, key);
+        void    deleteNode(const K key) {
+			Node<const K, V>	*node = searchNode(this->root, key);
 			deleteNode(node);
         }
 
-        Node<K, V>	*successor(Node<K, V> *node) const {
-			Node<K, V>	*tmp = node;
-			Node<K, V>	*tmp1;
+        Node<const K, V>	*successor(Node<K, V> *node) const {
+			Node<const K, V>	*tmp = node;
+			Node<const K, V>	*tmp1;
 			if (tmp->rightChild != nullNode)
 				return this->minimum(tmp->rightChild);
 			tmp1 = tmp->parent;
@@ -369,9 +362,9 @@ class RedBlackTree {
 			return tmp1;
         }
 
-        Node<K, V>	*predecessor(Node<K, V> *node) const {
-			Node<K, V>	*tmp = node;
-			Node<K, V>	*tmp1;
+        Node<const K, V>	*predecessor(Node<const K, V> *node) const {
+			Node<const K, V>	*tmp = node;
+			Node<const K, V>	*tmp1;
 			if (tmp->leftChild != nullNode)
 				return this->maximum(tmp->leftChild);
 			tmp1 = tmp->parent;
@@ -384,8 +377,8 @@ class RedBlackTree {
         }
 
 		template<class T, class U>
-        Node<T, U>	*searchNode(Node<T, U> *node, const K key) const {
-			Node<T, U>	*tmp = node;
+        Node<const T, U>	*searchNode(Node<const T, U> *node, const K key) const {
+			Node<const T, U>	*tmp = node;
 			while (tmp != nullNode)
 			{
 				if (tmp->data.first == key)
@@ -398,21 +391,21 @@ class RedBlackTree {
 			return tmp;
         }
 
-        Node<K, V>	*minimum(Node<K, V> *node) const {
-			Node<K, V>	*tmp = node;
+        Node<const K, V>	*minimum(Node<const K, V> *node) const {
+			Node<const K, V>	*tmp = node;
 			while (tmp->leftChild != nullptr && tmp->leftChild != nullNode)
 				tmp = tmp->leftChild;
 			return tmp;
         }
 
-        Node<K, V>	*maximum(Node<K, V> *node) const {
-			Node<K, V>	*tmp = node;
+        Node<const K, V>	*maximum(Node<const K, V> *node) const {
+			Node<const K, V>	*tmp = node;
 			while (tmp->rightChild != nullptr && tmp->rightChild != nullNode)
 				tmp = tmp->rightChild;
 			return tmp;
         }
 
-		void	printRBT(Node<K, V> *node, std::string pre, bool last) const {
+		void	printRBT(Node<const K, V> *node, std::string pre, bool last) const {
 			if (node != this->nullNode) {
 				std::cout << pre;
 				if (last) {

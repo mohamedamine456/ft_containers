@@ -223,21 +223,21 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         }
 
         // attributes
-        Node<Key, Value>	*__node;
-		Node<Key, Value>	*__root;
+        Node<const Key, Value>	*__node;
+		Node<const Key, Value>	*__root;
 
     public:
 
         typedef		std::ptrdiff_t          		difference_type;
-        typedef		ft::pair<Key, Value>    		value_type;
-        typedef		ft::pair<Key, Value>*			pointer;
-		typedef		ft::pair<Key, Value>&			reference;
+        typedef		ft::pair<const Key, Value>    		value_type;
+        typedef		ft::pair<const Key, Value>*			pointer;
+		typedef		ft::pair<const Key, Value>&			reference;
 		typedef		ft::bidirectional_iterator_tag	iterator_category;
 
         map_iterator () {}
 		
         map_iterator (Node<Key, Value> *node, Node<Key, Value> *root): __node(node), __root(root) {}
-
+        
         template < class K, class V >
         map_iterator( const map_iterator<ft::bidirectional_iterator_tag, K, V> &mp_it ) {
             this->__node = mp_it.base();
