@@ -4,22 +4,23 @@
 #include <memory>
 
 int main() {
-    RedBlackTree<int, int>  rbt;
-    Node<int, int>          *nodes[25];
-    Node<int, int>          *tmpNode;
+    RedBlackTree<int, int>         rbt;
+    Node<const int, int>          *nodes[25];
+    Node<const int, int>          *tmpNode;
     std::allocator<Node<int , int> > alloc;
     for (int i = 0; i < 25; i ++) {
         nodes[i] = rbt.newNode((i + 1) * 13, (i + 1)* 37);
     }
     for (int i = 0; i < 25; i++) {
-        if (rbt.insertNode(nodes[i]) == false) {
-            std::cout << "Key:" << nodes[i]->data.first << " already exists.\n";
-            break;
-        }
+        // if (rbt.insertNode(nodes[i]) == false) {
+            // std::cout << "Key:" << nodes[i]->data->first << " already exists.\n";
+            // break;
+        // }
+        std::cout << "[" << nodes[i]->data->first << ", " << nodes[i]->data->second << "], (" << (nodes[i]->red ? "RED" : "BLACK") << ")\n";
     }
     tmpNode = rbt.newNode(13, 75);
     if (rbt.insertNode(tmpNode) == false) {
-        std::cout << "Key:" << tmpNode->data.first << " already exists.\n";
+        std::cout << "Key:" << tmpNode->data->first << " already exists.\n";
     }
     // for (Node<int ,int> *min = rbt.minimum(rbt.getRoot()); min != rbt.maximum(rbt.getRoot()); min = rbt.successor(min)) {
     //     std::cout << "[" << min->data.first << ", " << min->data.second << "], (" << (min->red ? "RED" : "BLACK") << ")\n";

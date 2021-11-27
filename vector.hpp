@@ -36,7 +36,7 @@ class ft::vector
 			try {
 				__sequence = __allocator.allocate(n);
 				for (size_type i = 0; i < n; i++)
-					__sequence[i] = val;
+					__allocator.construct(&__sequence[i], val);
 				__capacity = n;
 				__size = n;
 			} catch (std::exception &ex) {
@@ -51,7 +51,7 @@ class ft::vector
             try {
 				__sequence = __allocator.allocate(__size);
 				for (size_type i = 0; first != last; i++, first++)
-                    __sequence[i] = *first;
+                    __allocator.construct(&__sequence[i], *first);
                 __capacity = __size;
                 
 			} catch (std::exception &ex) {
@@ -77,7 +77,7 @@ class ft::vector
 			try {
 				this->__sequence = __allocator.allocate(vec.__size);
 				for (size_type i = 0; i < vec.__size; i++)
-					this->__sequence[i] = vec.__sequence[i];
+					__allocator.construct(&this->__sequence[i], vec.__sequence[i]);
 				this->__size = vec.__size;
 				this->__capacity = vec.__capacity;
 				return *this;
@@ -138,7 +138,7 @@ class ft::vector
 			else {
 				if (n <= __capacity) {
 					for (size_type i = __size; i < n; i++) {
-						__sequence[i] = val;
+						__allocator.construct(&__sequence[i], val);
 					}
 					__size = n;
 				}
@@ -160,7 +160,7 @@ class ft::vector
 			if (n > __capacity) {
 				T*	tmp = __allocator.allocate(n);
 				for (size_type i = 0; i < __size; i++) {
-					tmp[i] = __sequence[i];
+					__allocator.construct(&tmp[i], __sequence[i]);
 					__allocator.destroy(&__sequence[i]);
 				}
 				__allocator.deallocate(__sequence, __capacity);
@@ -221,7 +221,7 @@ class ft::vector
 				}
 				__size = 0;
 				while (first != last) {
-					__sequence[__size] = *first;
+					__allocator.construct(&__sequence[__size], *first);
 					__size++;
 					first++;
 				}
@@ -240,7 +240,7 @@ class ft::vector
 				}
 			}
 			for (__size = 0; __size < n; __size++)
-				__sequence[__size] = val;
+				__allocator.construct(&__sequence[__size], val);
 		}
 
         // (Modifiers) push_back
@@ -253,12 +253,12 @@ class ft::vector
 						__capacity *= 2;
 					pointer		tmp = __allocator.allocate(__capacity);
 					for (size_type i = 0; i < __size; i++) {
-						tmp[i] = __sequence[i];
+						__allocator.construct(&tmp[i], __sequence[i]);
 					}
 					__allocator.deallocate(__sequence, __size);
 					__sequence = tmp;
 				}
-				__sequence[__size] = val;
+				__allocator.construct(&__sequence[__size], val);
 				__size++;
 			} catch (std::exception &ex) {
 				throw ft::LengthError("vector");
@@ -290,13 +290,13 @@ class ft::vector
 						__capacity *= 2;
 					T*		tmp = __allocator.allocate(__capacity);
 					for (size_type i = 0; i < pp; i++) {
-						tmp[i] = __sequence[i];
+						__allocator.construct(&tmp[i], __sequence[i]);
 						__allocator.destroy(&__sequence[i]);
 					}
 					tmp[pp] = val;
 					__size++;
 					for (size_type i = pp + 1; i < __size; i++) {
-						tmp[i] = __sequence[i - 1];
+						__allocator.construct(&tmp[i], __sequence[i - 1]);
 						__allocator.destroy(&__sequence[i - 1]);
 					}
 					__allocator.deallocate(__sequence, __old_capacity);
@@ -305,10 +305,10 @@ class ft::vector
 				else
 				{
 					for (size_type i = pp + 1; i < __size + 1; i++) {
-						__sequence[i] = __sequence[i - 1];
+						__allocator.construct(&__sequence[i], __sequence[i - 1]);
 						__allocator.destroy(&__sequence[i - 1]);
 					}
-					__sequence[pp] = val;
+					__allocator.construct(&__sequence[pp], val);
 					__size++;
 				}
 				return iterator(__sequence + pp);
@@ -332,14 +332,14 @@ class ft::vector
 						__capacity = __size + n;
 					T*		tmp = __allocator.allocate(__capacity);
 					for (size_type i = 0; i < pp; i++) {
-						tmp[i] = __sequence[i];
+						__allocator.construct(&tmp[i], __sequence[i]);
 						__allocator.destroy(&__sequence[i]);
 					}
 					for (size_type i = 0; i < n; i++)
-						tmp[i + pp] = val;
+						__allocator.construct(&tmp[i + pp], val);
 					__size += n;
 					for (size_type i = pp + n; i < __size; i++) {
-						tmp[i] = __sequence[i - n];
+						__allocator.construct(&tmp[i], __sequence[i - n]);
 						__allocator.destroy(&__sequence[i - n]);
 					}
 					__allocator.deallocate(__sequence, __old_capacity);
@@ -347,7 +347,7 @@ class ft::vector
 				}
 				else {
 					for (size_type i = pp + n; i < __size + n; i++) {
-						__sequence[i] = __sequence[i - n];
+						__allocator.construct(&__sequence[i], __sequence[i - n]);
 						__allocator.destroy(&__sequence[i - n]);
 					}
 
@@ -380,14 +380,14 @@ class ft::vector
 						__capacity = __size + n;
 					T*		tmp = __allocator.allocate(__capacity);
 					for (size_type i = 0; i < pp; i++) {
-						tmp[i] = __sequence[i];
+						__allocator.construct(&tmp[i], __sequence[i]);
 						__allocator.destroy(&__sequence[i]);
 					}
 					for (size_type i = 0; i < n; i++)
-						tmp[i + pp] = *it++;
+						__allocator.construct(&tmp[i + pp], *it++);
 					__size += n;
 					for (size_type i = pp + n; i < __size; i++) {
-						tmp[i] = __sequence[i - n];
+						__allocator.construct(&tmp[i], __sequence[i - n]);
 						__allocator.destroy(&__sequence[i - n]);
 					}
 					__allocator.deallocate(__sequence, __old_capacity);
@@ -395,12 +395,12 @@ class ft::vector
 				}
 				else {
 					for (size_type i = pp + n; i < __size + n; i++) {
-						__sequence[i] = __sequence[i - n];
+						__allocator.construct(&__sequence[i], __sequence[i - n]);
 						__allocator.destroy(&__sequence[i - n]);
 					}
 
 					for (size_type i = 0; i < n; i++) {
-						__sequence[pp + i] = *it;
+						__allocator.construct(&__sequence[pp + i], *it);
 						it++;
 					}
 					__size += n;
@@ -420,7 +420,7 @@ class ft::vector
 			}
 			for (size_type i = pp; i + 1 < __size; i++) {
 				__allocator.destroy(__sequence + i);
-				__sequence[i] = __sequence[i + 1];
+				__allocator.construct(&__sequence[i], __sequence[i + 1]);
 			}
 			__size--;
 			return iterator(__sequence + pp);
@@ -435,7 +435,7 @@ class ft::vector
 			}
 			for (size_type i = pp; i + n < __size; i++) {
 				__allocator.destroy(__sequence + i);
-				__sequence[i] = __sequence[i + n];
+				__allocator.construct(&__sequence[i], __sequence[i + n]);
 			}
 			__size -= n;
 			return iterator(__sequence + pp);

@@ -62,9 +62,9 @@ class ft::map
             (void)alloc;
             __size = 0;
             while (first != last) {
-                Node<Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
+                Node<const Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
                 if (tmp != __rbtree.getNullNode())
-                    tmp->data.second = first->second;
+                    tmp->data->second = first->second;
                 else
                     __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
                 first++;
@@ -138,15 +138,15 @@ class ft::map
 
         // (Element access) operator[]
         mapped_type&							operator[] ( const key_type& k ) {
-            Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
+            Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
             if (tmp != __rbtree.getNullNode()) {
-                return tmp->data.second;
+                return tmp->data->second;
             }
             else {
                 tmp = __rbtree.newNode(k, 0);
                 __rbtree.insertNode(tmp);
                 __size++;
-                return tmp->data.second;
+                return tmp->data->second;
             }
 		}
 
@@ -166,7 +166,7 @@ class ft::map
 
         iterator								insert( iterator position, const value_type& val ) {
             (void)position;
-            Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
+            Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
             if (tmp != __rbtree.getNullNode()) {
                 return iterator(tmp, __rbtree.getRoot());
             }
@@ -182,7 +182,7 @@ class ft::map
         void									insert( InputIterator first, InputIterator last ) {
             InputIterator tmpIt(first);
             while (tmpIt != last) {
-                Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), tmpIt->first);
+                Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), tmpIt->first);
                 if (tmp == __rbtree.getNullNode()) {
                     tmp = __rbtree.newNode(tmpIt->first, tmpIt->second);
                     __rbtree.insertNode(tmp);
@@ -224,7 +224,7 @@ class ft::map
 
         // (Operations) find
         iterator								find( const key_type& k ) {
-            Node<Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
+            Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
             if (tmp != __rbtree.getNullNode()) {
                 return iterator(tmp, __rbtree.getRoot());
             }
@@ -244,7 +244,7 @@ class ft::map
 
         // (Operations) count
         size_type								count( const key_type& k ) const {
-            Node<Key, T>    *node = __rbtree.searchNode(__rbtree.getRoot(), k);
+            Node<const Key, T>    *node = __rbtree.searchNode(__rbtree.getRoot(), k);
             if (node != __rbtree.getNullNode())
                 return (1);
             return (0);
@@ -300,17 +300,17 @@ bool    operator< (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key
 
 template < class Key, class T, class Compare, class Alloc > 
 bool    operator<= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
-    return (lhs < rhs || lhs == rhs);
+    return !(lhs > rhs);
 }
 
 template < class Key, class T, class Compare, class Alloc > 
 bool    operator> (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
-    return !(lhs < rhs) && (lhs != rhs);
+    return (rhs < lhs);
 }
 
 template < class Key, class T, class Compare, class Alloc > 
 bool    operator>= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
-    return (lhs > rhs || lhs == rhs);
+    return !(lhs < rhs);
 }
 
 template < class Key, class T, class Compare, class Alloc >

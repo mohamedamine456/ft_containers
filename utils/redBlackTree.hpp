@@ -6,25 +6,27 @@
 template < class K, class V >
 struct Node
 {
-	bool			empty;
-	bool			red;
-	ft::pair<const K, V>	data;
+	bool					empty;
+	bool					red;
+	ft::pair<K, V>			*data;
 	Node<const K, V>		*leftChild;
 	Node<const K, V>		*rightChild;
 	Node<const K, V>		*parent;
 };
 
-template < class K, class V, class Compare = std::less<K>, class Allocator = std::allocator<Node<K, V> > >
+template < class K, class V, class Compare = std::less<K>, class Allocator = std::allocator<Node<const K, V> > >
 class RedBlackTree {
     private:
-		Allocator	__alloc;
-		size_t		__size;
-		Compare		comp;
+		typedef typename Allocator::template rebind<ft::pair<const K, V> >::other	Pair_Allocator;
+		Pair_Allocator		__pair_alloc;
+		Allocator			__alloc;
+		size_t				__size;
+		Compare				comp;
 		Node<const K, V>	*root;
 		Node<const K, V>	*nullNode;
 
 		// fix violation if node is right child node (insert)
-		void	rightChildFixInsert(Node<const K, V>	**node, Node<K, V> **tmp) {
+		void	rightChildFixInsert(Node<const K, V>	**node, Node<const K, V> **tmp) {
 			*tmp = (*node)->parent->parent->leftChild;
 			if ((*tmp)->red == true) {
 				(*tmp)->red = false;
@@ -44,7 +46,7 @@ class RedBlackTree {
 		}
 
 		// fix violation if node is left child node (insert)
-		void	leftChildFixInsert(Node<const K, V>	**node, Node<K, V> **tmp) {
+		void	leftChildFixInsert(Node<const K, V>	**node, Node<const K, V> **tmp) {
 			(*tmp) = (*node)->parent->parent->rightChild;
 			if ((*tmp)->red == true) {
 				(*tmp)->red = false;
@@ -211,6 +213,7 @@ class RedBlackTree {
 			nullNode->leftChild = nullptr;
 			nullNode->rightChild = nullptr;
 			nullNode->red = false;
+			nullNode->data = nullptr;
 			this->root = nullNode;
 			__size = 0;
         }
@@ -240,7 +243,9 @@ class RedBlackTree {
 		Node<const K, V>	*newNode(const K key, V value) {
 			Node<const K, V>	*node;
 			node = __alloc.allocate(1);
-			node->data = ft::make_pair(key, value);
+			node->data = __pair_alloc.allocate(1);
+			ft::pair<const K, V>	__data(key, value);
+			__pair_alloc.construct(node->data, __data);
 			node->empty = false;
 			node->red = true;
 			node->parent = nullptr;
@@ -256,9 +261,9 @@ class RedBlackTree {
 			// where to insert
 			while (tmpRoot != nullNode) {
 				tmp = tmpRoot;
-				if (node->data.first == tmpRoot->data.first)
+				if (node->data->first == tmpRoot->data->first)
 					return false;
-				else if (comp(node->data.first, tmpRoot->data.first)) {
+				else if (comp(node->data->first, tmpRoot->data->first)) {
 					tmpRoot = tmpRoot->leftChild;
 				} else {
 					tmpRoot = tmpRoot->rightChild;
@@ -269,7 +274,7 @@ class RedBlackTree {
 			node->parent = tmp;
 			if (tmp == nullptr) {
 				this->root = node;
-			} else if (comp(node->data.first, tmp->data.first)) {
+			} else if (comp(node->data->first, tmp->data->first)) {
 				tmp->leftChild = node;
 			} else {
 				tmp->rightChild = node;
@@ -296,10 +301,10 @@ class RedBlackTree {
 			Node<const K, V>	*tmp3 = nullNode;
 
 			while (tmpNode != nullNode) {
-				if (tmpNode->data.first == node->data.first) {
+				if (tmpNode->data->first == node->data->first) {
 					tmp1 = tmpNode;
 				}
-				if (comp(tmpNode->data.first, node->data.first)) {
+				if (comp(tmpNode->data->first, node->data->first)) {
 					tmpNode = tmpNode->rightChild;
 				} else {
 					tmpNode = tmpNode->leftChild;
@@ -381,9 +386,9 @@ class RedBlackTree {
 			Node<const T, U>	*tmp = node;
 			while (tmp != nullNode)
 			{
-				if (tmp->data.first == key)
+				if (tmp->data->first == key)
 					break ;
-				else if (tmp->data.first > key)
+				else if (tmp->data->first > key)
 					tmp = tmp->leftChild;
 				else
 					tmp = tmp->rightChild;
@@ -417,7 +422,7 @@ class RedBlackTree {
 				}
 
 				std::string color = node->red ? "RED" : "BLACK";
-				std::cout << "[" << node->data.first << ", " << node->data.second << "], (" << color << "), " /*<< (node->empty ? "EMPTY" : "FULL")*/ << "\n";
+				std::cout << "[" << node->data->first << ", " << node->data->second << "], (" << color << "), " /*<< (node->empty ? "EMPTY" : "FULL")*/ << "\n";
 				printRBT(node->leftChild, pre, false);
 				printRBT(node->rightChild, pre, true);
 	    	}
