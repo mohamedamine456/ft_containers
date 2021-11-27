@@ -246,6 +246,10 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
             this->__node = mp_it.base();
         }
 
+        operator map_iterator<const Category, const Key, const Value>() const{
+            return map_iterator<const Category, const Key, const Value>(this->__node, this->__root);
+        }
+
         virtual ~map_iterator() {}
 
         map_iterator    &operator= ( const map_iterator &mp_it ) {
@@ -281,10 +285,11 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
 		ft::pair<Key, Value>	&operator*() const {
             return *(this->__node->data);
         }
-
         typename ft::pair<Key, Value>    *operator->() const {
             return this->__node->data;
         }
+
+
 };
 
 template< class Category, class K, class V, class U, class T>
