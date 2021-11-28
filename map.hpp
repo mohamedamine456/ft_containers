@@ -101,7 +101,7 @@ class ft::map
             return iterator(__rbtree.maximum(__rbtree.getRoot()), __rbtree.getRoot());
 		}
         const_iterator							end() const {
-            return const_iterator((Node<const Key, const T> *)(__rbtree.maximum(__rbtree.getRoot())), __rbtree.getRoot());
+            return const_iterator(__rbtree.maximum(__rbtree.getRoot()), __rbtree.getRoot());
 		}
 
         // (Iterators) rbegin & rend
@@ -152,12 +152,12 @@ class ft::map
 
         // (Modifiers) insert
         ft::pair<iterator, bool>					insert( const value_type& val ) {
-            Node<const Key, T>    *tmp = (Node<const Key, T>*)__rbtree.searchNode(__rbtree.getRoot(), val.first);
-            if (tmp != (Node<const Key, T>*)__rbtree.getNullNode()) {
-                return ft::make_pair(iterator(tmp, (Node<const Key, T>*)__rbtree.getRoot()), false);
+            Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), val.first);
+            if (tmp != __rbtree.getNullNode()) {
+                return ft::make_pair(iterator(tmp, __rbtree.getRoot()), false);
             }
             else {
-                tmp = (Node<const Key, T>*)__rbtree.newNode(val.first, val.second);
+                tmp = __rbtree.newNode(val.first, val.second);
                 __rbtree.insertNode(tmp);
                 __size++;
                 return ft::make_pair(iterator(tmp, __rbtree.getRoot()), true);
@@ -233,8 +233,8 @@ class ft::map
             }
 		}
         const_iterator							find( const key_type& k ) const {
-            Node<const Key, const T>    *tmp = (Node<const Key, const T> *)(__rbtree.searchNode(__rbtree.getRoot(), k));
-            if (tmp != (Node<const Key, const T> *)(__rbtree.getNullNode())) {
+            Node<const Key, T>    *tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
+            if (tmp != __rbtree.getNullNode()) {
                 return const_iterator(tmp, __rbtree.getRoot());
             }
             else {
@@ -300,12 +300,12 @@ bool    operator< (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key
 
 template < class Key, class T, class Compare, class Alloc > 
 bool    operator<= (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
-    return !(lhs > rhs);
+    return (lhs < rhs || lhs == rhs);
 }
 
 template < class Key, class T, class Compare, class Alloc > 
 bool    operator> (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
-    return (rhs < lhs);
+    return !(lhs < rhs) && (lhs != rhs);
 }
 
 template < class Key, class T, class Compare, class Alloc > 
