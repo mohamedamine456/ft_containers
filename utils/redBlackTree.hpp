@@ -14,12 +14,12 @@ struct Node
 	Node<const K, V>		*parent;
 };
 
-template < class K, class V, class Compare = std::less<K>, class Allocator = std::allocator<Node<const K, V> > >
+template < class K, class V, class Compare = std::less<K>, class Allocator = std::allocator<ft::pair <const K, V> > >
 class RedBlackTree {
     private:
-		typedef typename Allocator::template rebind<ft::pair<const K, V> >::other	Pair_Allocator;
-		Pair_Allocator		__pair_alloc;
-		Allocator			__alloc;
+		typedef typename Allocator::template rebind<Node<const K, V> >::other	Node_Allocator;
+		Allocator			__pair_alloc;
+		Node_Allocator		__alloc;
 		size_t				__size;
 		Compare				comp;
 		Node<const K, V>	*root;

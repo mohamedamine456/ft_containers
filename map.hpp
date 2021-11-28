@@ -42,7 +42,7 @@ class ft::map
 		
 		allocator_type																__allocator;
 		size_type																	__size;
-		RedBlackTree<key_type, mapped_type, Compare>								__rbtree;
+		RedBlackTree<key_type, mapped_type, key_compare, Allocator>					__rbtree;
 		key_compare																	__key_comp;
 		value_compare																__value_compare;
 	public:
@@ -50,8 +50,8 @@ class ft::map
         // constructors
 		// default constructor
         explicit map( const key_compare& comp = key_compare(), const allocator_type& alloc = allocator_type() ) {
-            (void)alloc;
             (void)comp;
+            (void)alloc;
             __size = 0;
         }
 
@@ -77,7 +77,9 @@ class ft::map
             *this = mp;
 		}
         // destructor
-        ~map() {}
+        ~map() {
+
+        }
 
         // operator=
         map& operator= ( const map& mp ) {
