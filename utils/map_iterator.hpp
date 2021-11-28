@@ -5,9 +5,12 @@
 
 // map iterator
 
-template <class Category, class Key, class Value>
-class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag, Node<Key, Value> >
+template <class Category, class Pair>
+class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag, Node<typename Pair::First, typename Pair::Second> >
 {
+    public:
+        typedef typename Pair::First			Key;
+		typedef typename Pair::Second			Value;
     private:
         Node<Key, Value>	*minimum(Node<Key, Value> *node) {
 			Node<Key, Value>	*tmp = node;
@@ -56,11 +59,11 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
 
     public:
 
-        typedef		std::ptrdiff_t          		difference_type;
+        typedef		std::ptrdiff_t          		    difference_type;
         typedef		ft::pair<const Key, Value>    		value_type;
         typedef		ft::pair<const Key, Value>*			pointer;
 		typedef		ft::pair<const Key, Value>&			reference;
-		typedef		ft::bidirectional_iterator_tag	iterator_category;
+		typedef		ft::bidirectional_iterator_tag	    iterator_category;
 
         map_iterator () {}
 		
@@ -69,13 +72,13 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         template<class T>
         map_iterator (Node<Key, T> *node, Node<Key, T> *root): __node(node), __root(root) {}
         
-        template < class K, class V >
-        map_iterator( const map_iterator<ft::bidirectional_iterator_tag, K, V> &mp_it ) {
+        template < class P >
+        map_iterator( const map_iterator<ft::bidirectional_iterator_tag, P > &mp_it ) {
             this->__node = mp_it.base();
         }
 
-        operator map_iterator<const Category, const Key, const Value>() const{
-            return map_iterator<const Category, const Key, const Value>(this->__node, this->__root);
+        operator map_iterator<const Category, const Pair>() const{
+            return map_iterator<const Category, const Pair>(this->__node, this->__root);
         }
 
         virtual ~map_iterator() {}
@@ -84,12 +87,8 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
             this->__node = mp_it.__node;
             return *this;
         }
-        Node<Key, Value>    *base() {
+        Node<Key, Value>    *base() const {
             return this->__node;
-        }
-
-        Node< const Key, const Value >    *base() const{
-            return (Node<const Key, const Value> *)this->__node;
         }
         
         map_iterator    &operator++() {
@@ -120,14 +119,14 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
 
 };
 
-template< class Category, class K, class V, class U, class T>
-bool    operator== (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Category, U, T> sec) {
-    return (Node<const K, const V> *)(fir.base()) == (Node<const U, const T> *)(sec.base());
+template< class Category, class Pair>
+bool    operator== (ft::map_iterator<Category, Pair> fir, ft::map_iterator<Category, Pair> sec) {
+    return fir.base() == sec.base();
 }
 
-template< class Category, class K, class V, class U, class T >
-bool    operator!= (ft::map_iterator<Category, K, V> fir, ft::map_iterator<Category, U, T> sec) {
-    return (Node<const K, const V> *)(fir.base()) != (Node<const U, const T> *)(sec.base());
+template< class Category, class Pair >
+bool    operator!= (ft::map_iterator<Category, Pair> fir, ft::map_iterator<Category, Pair> sec) {
+    return fir.base() != sec.base();
 }
 
 #endif

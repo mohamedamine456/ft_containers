@@ -6,6 +6,8 @@
 template < class T1, class T2 >
 struct ft::pair
 {
+    typedef T1  First;
+    typedef T2  Second;
     T1  first;
     T2  second;
     pair(): first(), second() {}

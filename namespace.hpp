@@ -95,12 +95,9 @@ namespace ft {
 	template < class Iter >
 	class reverse_iterator;
 
-	// bidirectional_iterator
-	template < class Category, class T >
-	class bidirectional_iterator;
 
 	// map iterator
-	template <class Category, class Key, class Value>
+	template <class Category, class Pair>
 	class map_iterator;
 
 	// equal
