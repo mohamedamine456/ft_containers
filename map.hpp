@@ -77,9 +77,7 @@ class ft::map
             *this = mp;
 		}
         // destructor
-        ~map() {
-
-        }
+        ~map() {}
 
         // operator=
         map& operator= ( const map& mp ) {
@@ -196,19 +194,34 @@ class ft::map
 
         // (Modifiers) erase
         void									erase( iterator position ) {
-            (void)position;
+            Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), (*position).first);
+            if (tmp != __rbtree.getNullNode()) {
+                __rbtree.deleteNode(tmp);
+            }
 		}
         size_type								erase( const key_type& k ) {
-            (void)k;
+            Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), k);
+            if (tmp != __rbtree.getNullNode()) {
+                __rbtree.deleteNode(tmp);
+                return 1;
+            }
+            return 0;
 		}
         void									erase( iterator first, iterator last ) {
-            (void)first;
-            (void)last;
+            iterator    tmp_it = first;
+            while (tmp_it != last)
+            {
+                Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), (*tmp_it).first);
+                if (tmp != __rbtree.getNullNode()) {
+                    __rbtree.deleteNode(tmp);
+                }
+                tmp_it++;
+            }
 		}
 
         // (Modifiers) swap
         void									swap( map& mp ) {
-            (void)mp;
+            
 		}
 
         // (Modifiers) clear

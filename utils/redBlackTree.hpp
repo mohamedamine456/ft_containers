@@ -1,3 +1,4 @@
+
 #ifndef REDBLACKTREE_HPP
 #define REDBLACKTREE_HPP
 
@@ -21,7 +22,7 @@ class RedBlackTree {
 		Allocator			__pair_alloc;
 		Node_Allocator		__alloc;
 		size_t				__size;
-		Compare				comp;
+		Compare				__comp;
 		Node<const K, V>	*root;
 		Node<const K, V>	*nullNode;
 
@@ -222,7 +223,9 @@ class RedBlackTree {
             *this = rbt;
         }
 
-        ~RedBlackTree() {}
+        ~RedBlackTree() {
+			// delete all nodes;
+		}
 
         RedBlackTree &operator= (RedBlackTree const &rbt) {
 			this->root = rbt.root;
@@ -263,7 +266,7 @@ class RedBlackTree {
 				tmp = tmpRoot;
 				if (node->data->first == tmpRoot->data->first)
 					return false;
-				else if (comp(node->data->first, tmpRoot->data->first)) {
+				else if (__comp(node->data->first, tmpRoot->data->first)) {
 					tmpRoot = tmpRoot->leftChild;
 				} else {
 					tmpRoot = tmpRoot->rightChild;
@@ -274,7 +277,7 @@ class RedBlackTree {
 			node->parent = tmp;
 			if (tmp == nullptr) {
 				this->root = node;
-			} else if (comp(node->data->first, tmp->data->first)) {
+			} else if (__comp(node->data->first, tmp->data->first)) {
 				tmp->leftChild = node;
 			} else {
 				tmp->rightChild = node;
@@ -304,7 +307,7 @@ class RedBlackTree {
 				if (tmpNode->data->first == node->data->first) {
 					tmp1 = tmpNode;
 				}
-				if (comp(tmpNode->data->first, node->data->first)) {
+				if (__comp(tmpNode->data->first, node->data->first)) {
 					tmpNode = tmpNode->rightChild;
 				} else {
 					tmpNode = tmpNode->leftChild;
