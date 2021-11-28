@@ -25,4 +25,4 @@ stack:
 set:
 	@$(COMPILER) $(FLAGS)	Set_tests.cpp -o set.out 
 clean:
-	rm -f vector.out map.out stack.out set.out
+	rm -rf vector.out map.out stack.out set.out vector.out.dSYM map.out.dSYM stack.out.dSYM set.out.dSYM
