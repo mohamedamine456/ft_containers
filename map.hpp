@@ -221,7 +221,23 @@ class ft::map
 
         // (Modifiers) swap
         void									swap( map& mp ) {
-            
+            allocator_type												tmp_alloc = mp.__allocator;
+            size_type													tmp_size = mp.__size;
+            RedBlackTree<key_type, mapped_type, key_compare, Allocator>	tmp_rbtree = mp.__rbtree;
+			key_compare													tmp_key_comp = mp.__key_comp;
+			value_compare												tmp_value_comp = mp.__value_compare;
+
+			mp.__allocator = this->__allocator;
+			mp.__size = this->__size;
+			mp.__rbtree = this->__rbtree;
+			mp.__key_comp = this->__key_comp;
+			mp.__value_compare = this->__value_compare;
+
+			this->__allocator = tmp_alloc;
+			this->__size = tmp_size;
+			this->__rbtree = tmp_rbtree;
+			this->__key_comp = tmp_key_comp;
+			this->__value_compare = tmp_value_comp;
 		}
 
         // (Modifiers) clear
@@ -267,25 +283,86 @@ class ft::map
 
         // (Operations) lower_bound & upper_bound
         iterator								lower_bound( const key_type& k ) {
-            (void)k;
+            Node<const Key, T>    *tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
+			Node<const Key, T>    *tmp2;
+			if (tmp != __rbtree.getNullNode())
+				return iterator(tmp, __rbtree.getRoot());
+			else {
+				tmp = __rbtree.minimum(__rbtree.getRoot());
+				tmp2 = tmp;
+				while (tmp->data->first < k)
+				{
+					tmp2 = tmp;
+					tmp = __rbtree.successor(tmp);
+				}
+				return iterator(tmp2, __rbtree.getRoot());
+			}
 		}
         const_iterator							lower_bound( const key_type& k ) const {
-            (void)k;
+            Node<const Key, T>    *tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
+			Node<const Key, T>    *tmp2;
+			if (tmp != __rbtree.getNullNode())
+				return const_iterator(tmp, __rbtree.getRoot());
+			else {
+				tmp = __rbtree.minimum(__rbtree.getRoot());
+				tmp2 = tmp;
+				while (tmp->data->first < k)
+				{
+					tmp2 = tmp;
+					tmp = __rbtree.successor(tmp);
+				}
+				return const_iterator(tmp2, __rbtree.getRoot());
+			}
 		}
 
         iterator								upper_bound( const key_type& k ) {
-            (void)k;
+            Node<const Key, T>    *tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
+			Node<const Key, T>    *tmp2;
+			if (tmp != __rbtree.getNullNode())
+				return iterator(tmp, __rbtree.getRoot());
+			else {
+				tmp = __rbtree.maximum(__rbtree.getRoot());
+				tmp2 = tmp;
+				while (tmp->data->first < k)
+				{
+					tmp2 = tmp;
+					tmp = __rbtree.predecessor(tmp);
+				}
+				return iterator(tmp2, __rbtree.getRoot());
+			}
 		}
         const_iterator							upper_bound( const key_type& k ) const {
-            (void)k;
+            Node<const Key, T>    *tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
+			Node<const Key, T>    *tmp2;
+			if (tmp != __rbtree.getNullNode())
+				return const_iterator(tmp, __rbtree.getRoot());
+			else {
+				tmp = __rbtree.maximum(__rbtree.getRoot());
+				tmp2 = tmp;
+				while (tmp->data->first < k)
+				{
+					tmp2 = tmp;
+					tmp = __rbtree.predecessor(tmp);
+				}
+				return const_iterator(tmp2, __rbtree.getRoot());
+			}
 		}
 
         // (Operations equal_range
         pair< const_iterator, const_iterator>	equal_range( const key_type& k ) const {
-            (void)k;
+			Node<const Key, T>	*tmp1 =__rbtree.searchNode(__rbtree.getRoot(), k);
+			Node<const Key, T>	*tmp2 = nullptr;
+			if (tmp1 != __rbtree.getNullNode())
+				return ft::pair<const_iterator, const_iterator>(const_iterator(tmp1, __rbtree.getRoot()), const_iterator(tmp2, __rbtree.getRoot()));
+			return ft::pair<const_iterator, const_iterator>(const_iterator(tmp1, __rbtree.getRoot()), const_iterator(tmp2, __rbtree.getRoot()));
         }
         pair<iterator, iterator>				equal_range( const key_type& k) {
             (void)k;
+			Node<const Key, T>	*tmp1 =__rbtree.searchNode(__rbtree.getRoot(), k);
+			Node<const Key, T>	*tmp2 = nullptr;
+			if (tmp1 != __rbtree.getNullNode())
+				return ft::pair<iterator, iterator>(iterator(tmp1, __rbtree.getRoot()), iterator(tmp2, __rbtree.getRoot()));
+			return ft::pair<iterator, iterator>(iterator(tmp1, __rbtree.getRoot()), iterator(tmp2, __rbtree.getRoot()));
         }
 
         // (Allocator) get_allocator

@@ -356,7 +356,7 @@ class RedBlackTree {
 			deleteNode(node);
         }
 
-        Node<const K, V>	*successor(Node<K, V> *node) const {
+        Node<const K, V>	*successor(Node<const K, V> *node) const {
 			Node<const K, V>	*tmp = node;
 			Node<const K, V>	*tmp1;
 			if (tmp->rightChild != nullNode)
