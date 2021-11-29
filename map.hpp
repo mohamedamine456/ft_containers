@@ -184,15 +184,14 @@ class ft::map
 
         template < class InputIterator >
         void									insert( InputIterator first, InputIterator last ) {
-            InputIterator tmpIt(first);
-            while (tmpIt != last) {
-                Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), tmpIt->first);
+            while (first != last) {
+                Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
                 if (tmp == __rbtree.getNullNode()) {
-                    tmp = __rbtree.newNode(tmpIt->first, tmpIt->second);
+                    tmp = __rbtree.newNode(first->first, first->second);
                     __rbtree.insertNode(tmp);
                     __size++;
                 }
-                tmpIt++;
+                first++;
             }
 		}
 

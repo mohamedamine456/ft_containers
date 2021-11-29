@@ -29,12 +29,12 @@ int main() {
         mp[25] = 1;
 
         mp.insert(mpp2.begin(), mpp2.end());
-        it = mp.begin();
-        ft::map<int, int>::iterator ite = mp.end();
-        std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
-        ite--;
-        std::cout << "key: " << ite->first << ", value: " << ite->second << std::endl;
-        for (it = mp.begin(); it != mp.end(); it++)
+        // it = mp.begin();
+        // ft::map<int, int>::iterator ite = mp.end();
+        // std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
+        // ite--;
+        // std::cout << "key: " << ite->first << ", value: " << ite->second << std::endl;
+        for (it = mp.begin(); it != mp.end(); ++it)
             std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
         std::cout << "-----------------------------------------------------\n";
         ft::map<int, int>::iterator itf = mp.find(25);
