@@ -15,36 +15,36 @@ int main() {
             mpp2.insert(std::make_pair((i + 20) * 13, (i + 20)* 37));
         }
 
-        ft::map<int, int> mp(mpp.begin(), mpp.end());
-        mp.insert(ft::make_pair(13, 841));
-        mp.insert(ft::make_pair(15, 78));
-        ft::map<int, int>::iterator it = mp.begin();
+        std::map<int, int> mp(mpp.begin(), mpp.end());
+        mp.insert(std::make_pair(13, 841));
+        mp.insert(std::make_pair(15, 78));
+        std::map<int, int>::iterator it = mp.begin();
         it++;
         it++;
         --it;
-        mp.insert(it, ft::make_pair(45, 654));
-        mp.insert(it, ft::make_pair(45, 456));
+        mp.insert(it, std::make_pair(45, 654));
+        mp.insert(it, std::make_pair(45, 456));
         mp[23] = 1450;
         mp[25] = 784;
         mp[25] = 1;
 
         // mp.insert(mpp2.begin(), mpp2.end());
         it = mp.begin();
-        ft::map<int, int>::iterator ite = mp.end();
+        std::map<int, int>::iterator ite = mp.end();
         std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
         ite--;
         std::cout << "key: " << ite->first << ", value: " << ite->second << std::endl;
         for (it = mp.begin(); it != mp.end(); it++)
             std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
         std::cout << "-----------------------------------------------------\n";
-        ft::map<int, int>::iterator itf = mp.find(25);
+        std::map<int, int>::iterator itf = mp.find(25);
         std::cout << "key: " << itf->first << ", value: " << itf->second << std::endl;
 
-        ft::map<int, int>::const_iterator itc = mp.find(25);
+        std::map<int, int>::const_iterator itc = mp.find(25);
         std::cout << "key: " << itc->first << ", value: " << itc->second << std::endl;
         std::cout << "Size: " << mp.size() << std::endl;
 
-        ft::map<int, int>::reverse_iterator rit = mp.rbegin();
+        std::map<int, int>::reverse_iterator rit = mp.rbegin();
         rit++;
         std::cout << "key: " << rit->first << ", value: " << rit->second << std::endl;
     }

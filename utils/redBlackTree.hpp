@@ -214,7 +214,7 @@ class RedBlackTree {
 			nullNode->leftChild = nullptr;
 			nullNode->rightChild = nullptr;
 			nullNode->red = false;
-			nullNode->data = nullptr;
+			nullNode->data = __pair_alloc.allocate(1);;
 			this->root = nullNode;
 			__size = 0;
         }

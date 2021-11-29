@@ -98,10 +98,14 @@ class ft::map
 		}
 
         iterator								end() {
-            return iterator(__rbtree.maximum(__rbtree.getRoot()), __rbtree.getRoot());
+            iterator tmp(__rbtree.maximum(__rbtree.getRoot()), __rbtree.getRoot());
+            tmp++;
+            return iterator(tmp);
 		}
         const_iterator							end() const {
-            return const_iterator(__rbtree.maximum(__rbtree.getRoot()), __rbtree.getRoot());
+            const_iterator tmp(__rbtree.maximum(__rbtree.getRoot()), __rbtree.getRoot());
+            tmp++;
+            return const_iterator(tmp);
 		}
 
         // (Iterators) rbegin & rend
