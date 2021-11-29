@@ -28,7 +28,7 @@ int main() {
         mp[25] = 784;
         mp[25] = 1;
 
-        // mp.insert(mpp2.begin(), mpp2.end());
+        mp.insert(mpp2.begin(), mpp2.end());
         it = mp.begin();
         ft::map<int, int>::iterator ite = mp.end();
         std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
