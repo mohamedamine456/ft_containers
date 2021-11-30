@@ -190,6 +190,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         template < class P >
         map_iterator( const map_iterator<ft::bidirectional_iterator_tag, P > &mp_it ) {
             this->__node = mp_it.base();
+            this->__root = mp_it.root();
         }
 
         operator map_iterator<const Category, const Pair>() const{
@@ -205,14 +206,29 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         Node<Key, Value>    *base() const {
             return this->__node;
         }
+        Node<Key, Value>    *root() const {
+            return this->__root;
+        }
         
         map_iterator    &operator++() {
-            this->__node = successor(this->__node);
+            if (this->__node->empty == false)
+            {
+                if (this->__node == maximum(this->__root))
+                    this->__node = this->__node->rightChild;
+                else
+                    this->__node = successor(this->__node);
+            }
             return *this;
         }
         map_iterator    operator++(int) {
             map_iterator    tmp(*this);
-            this->__node = successor(this->__node);
+            if (this->__node->empty == false)
+            {
+                if (this->__node == maximum(this->__root))
+                    this->__node = this->__node->rightChild;
+                else
+                    this->__node = successor(this->__node);
+            }
             return tmp;
         }
 		map_iterator    &operator--() {
