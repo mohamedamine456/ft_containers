@@ -182,7 +182,7 @@ void iterator_tests(void)
     {
         /*---------------------------------- time limit test --------------------------------------------*/
         {
-            time_t start, end, diff;
+            // time_t start, end, diff;
 
             std::map<int, std::string> m;
             ft::map<int, std::string> ft_m;
@@ -191,17 +191,17 @@ void iterator_tests(void)
                 m.insert(std::make_pair(i, "value"));
                 ft_m.insert(ft::make_pair(i, "value"));
             }
-            start = get_time();
-            for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
-                ;
-            end = get_time();
-            diff = end - start;
-            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            // start = get_time();
+            // for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
+            //     ;
+            // end = get_time();
+            // diff = end - start;
+            // diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
 
-            ualarm(diff * 1e3, 0);
-            for (ft::map<int, std::string>::iterator it = ft_m.begin(); it != ft_m.end(); ++it)
-                ;
-            ualarm(0, 0);
+            // ualarm(diff * 1e3, 0);
+            // for (ft::map<int, std::string>::iterator it = ft_m.begin(); it != ft_m.end(); ++it)
+            //     ;
+            // ualarm(0, 0);
         }
         bool cond(false);
         {

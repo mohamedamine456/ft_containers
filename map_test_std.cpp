@@ -36,6 +36,8 @@ int main() {
         // std::cout << "key: " << ite->first << ", value: " << ite->second << std::endl;
         for (it = mp.begin(); it != mp.end(); it++)
             std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
+        ++it;
+        std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
         std::cout << "-----------------------------------------------------\n";
         std::map<int, int>::iterator itf = mp.find(25);
         std::cout << "key: " << itf->first << ", value: " << itf->second << std::endl;

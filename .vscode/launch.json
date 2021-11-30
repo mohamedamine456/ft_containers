@@ -5,7 +5,7 @@
             "name": "(lldb) Launch",
             "type": "cppdbg",
             "request": "launch",
-            "program": "${workspaceFolder}/tester/map.out",
+            "program": "${workspaceFolder}/a.out",
             "args": [],
             "stopAtEntry": false,
             "cwd": "${fileDirname}",
