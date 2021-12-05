@@ -66,35 +66,20 @@ int main() {
     //     rit++;
     //     std::cout << "key: " << rit->first << ", value: " << rit->second << std::endl;
     // }
-    std::map<int, std::string> m1;
-    ft::map<int, std::string> ft_m1;
+    // std::map<int, std::string> m1;
+    // ft::map<int, std::string> ft_m1;
 
-    for (size_t i = 0; i < 10; i++)
-    {
-        m1.insert(std::make_pair(i, "string2"));
-        ft_m1.insert(ft::make_pair(i, "string2"));
-    }
-
-    std::map<int, std::string> const m2(m1.rbegin(), m1.rend());
-    ft::map<int, std::string> const ft_m2(ft_m1.rbegin(), ft_m1.rend());
-
-    // for (std::map<int, std::string>::reverse_iterator rit = m1.rbegin(); rit != m1.rend(); ++rit) // fill c_res from const m1
+    // for (size_t i = 0; i < 10; i++)
     // {
-    //     std::cout << rit->first << ", " << rit->second << "\n";       
+    //     m1.insert(std::make_pair(i, "string2"));
+    //     ft_m1.insert(ft::make_pair(i, "string2"));
     // }
 
-    // std::cout << "/*----------------------------------------------------*/\n"; 
+    // std::map<int, std::string> const m2(m1.rbegin(), m1.rend());
+    // ft::map<int, std::string> const ft_m2(ft_m1.rbegin(), ft_m1.rend());
 
-    // for (ft::map<int, std::string>::reverse_iterator rit = ft_m1.rbegin(); rit != ft_m1.rend(); ++rit) // fill c_ft_res from const ft_m1
-    // {
-    //     std::cout << rit->first << ", " << rit->second << "\n";      
-    // }
+    // std::string c_res, c_ft_res;
 
-    /*-----------------------------------------------------*/
-    /*------------------ ft::maps ---------------------*/
-    /*----------------------------------------------------*/
-    /*------------------ strings to store the results ----*/
-    std::string c_res, c_ft_res;
     /*----------------------------------------------------*/
     // for (std::map<int, std::string>::const_reverse_iterator rit = m2.rbegin(); rit != m2.rend(); ++rit) // fill c_res from const m1
     // {
@@ -107,10 +92,74 @@ int main() {
     // for (ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin(); rit != ft_m2.rend(); ++rit) // fill c_ft_res from const ft_m1
     // {
     //     std::cout << rit->first << ", " << rit->second << "\n";
-    //     c_ft_res += rit->second;        
+    //     c_ft_res += rit->second;
+    //     usleep(50000);
     // }
 
     // ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin();
 
-    EQUAL(c_res == c_ft_res);
+    {
+        std::map<int, std::string> m1;
+        std::map<int, std::string> m2;
+        ft::map<int, std::string> ft_m1;
+        ft::map<int, std::string> ft_m2;
+
+        for (int i = 0; i < 20; ++i)
+        {
+            m1.insert(std::make_pair(i, "string1"));
+            ft_m1.insert(ft::make_pair(i, "string1"));
+        }
+
+        for (int i = 0; i < 10; ++i)
+        {
+            m2.insert(std::make_pair(i, "string2"));
+            ft_m2.insert(ft::make_pair(i, "string2"));
+        }
+        m1 = m2;
+        /*-----------------------------------------------------*/
+        /*------------------ ft::map ---------------------*/
+        ft_m1 = ft_m2;
+        /*----------------------------------------------------*/
+        /*------------------ strings to store the results ----*/
+        std::string res, ft_res;
+        /*----------------------------------------------------*/
+        for (std::map<int, std::string>::iterator it = m1.begin(); it != m1.end(); ++it) // fill res from m1
+            res += it->second;
+
+        for (ft::map<int, std::string>::iterator it = ft_m1.begin(); it != ft_m1.end(); ++it) // fill ft_res from ft_m1
+            ft_res += it->second;
+
+        std::cout << res << "\n";
+        std::cout << ft_res << "\n";
+    }
+
+
+    {
+        std::map<int, std::string> m1;
+        std::map<int, std::string> m2;
+        ft::map<int, std::string> ft_m1;
+        ft::map<int, std::string> ft_m2;
+
+        for (int i = 0; i < 10; ++i)
+        {
+            m1.insert(std::make_pair(i, "string2"));
+            ft_m1.insert(ft::make_pair(i, "string2"));
+        }
+        m1 = m2;
+        /*-----------------------------------------------------*/
+        /*------------------ ft::map ---------------------*/
+        ft_m1 = ft_m2;
+        /*----------------------------------------------------*/
+        /*------------------ strings to store the results ----*/
+        std::string res, ft_res;
+        /*----------------------------------------------------*/
+        for (std::map<int, std::string>::iterator it = m1.begin(); it != m1.end(); ++it) // fill res from m1
+            res += it->second;
+
+        for (ft::map<int, std::string>::iterator it = ft_m1.begin(); it != ft_m1.end(); ++it) // fill ft_res from ft_m1
+            ft_res += it->second;
+        
+        std::cout << res << "\n";
+        std::cout << ft_res << "\n";
+    }
 }

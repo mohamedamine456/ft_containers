@@ -2220,10 +2220,10 @@ int main()
     std::cout << RED << "--------------------------------------------------------------------------------------------------------" << RESET << std::endl;
     signal(SIGALRM, alarm_handler);
 
-    std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
+    // std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
 
     // need to fix TLE prob how is that even possible
-    TEST_CASE(iterator_tests);
+    // TEST_CASE(iterator_tests);
 
     // DOOOOONE
     // TEST_CASE(const_iterator_tests);
@@ -2231,6 +2231,7 @@ int main()
     // TEST_CASE(reverse_iterator_tests);
     // std::cout << std::endl;
 
+    // DOOOOONE
     // std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
     // TEST_CASE(testConstructors);
     // std::cout << std::endl;

@@ -8,7 +8,7 @@
 template < class Key, class T, class Compare, class Allocator >
 class ft::map
 {
-    public: 
+    public:
         typedef Key																	key_type;
         typedef T																	mapped_type;
         typedef ft::pair<const key_type, mapped_type>								value_type;
@@ -37,10 +37,12 @@ class ft::map
                     return comp(x.first, y.first);
                 }
         };
+        typedef typename Allocator::template rebind<RedBlackTree<key_type, mapped_type, key_compare, Allocator> >::other       Tree_Allocator;
 	private:
 		// attributes
 		
 		allocator_type																__allocator;
+        Tree_Allocator                                                              __tree_allocator;
 		size_type																	__size;
 		RedBlackTree<key_type, mapped_type, key_compare, Allocator>					__rbtree;
 		key_compare																	__key_comp;
@@ -61,13 +63,13 @@ class ft::map
             (void)comp;
             (void)alloc;
             __size = 0;
+            Iterator tmp = first;
             while (first != last) {
-                // Node<const Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
-                // if (tmp != __rbtree.getNullNode())
-                //     tmp->data->second = first->second;
-                // else
-                //     __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
-                std::cout << first->first << ", " << first->second << "\n";
+                Node<const Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
+                if (tmp != __rbtree.getNullNode())
+                    tmp->data->second = first->second;
+                else
+                    __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
                 ++first;
                 __size++;
             }
@@ -82,7 +84,8 @@ class ft::map
 
         // operator=
         map& operator= ( const map& mp ) {
-            this->__rbtree = mp.__rbtree;   // need deep copy
+            __tree_allocator.construct(&(this->__rbtree));
+            this->insert(mp.begin(), mp.end());
             this->__size = mp.__size;
             this->__value_compare = value_compare(mp.__value_compare);
             this->__key_comp = key_compare(mp.__key_comp);

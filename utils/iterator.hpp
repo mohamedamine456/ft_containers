@@ -230,7 +230,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
                     this->__node = successor(this->__node);
                 }
             }
-            else if (this->__last_used != maximum(this->__root))
+            else if (this->__last_used && this->__last_used != maximum(this->__root))
             {
                 this->__node = this->__last_used;
                 ++(*this);
@@ -251,10 +251,10 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
                     this->__node = successor(this->__node);
                 }
             }
-            else if (this->__last_used != maximum(this->__root))
+            else if (this->__last_used && this->__last_used != maximum(this->__root))
             {
                 this->__node = this->__last_used;
-                ++(*this);
+                (*this)++;
             }
             return tmp;
         }
