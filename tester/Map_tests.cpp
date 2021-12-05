@@ -1036,13 +1036,13 @@ void testIterators()
         /*----------------------------------------------------*/
         for (std::map<int, std::string>::reverse_iterator it = m1.rbegin(); it != m1.rend(); ++it) // fill res from m1
             res += it->second;
-        // for (std::map<int, std::string>::const_reverse_iterator rit = m2.rbegin(); rit != m2.rend(); ++rit) // fill c_res from const m1
-        //     c_res += rit->second;
+        for (std::map<int, std::string>::const_reverse_iterator rit = m2.rbegin(); rit != m2.rend(); ++rit) // fill c_res from const m1
+            c_res += rit->second;
 
         for (ft::map<int, std::string>::reverse_iterator it = ft_m1.rbegin(); it != ft_m1.rend(); ++it) // fill ft_res from ft_m1
             ft_res += it->second;
-        // for (ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin(); rit != ft_m2.rend(); ++rit) // fill c_ft_res from const ft_m1
-        //     c_ft_res += rit->second;
+        for (ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin(); rit != ft_m2.rend(); ++rit) // fill c_ft_res from const ft_m1
+            c_ft_res += rit->second;
         int arr[] = {12, 82, 37, 64, 15};
         ft::map<int, int> end_test;
         for(size_t i = 0; i < 5; ++i)
@@ -1050,7 +1050,6 @@ void testIterators()
         ft::map<int, int>::reverse_iterator rit = end_test.rend();
         rit--;
         EQUAL(res == ft_res && c_res == c_ft_res && rit->first == 12);
-        std::cout << "\n\n" << ft_m1.rbegin()->first << ", " << ft_m1.rbegin()->second << "\n";
     }
 }
 
@@ -2149,7 +2148,6 @@ void testRetionalOperators()
         ualarm(0, 0);
     }
     EQUAL(((foo > bar) == (ft_foo > ft_bar)) && (res == ft_res));
-
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " operator >= "
               << "] --------------------]\t\t\033[0m";
     /*---------------------------------- time limit test --------------------------------------------*/
@@ -2223,9 +2221,9 @@ int main()
     // std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
 
     // DOOOOONE
-    TEST_CASE(iterator_tests);
+    // TEST_CASE(iterator_tests);
 
-    // 
+    // DOOOOONE
     // TEST_CASE(const_iterator_tests);
     // DOOOOONE
     // TEST_CASE(reverse_iterator_tests);
@@ -2236,6 +2234,7 @@ int main()
     // TEST_CASE(testConstructors);
     // std::cout << std::endl;
 
+    // rbegin & rend ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
     // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
     // TEST_CASE(testIterators);
     // std::cout << std::endl;
@@ -2250,14 +2249,17 @@ int main()
     // TEST_CASE(testElementAccess);
     // std::cout << std::endl;
 
+    // erase(it1, it2) ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
     // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
     // TEST_CASE(testModifiers)
     // std::cout << std::endl;
 
+    // DOOOOONE
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
     // TEST_CASE(testObservers)
     // std::cout << std::endl;
 
+    // upper & lower bound & equal_range ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
     // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
     // TEST_CASE(testOperations)
     // std::cout << std::endl;
