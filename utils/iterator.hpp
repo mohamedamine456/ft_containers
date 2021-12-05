@@ -275,10 +275,10 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
                 this->__node = predecessor(this->__node);
             return tmp;
         }
-		ft::pair<Key, Value>	&operator*() const {
+		reference   operator*() const {
             return *(this->__node->data);
         }
-        typename ft::pair<Key, Value>    *operator->() const {
+        pointer     operator->() const {
             return this->__node->data;
         }
 

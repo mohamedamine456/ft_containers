@@ -67,7 +67,7 @@ class ft::map
                     tmp->data->second = first->second;
                 else
                     __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
-                first++;
+                ++first;
                 __size++;
             }
         }
