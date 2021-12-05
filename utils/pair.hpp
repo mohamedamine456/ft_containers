@@ -40,22 +40,22 @@ bool operator!= ( ft::pair<T1, T2> const &lhs, ft::pair<T1, T2> const &rhs ) {
 
 template < class T1, class T2 >
 bool operator< ( ft::pair<T1, T2> const &lhs, ft::pair<T1, T2> const &rhs ) {
-    return lhs.first < rhs.first && lhs.second < rhs.second;
+    return lhs.first < rhs.first || (!(rhs.first < lhs.first) && lhs.second < rhs.second);
 }
 
 template < class T1, class T2 >
 bool operator<= ( ft::pair<T1, T2> const &lhs, ft::pair<T1, T2> const &rhs ) {
-    return lhs.first <= rhs.first && lhs.second <= rhs.second;
+    return !(rhs < lhs);
 }
 
 template < class T1, class T2 >
 bool operator> ( ft::pair<T1, T2> const &lhs, ft::pair<T1, T2> const &rhs ) {
-    return lhs.first > rhs.first && lhs.second > rhs.second;
+    return rhs > lhs;
 }
 
 template < class T1, class T2 >
 bool operator>= ( ft::pair<T1, T2> const &lhs, ft::pair<T1, T2> const &rhs ) {
-    return lhs.first >= rhs.first && lhs.second >= rhs.second;
+    return !(rhs < lhs);
 }
 
 // make_pair

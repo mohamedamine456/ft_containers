@@ -7,6 +7,7 @@
 #include <signal.h>
 #include <sys/time.h>
 #include <random>
+#include <utility>
 
 #define EQUAL(x) ((x) ? (std::cout << "\033[1;32mAC\033[0m\n") : (std::cout << "\033[1;31mWA\033[0m\n"))
 #define TIME_FAC 4
@@ -18,6 +19,117 @@ time_t get_time(void)
     gettimeofday(&time_now, NULL);
     time_t msecs_time = (time_now.tv_sec * 1e3) + (time_now.tv_usec / 1e3);
     return (msecs_time);
+}
+
+void testRetionalOperators()
+{
+
+    /* ---------------  pretty simple tests --------------- */
+    std::map<char, int> foo, bar;
+    ft::map<char, int> ft_foo, ft_bar;
+    bool res;
+    bool ft_res;
+    foo['a'] = 100;
+    foo['b'] = 200;
+    bar['a'] = 10;
+    bar['z'] = 1000;
+
+    ft_foo['a'] = 100;
+    ft_foo['b'] = 200;
+    ft_bar['a'] = 10;
+    ft_bar['z'] = 1000;
+
+    std::map<int, std::string> m, m1;
+    ft::map<int, std::string> ft_m, ft_m1;
+    for (size_t i = 0; i < 10; ++i)
+    {
+        m.insert(std::make_pair(i, "value"));
+        ft_m.insert(ft::make_pair(i, "value"));
+    }
+    for (size_t i = 0; i < 10; ++i)
+    {
+        m1.insert(std::make_pair(i + 1, "value1"));
+        ft_m1.insert(ft::make_pair(i + 1, "value1"));
+    }
+    ft::map<int, std::string>::iterator itf = ft_m.begin();
+    std::map<int, std::string>::iterator its = m.begin();
+    for (; itf != ft_m.end() && its != m.end(); itf++, its++)
+        std::cout << "ft: " << itf->first << ", " << itf->second << "| std: " << its->first << ", " << its->second << "\n";
+
+    ft::map<int, std::string>::iterator itf2 = ft_m1.begin();
+    std::map<int, std::string>::iterator its2 = m1.begin();
+    for (; itf2 != ft_m1.end() && its2 != m1.end(); itf2++, its2++)
+        std::cout << "ft: " << itf2->first << ", " << itf2->second << "| std: " << its2->first << ", " << its2->second << "\n";
+
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " operator > "
+              << "] --------------------]\t\t\033[0m";
+    /*---------------------------------- time limit test --------------------------------------------*/
+    {
+        time_t start, end, diff;
+        start = get_time();
+        res = m > m1;
+        end = get_time();
+        diff = end - start;
+        diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+
+        ualarm(diff * 1e3, 0);
+        ft_res = ft_m > ft_m1;
+        ualarm(0, 0);
+    }
+    EQUAL(((foo > bar) == (ft_foo > ft_bar)) && (res == ft_res));
+    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " operator >= "
+    //           << "] --------------------]\t\t\033[0m";
+    // /*---------------------------------- time limit test --------------------------------------------*/
+    // {
+    //     time_t start, end, diff;
+
+    //     start = get_time();
+    //     res = m >= m1;
+    //     end = get_time();
+    //     diff = end - start;
+    //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+
+    //     ualarm(diff * 1e3, 0);
+    //     ft_res = ft_m >= ft_m1;
+    //     ualarm(0, 0);
+    // }
+    // EQUAL(((foo >= bar) == (ft_foo >= ft_bar)) && (res == ft_res));
+
+    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " operator < "
+    //           << "] --------------------]\t\t\033[0m";
+    // /*---------------------------------- time limit test --------------------------------------------*/
+    // {
+    //     time_t start, end, diff;
+
+    //     start = get_time();
+    //     res = m < m1;
+    //     end = get_time();
+    //     diff = end - start;
+    //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+
+    //     ualarm(diff * 1e3, 0);
+    //     ft_res = ft_m < ft_m1;
+    //     ualarm(0, 0);
+    // }
+    // EQUAL(((foo < bar) == (ft_foo < ft_bar)) && (res == ft_res));
+
+    // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " operator <= "
+    //           << "] --------------------]\t\t\033[0m";
+    // /*---------------------------------- time limit test --------------------------------------------*/
+    // {
+    //     time_t start, end, diff;
+
+    //     start = get_time();
+    //     res = m <= m1;
+    //     end = get_time();
+    //     diff = end - start;
+    //     diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+
+    //     ualarm(diff * 1e3, 0);
+    //     ft_res = ft_m <= ft_m1;
+    //     ualarm(0, 0);
+    // }
+    // EQUAL(((foo <= bar) == (ft_foo <= ft_bar)) && (res == ft_res));
 }
 
 int main() {
@@ -87,7 +199,7 @@ int main() {
     //     c_res += rit->second;        
     // }
 
-    std::cout << "/*----------------------------------------------------*/\n"; 
+    // std::cout << "/*----------------------------------------------------*/\n"; 
 
     // for (ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin(); rit != ft_m2.rend(); ++rit) // fill c_ft_res from const ft_m1
     // {
@@ -96,70 +208,5 @@ int main() {
     //     usleep(50000);
     // }
 
-    // ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin();
-
-    {
-        std::map<int, std::string> m1;
-        std::map<int, std::string> m2;
-        ft::map<int, std::string> ft_m1;
-        ft::map<int, std::string> ft_m2;
-
-        for (int i = 0; i < 20; ++i)
-        {
-            m1.insert(std::make_pair(i, "string1"));
-            ft_m1.insert(ft::make_pair(i, "string1"));
-        }
-
-        for (int i = 0; i < 10; ++i)
-        {
-            m2.insert(std::make_pair(i, "string2"));
-            ft_m2.insert(ft::make_pair(i, "string2"));
-        }
-        m1 = m2;
-        /*-----------------------------------------------------*/
-        /*------------------ ft::map ---------------------*/
-        ft_m1 = ft_m2;
-        /*----------------------------------------------------*/
-        /*------------------ strings to store the results ----*/
-        std::string res, ft_res;
-        /*----------------------------------------------------*/
-        for (std::map<int, std::string>::iterator it = m1.begin(); it != m1.end(); ++it) // fill res from m1
-            res += it->second;
-
-        for (ft::map<int, std::string>::iterator it = ft_m1.begin(); it != ft_m1.end(); ++it) // fill ft_res from ft_m1
-            ft_res += it->second;
-
-        std::cout << res << "\n";
-        std::cout << ft_res << "\n";
-    }
-
-
-    {
-        std::map<int, std::string> m1;
-        std::map<int, std::string> m2;
-        ft::map<int, std::string> ft_m1;
-        ft::map<int, std::string> ft_m2;
-
-        for (int i = 0; i < 10; ++i)
-        {
-            m1.insert(std::make_pair(i, "string2"));
-            ft_m1.insert(ft::make_pair(i, "string2"));
-        }
-        m1 = m2;
-        /*-----------------------------------------------------*/
-        /*------------------ ft::map ---------------------*/
-        ft_m1 = ft_m2;
-        /*----------------------------------------------------*/
-        /*------------------ strings to store the results ----*/
-        std::string res, ft_res;
-        /*----------------------------------------------------*/
-        for (std::map<int, std::string>::iterator it = m1.begin(); it != m1.end(); ++it) // fill res from m1
-            res += it->second;
-
-        for (ft::map<int, std::string>::iterator it = ft_m1.begin(); it != ft_m1.end(); ++it) // fill ft_res from ft_m1
-            ft_res += it->second;
-        
-        std::cout << res << "\n";
-        std::cout << ft_res << "\n";
-    }
+    testRetionalOperators();
 }
