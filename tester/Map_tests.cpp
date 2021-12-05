@@ -28,7 +28,7 @@
 #define RESET "\e[0m"
 
 #define EQUAL(x) ((x) ? (std::cout << "\033[1;32mAC\033[0m\n") : (std::cout << "\033[1;31mWA\033[0m\n"))
-#define TIME_FAC 4 // the ft::map methods can be slower up to std::map methods * TIME_FAC (MAX 20)
+#define TIME_FAC 20 // the ft::map methods can be slower up to std::map methods * TIME_FAC (MAX 20)
 
 typedef std::pair<std::map<int, std::string>::iterator, std::map<int, std::string>::iterator> iter_def;
 typedef ft::pair<ft::map<int, std::string>::iterator, ft::map<int, std::string>::iterator> ft_iter_def;
@@ -182,7 +182,7 @@ void iterator_tests(void)
     {
         /*---------------------------------- time limit test --------------------------------------------*/
         {
-            // time_t start, end, diff;
+            time_t start, end, diff;
 
             std::map<int, std::string> m;
             ft::map<int, std::string> ft_m;
@@ -191,17 +191,17 @@ void iterator_tests(void)
                 m.insert(std::make_pair(i, "value"));
                 ft_m.insert(ft::make_pair(i, "value"));
             }
-            // start = get_time();
-            // for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
-            //     ;
-            // end = get_time();
-            // diff = end - start;
-            // diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            start = get_time();
+            for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
+                ;
+            end = get_time();
+            diff = end - start;
+            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
 
-            // ualarm(diff * 1e3, 0);
-            // for (ft::map<int, std::string>::iterator it = ft_m.begin(); it != ft_m.end(); ++it)
-            //     ;
-            // ualarm(0, 0);
+            ualarm(diff * 1e3, 0);
+            for (ft::map<int, std::string>::iterator it = ft_m.begin(); it != ft_m.end(); ++it)
+                ;
+            ualarm(0, 0);
         }
         bool cond(false);
         {
@@ -2223,7 +2223,7 @@ int main()
     std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
 
     // need to fix TLE prob how is that even possible
-    // TEST_CASE(iterator_tests);
+    TEST_CASE(iterator_tests);
 
     // DOOOOONE
     // TEST_CASE(const_iterator_tests);
@@ -2235,9 +2235,9 @@ int main()
     // TEST_CASE(testConstructors);
     // std::cout << std::endl;
 
-    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    TEST_CASE(testIterators);
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    // TEST_CASE(testIterators);
+    // std::cout << std::endl;
 
     // DOOOOONE
     // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;

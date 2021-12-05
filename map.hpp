@@ -62,11 +62,12 @@ class ft::map
             (void)alloc;
             __size = 0;
             while (first != last) {
-                Node<const Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
-                if (tmp != __rbtree.getNullNode())
-                    tmp->data->second = first->second;
-                else
-                    __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
+                // Node<const Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
+                // if (tmp != __rbtree.getNullNode())
+                //     tmp->data->second = first->second;
+                // else
+                //     __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
+                std::cout << first->first << ", " << first->second << "\n";
                 ++first;
                 __size++;
             }

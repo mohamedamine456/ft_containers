@@ -96,21 +96,21 @@ int main() {
     /*------------------ strings to store the results ----*/
     std::string c_res, c_ft_res;
     /*----------------------------------------------------*/
-    for (std::map<int, std::string>::const_reverse_iterator rit = m2.rbegin(); rit != m2.rend(); ++rit) // fill c_res from const m1
-    {
-        std::cout << rit->first << ", " << rit->second << "\n";
-        c_res += rit->second;        
-    }
+    // for (std::map<int, std::string>::const_reverse_iterator rit = m2.rbegin(); rit != m2.rend(); ++rit) // fill c_res from const m1
+    // {
+    //     std::cout << rit->first << ", " << rit->second << "\n";
+    //     c_res += rit->second;        
+    // }
 
     std::cout << "/*----------------------------------------------------*/\n"; 
 
-    for (ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin(); rit != ft_m2.rend(); ++rit) // fill c_ft_res from const ft_m1
-    {
-        std::cout << rit->first << ", " << rit->second << "\n";
-        c_ft_res += rit->second;        
-    }
+    // for (ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin(); rit != ft_m2.rend(); ++rit) // fill c_ft_res from const ft_m1
+    // {
+    //     std::cout << rit->first << ", " << rit->second << "\n";
+    //     c_ft_res += rit->second;        
+    // }
 
-    ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin();
+    // ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin();
 
     EQUAL(c_res == c_ft_res);
 }
