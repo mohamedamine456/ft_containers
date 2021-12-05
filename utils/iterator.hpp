@@ -239,12 +239,22 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         }
         map_iterator    operator++(int) {
             map_iterator    tmp(*this);
-            if (this->__node != nullptr && this->__node->rightChild != nullptr)
+            if (this->__node->empty == false)
             {
                 if (this->__node == maximum(this->__root))
+                {
+                    this->__last_used = this->__node;
                     this->__node = this->__node->rightChild;
+                }
                 else
+                {
                     this->__node = successor(this->__node);
+                }
+            }
+            else if (this->__last_used != maximum(this->__root))
+            {
+                this->__node = this->__last_used;
+                ++(*this);
             }
             return tmp;
         }
