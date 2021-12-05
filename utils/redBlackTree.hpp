@@ -214,12 +214,12 @@ class RedBlackTree {
 			nullNode->leftChild = nullptr;
 			nullNode->rightChild = nullptr;
 			nullNode->red = false;
-			nullNode->data = __pair_alloc.allocate(1);;
+			nullNode->data = __pair_alloc.allocate(1);
 			this->root = nullNode;
 			__size = 0;
         }
 
-        RedBlackTree(RedBlackTree &rbt) {
+        RedBlackTree(const RedBlackTree &rbt) {
             *this = rbt;
         }
 

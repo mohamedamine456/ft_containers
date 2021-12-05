@@ -81,11 +81,11 @@ class ft::map
 
         // operator=
         map& operator= ( const map& mp ) {
-            this->__rbtree = mp.__rbtree;
+            this->__rbtree = mp.__rbtree;   // need deep copy
             this->__size = mp.__size;
-            this->__value_compare = mp.__value_compare;
-            this->__key_comp = mp.__key_comp;
-            this->__allocator = mp.__allocator;
+            this->__value_compare = value_compare(mp.__value_compare);
+            this->__key_comp = key_compare(mp.__key_comp);
+            this->__allocator = allocator_type(mp.__allocator);
             return *this;
 		}
 
@@ -147,7 +147,7 @@ class ft::map
                 return tmp->data->second;
             }
             else {
-                tmp = __rbtree.newNode(k, 0);
+                tmp = __rbtree.newNode(k, mapped_type());
                 __rbtree.insertNode(tmp);
                 __size++;
                 return tmp->data->second;
@@ -212,13 +212,14 @@ class ft::map
 		}
         void									erase( iterator first, iterator last ) {
             iterator    tmp_it = first;
+            Node<const Key, T>    *tmp;
             while (tmp_it != last)
             {
-                Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), (*tmp_it).first);
-                if (tmp != __rbtree.getNullNode()) {
+                tmp = __rbtree.searchNode(__rbtree.getRoot(), (*tmp_it).first);
+                if (tmp != nullptr && tmp != __rbtree.getNullNode()) {
                     __rbtree.deleteNode(tmp);
                 }
-                tmp_it++;
+                ++tmp_it;
             }
 		}
 

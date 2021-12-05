@@ -171,6 +171,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         // attributes
         Node<const Key, Value>	*__node;
 		Node<const Key, Value>	*__root;
+        Node<const Key, Value>  *__last_used;
 
     public:
 
@@ -182,25 +183,28 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
 
         map_iterator () {}
 		
-        map_iterator (Node<Key, Value> *node, Node<Key, Value> *root): __node(node), __root(root) {}
+        map_iterator (Node<Key, Value> *node, Node<Key, Value> *root): __node(node), __root(root), __last_used(nullptr) {}
         
         template<class T>
-        map_iterator (Node<Key, T> *node, Node<Key, T> *root): __node(node), __root(root) {}
+        map_iterator (Node<Key, T> *node, Node<Key, T> *root): __node(node), __root(root), __last_used(nullptr) {}
         
         template < class P >
         map_iterator( const map_iterator<ft::bidirectional_iterator_tag, P > &mp_it ) {
             this->__node = mp_it.base();
             this->__root = mp_it.root();
+            this->__last_used = mp_it.last_used();
         }
 
         operator map_iterator<const Category, const Pair>() const{
-            return map_iterator<const Category, const Pair>(this->__node, this->__root);
+            return map_iterator<const Category, const Pair>(this->__node, this->__root, this->__last_used);
         }
 
         virtual ~map_iterator() {}
 
         map_iterator    &operator= ( const map_iterator &mp_it ) {
             this->__node = mp_it.__node;
+            this->__root = mp_it.__root;
+            this->__last_used = mp_it.__last_used;
             return *this;
         }
         Node<Key, Value>    *base() const {
@@ -209,14 +213,27 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         Node<Key, Value>    *root() const {
             return this->__root;
         }
+        Node<Key, Value>    *last_used() const {
+            return this->__last_used;
+        }
         
         map_iterator    &operator++() {
             if (this->__node->empty == false)
             {
                 if (this->__node == maximum(this->__root))
+                {
+                    this->__last_used = this->__node;
                     this->__node = this->__node->rightChild;
+                }
                 else
+                {
                     this->__node = successor(this->__node);
+                }
+            }
+            else if (this->__last_used != maximum(this->__root))
+            {
+                this->__node = this->__last_used;
+                ++(*this);
             }
             return *this;
         }

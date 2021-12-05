@@ -182,7 +182,7 @@ void iterator_tests(void)
     {
         /*---------------------------------- time limit test --------------------------------------------*/
         {
-            // time_t start, end, diff;
+            time_t start, end, diff;
 
             std::map<int, std::string> m;
             ft::map<int, std::string> ft_m;
@@ -191,17 +191,17 @@ void iterator_tests(void)
                 m.insert(std::make_pair(i, "value"));
                 ft_m.insert(ft::make_pair(i, "value"));
             }
-            // start = get_time();
-            // for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
-            //     ;
-            // end = get_time();
-            // diff = end - start;
-            // diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            start = get_time();
+            for (std::map<int, std::string>::iterator it = m.begin(); it != m.end(); ++it)
+                ;
+            end = get_time();
+            diff = end - start;
+            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
 
-            // ualarm(diff * 1e3, 0);
-            // for (ft::map<int, std::string>::iterator it = ft_m.begin(); it != ft_m.end(); ++it)
-            //     ;
-            // ualarm(0, 0);
+            ualarm(diff * 1e3, 0);
+            for (ft::map<int, std::string>::iterator it = ft_m.begin(); it != ft_m.end(); ++it)
+                ;
+            ualarm(0, 0);
         }
         bool cond(false);
         {
@@ -656,7 +656,6 @@ void testConstructors()
         ft_m1 = ft_m2;
         m2.begin()->second = "hello";
         ft_m2.begin()->second = "hello";
-
         EQUAL((m1.begin()->second != m2.begin()->second) && (ft_m1.begin()->second != ft_m2.begin()->second));
     }
 
@@ -2221,10 +2220,13 @@ int main()
     signal(SIGALRM, alarm_handler);
 
     std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
-    TEST_CASE(iterator_tests);
-    TEST_CASE(const_iterator_tests);
-    TEST_CASE(reverse_iterator_tests);
-    std::cout << std::endl;
+    // TEST_CASE(iterator_tests);
+
+    // DOOOOONE
+    // TEST_CASE(const_iterator_tests);
+    // DOOOOONE
+    // TEST_CASE(reverse_iterator_tests);
+    // std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
     // TEST_CASE(testConstructors);
@@ -2234,17 +2236,19 @@ int main()
     // TEST_CASE(testIterators);
     // std::cout << std::endl;
 
+    // DOOOOONE
     // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
     // TEST_CASE(testCapacityMethods)
     // std::cout << std::endl;
 
+    // DOOOOONE
     // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
     // TEST_CASE(testElementAccess);
     // std::cout << std::endl;
 
-    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    // TEST_CASE(testModifiers)
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    TEST_CASE(testModifiers)
+    std::cout << std::endl;
 
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
     // TEST_CASE(testObservers)

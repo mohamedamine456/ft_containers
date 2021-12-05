@@ -62,4 +62,5 @@ int main() {
     rbt.printRBT(rbt.getRoot(), "", true);
 
     std::cout << "Finished.\n";
+    // system("leaks a.out");
 }
