@@ -343,7 +343,7 @@ class RedBlackTree {
 				tmp2->red = tmp1->red;
 			}
 			__alloc.destroy(tmp1);
-			__alloc.deallocate(tmp1, 1);
+			// __alloc.deallocate(tmp1, 1);
 			tmp1 = nullNode;
 			if (color == false) {
 				deleteFix(tmp3);
