@@ -252,7 +252,19 @@ class ft::map
 
         // (Modifiers) clear
         void									clear() {
-
+            Node<const Key, T>  *min_node = __rbtree.minimum(__rbtree.getRoot());
+            if (min_node == nullptr || min_node == __rbtree.getNullNode())
+                return;
+            else
+            {
+                Node<const Key, T>  *next_min = __rbtree.successor(min_node);
+                while (next_min != nullptr && next_min != __rbtree.getNullNode())
+                {
+                    __rbtree.deleteNode(next_min);
+                    next_min = __rbtree.successor(min_node);
+                }
+                __rbtree.deleteNode(min_node);
+            }
 		}
 
         // (Observers) key_comp & value_comp

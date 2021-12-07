@@ -28,7 +28,7 @@
 #define RESET "\e[0m"
 
 #define EQUAL(x) ((x) ? (std::cout << "\033[1;32mAC\033[0m\n") : (std::cout << "\033[1;31mWA\033[0m\n"))
-#define TIME_FAC 17 // the ft::map methods can be slower up to std::map methods * TIME_FAC (MAX 20)
+#define TIME_FAC 20 // the ft::map methods can be slower up to std::map methods * TIME_FAC (MAX 20)
 
 typedef std::pair<std::map<int, std::string>::iterator, std::map<int, std::string>::iterator> iter_def;
 typedef ft::pair<ft::map<int, std::string>::iterator, ft::map<int, std::string>::iterator> ft_iter_def;
@@ -1544,15 +1544,15 @@ void testModifiers()
         ft_m2["ε"] = "epsilon";
 
         // const std::pair<std::string, std::string> &ref = *(m1.begin());
-        // const std::map<std::string, std::string, std::greater<std::string> >::iterator iter = std::next(m1.begin());
+        // // const std::map<std::string, std::string, std::greater<std::string> >::iterator iter = std::next(m1.begin());
         // const ft::pair<std::string, std::string> &ft_ref = *(ft_m1.begin());
-        // const ft::map<std::string, std::string, std::greater<std::string> >::iterator ft_iter = std::next(ft_m1.begin());
+        // // const ft::map<std::string, std::string, std::greater<std::string> >::iterator ft_iter = std::next(ft_m1.begin());
 
         // // std::cout << "──────── before swap ────────\n"
         // //           << "m1: " << m1 << "m2: " << m2 << "ref: " << ref
         // //           << "\niter: " << *iter << '\n';
 
-        // cond = cond && ref.first == ft_ref.first && ref.second == ft_ref.second && iter->second == ft_iter->second && iter->first == ft_iter->first && m1.size() == ft_m1.size() && m2.size() && ft_m2.size();
+        // cond = cond && ref.first == ft_ref.first && ref.second == ft_ref.second && m1.size() == ft_m1.size() && m2.size() && ft_m2.size();
 
         // m1.swap(m2);
         // ft_m1.swap(ft_m2);
@@ -2246,13 +2246,13 @@ int main()
 
     // DOOOOONE
     // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
-    // TEST_CASE(testElementAccess);
+    TEST_CASE(testElementAccess);
     // std::cout << std::endl;
 
     // erase(it1, it2) ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
-    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    TEST_CASE(testModifiers)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    // TEST_CASE(testModifiers)
+    // std::cout << std::endl;
 
     // DOOOOONE
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
