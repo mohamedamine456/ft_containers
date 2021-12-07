@@ -21,100 +21,78 @@ time_t get_time(void)
     return (msecs_time);
 }
 
+
+template <typename Iter1, typename Iter2>
+bool comparemaps(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
+{
+    for (; (first1 != last1) && (first2 != last2); ++first1, ++first2)
+        if (first1->first != first2->first || first1->second != first2->second)
+            return false;
+    return true;
+}
+
 int main() {
-    // std::cout << "begin & end: " << std::endl << std::endl;
-    // {
-    //     ft::map<int, int> mpp;
-    //     for (int i = 0; i < 10; i++) {
-    //         mpp.insert(ft::make_pair((i + 1) * 13, (i + 1)* 37));
-    //     }
-
-    //     ft::map<int, int> mpp2;
-    //     for (int i = 0; i < 10; i++) {
-    //         mpp2.insert(ft::make_pair((i + 20) * 13, (i + 20)* 37));
-    //     }
-
-    //     ft::map<int, int> mp(mpp.begin(), mpp.end());
-    //     mp.insert(ft::make_pair(13, 841));
-    //     mp.insert(ft::make_pair(15, 78));
-    //     ft::map<int, int>::iterator it = mp.begin();
-    //     it++;
-    //     it++;
-    //     --it;
-    //     mp.insert(it, ft::make_pair(45, 654));
-    //     mp.insert(it, ft::make_pair(45, 456));
-    //     mp[23] = 1450;
-    //     mp[25] = 784;
-    //     mp[25] = 1;
-
-    //     mp.insert(mpp2.begin(), mpp2.end());
-    //     // it = mp.begin();
-    //     // ft::map<int, int>::iterator ite = mp.end();
-    //     // std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
-    //     // ite--;
-    //     // std::cout << "key: " << ite->first << ", value: " << ite->second << std::endl;
-    //     for (it = mp.begin(); it != mp.end(); it++)
-    //         std::cout << "key: " << it->first << ", value: " << it->second << std::endl;
-    //     std::cout << "-----------------------------------------------------\n";
-    //     ft::map<int, int>::iterator itf = mp.find(25);
-    //     std::cout << "key: " << itf->first << ", value: " << itf->second << std::endl;
-
-    //     ft::map<int, int>::const_iterator itc = mp.find(25);
-    //     std::cout << "key: " << itc->first << ", value: " << itc->second << std::endl;
-    //     std::cout << "Size: " << mp.size() << std::endl;
-
-    //     ft::map<int, int>::reverse_iterator rit = mp.rbegin();
-    //     rit++;
-    //     std::cout << "key: " << rit->first << ", value: " << rit->second << std::endl;
-    // }
-    // std::map<int, std::string> m1;
-    // ft::map<int, std::string> ft_m1;
-
-    // for (size_t i = 0; i < 10; i++)
-    // {
-    //     m1.insert(std::make_pair(i, "string2"));
-    //     ft_m1.insert(ft::make_pair(i, "string2"));
-    // }
-
-    // std::map<int, std::string> const m2(m1.rbegin(), m1.rend());
-    // ft::map<int, std::string> const ft_m2(ft_m1.rbegin(), ft_m1.rend());
-
-    // std::string c_res, c_ft_res;
-
-    /*----------------------------------------------------*/
-    // for (std::map<int, std::string>::const_reverse_iterator rit = m2.rbegin(); rit != m2.rend(); ++rit) // fill c_res from const m1
-    // {
-    //     std::cout << rit->first << ", " << rit->second << "\n";
-    //     c_res += rit->second;        
-    // }
-
-    // std::cout << "/*----------------------------------------------------*/\n"; 
-
-    // for (ft::map<int, std::string>::const_reverse_iterator rit = ft_m2.rbegin(); rit != ft_m2.rend(); ++rit) // fill c_ft_res from const ft_m1
-    // {
-    //     std::cout << rit->first << ", " << rit->second << "\n";
-    //     c_ft_res += rit->second;
-    //     usleep(50000);
-    // }
-
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " size method "
+              << "] --------------------]\t\t\033[0m";
     {
+        /*-------------------------------------- time limit test -----------------------------------*/
+        {
+            time_t start, end, diff;
+            /*------------------ std::maps ---------------------*/
+            std::map<int, std::string> m1;
+            ft::map<int, std::string> ft_m1;
+            for (size_t i = 0; i < 1e6; i++)
+            {
+                m1.insert(std::make_pair(i, "string2"));
+                ft_m1.insert(ft::make_pair(i, "string2"));
+            }
+
+            start = get_time();
+            m1.size();
+            end = get_time();
+            diff = end - start;
+            diff = (diff) ? (diff * TIME_FAC) : TIME_FAC;
+            /*-----------------------------------------------------*/
+            /*------------------ ft::maps ---------------------*/
+            ualarm(diff * 1e3, 0);
+            ft_m1.size();
+            ualarm(0, 0);
+            /*----------------------------------------------------*/
+        }
+        /*------------------------------------------------------------------------------------------*/
         /*------------------ std::maps ---------------------*/
-        std::map<int, std::string> m1;
+        std::map<int, std::string> m1; // fill constructor
         ft::map<int, std::string> ft_m1;
-        for (size_t i = 0; i < 15; i++)
+        for (size_t i = 0; i < 10; i++)
         {
             m1.insert(std::make_pair(i, "string2"));
             ft_m1.insert(ft::make_pair(i, "string2"));
         }
 
-        m1.erase(m1.begin(), m1.end());
-        for (std::map<int, std::string>::iterator rit = m1.begin(); rit != m1.end(); ++rit) // fill c_res from const m1
-            std::cout << rit->first << ", " << rit->second << "\n";
+        std::map<int, std::string> m2;                         // empty constructor
+        std::map<int, std::string> m3(m1.begin(), m1.end());   // range constructor with normal iterators
+        std::map<int, std::string> m4(m3);                     // copy constructor
+        std::map<int, std::string> m5(m1.rbegin(), m1.rend()); // range constructor with reverse iterators
         /*-----------------------------------------------------*/
         /*------------------ ft::maps ---------------------*/
-        ft_m1.erase(ft_m1.begin(), ft_m1.end());
-        for (ft::map<int, std::string>::iterator rit = ft_m1.begin(); rit != ft_m1.end(); ++rit) // fill c_res from const m1
-            std::cout << rit->first << ", " << rit->second << "\n";
+        ft::map<int, std::string> ft_m2;
+        ft::map<int, std::string> ft_m3(ft_m1.begin(), ft_m1.end());
+        ft::map<int, std::string> ft_m4(ft_m1);
+        ft::map<int, std::string> ft_m5(ft_m1.begin(), ft_m1.end()); // real one is: ft::map<int, std::string> ft_m5(ft_m1.rbegin(), ft_m1.rend());
         /*----------------------------------------------------*/
+        EQUAL(m1.size() == ft_m1.size() && m2.size() == ft_m2.size() && m3.size() == ft_m3.size() && m5.size() == ft_m5.size() && m4.size() == ft_m4.size());
     }
+
+    std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " empty method "
+              << "] --------------------]\t\t\033[0m";
+    {
+        std::map<int, std::string> m1;
+        std::map<int, std::string> m2;
+        ft::map<int, std::string> ft_m1;
+        ft::map<int, std::string> ft_m2;
+        m1[0] = "stringsrtring";
+        ft_m1[0] = "stringsrtring";
+        EQUAL(m1.empty() == ft_m1.empty() && m2.empty() == ft_m2.empty());
+    }
+    system("leaks a.out");
 }

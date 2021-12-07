@@ -63,7 +63,6 @@ class ft::map
             (void)comp;
             (void)alloc;
             __size = 0;
-            Iterator tmp = first;
             while (first != last) {
                 Node<const Key, T> *tmp = __rbtree.searchNode(__rbtree.getRoot(), first->first);
                 if (tmp != __rbtree.getNullNode())
@@ -80,10 +79,27 @@ class ft::map
             *this = mp;
 		}
         // destructor
-        ~map() {}
+        ~map() {
+            Node<const Key, T>  *min_node = __rbtree.minimum(__rbtree.getRoot());
+            if (min_node == nullptr || min_node == __rbtree.getNullNode())
+                return;
+            else
+            {
+                Node<const Key, T>  *next_min = __rbtree.successor(min_node);
+                while (next_min != nullptr && next_min != __rbtree.getNullNode())
+                {
+                    __rbtree.deleteNode(next_min);
+                    next_min = __rbtree.successor(min_node);
+                    __size--;
+                }
+                __rbtree.deleteNode(min_node);
+                __size--;
+            }
+        }
 
         // operator=
         map& operator= ( const map& mp ) {
+            __tree_allocator.destroy(&(this)->__rbtree);
             __tree_allocator.construct(&(this->__rbtree));
             this->insert(mp.begin(), mp.end());
             this->__size = mp.__size;
@@ -217,15 +233,17 @@ class ft::map
             return 0;
 		}
         void									erase( iterator first, iterator last ) {
+            iterator    tmp_it = first;
             Node<const Key, T>    *tmp;
-            while (first != last)
+            while (tmp_it != last)
             {
-                tmp = __rbtree.searchNode(__rbtree.getRoot(), (*first).first);
+                ++first;
+                tmp = __rbtree.searchNode(__rbtree.getRoot(), (*tmp_it).first);
                 if (tmp != nullptr && tmp != __rbtree.getNullNode()) {
                     __rbtree.deleteNode(tmp);
                     __size--;
                 }
-                ++first;
+                tmp_it = first;
             }
 		}
 

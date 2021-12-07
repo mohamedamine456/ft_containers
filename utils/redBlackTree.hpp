@@ -224,7 +224,8 @@ class RedBlackTree {
         }
 
         ~RedBlackTree() {
-			// delete all nodes;
+			__pair_alloc.deallocate(nullNode->data, 1);
+			__alloc.deallocate(nullNode, 1);
 		}
 
         RedBlackTree &operator= (RedBlackTree const &rbt) {
@@ -342,8 +343,10 @@ class RedBlackTree {
 				tmp2->leftChild->parent = tmp2;
 				tmp2->red = tmp1->red;
 			}
+			__pair_alloc.destroy(tmp1->data);
+			__pair_alloc.deallocate(tmp1->data, 1);
 			__alloc.destroy(tmp1);
-			// __alloc.deallocate(tmp1, 1);
+			__alloc.deallocate(tmp1, 1);
 			tmp1 = nullNode;
 			if (color == false) {
 				deleteFix(tmp3);
