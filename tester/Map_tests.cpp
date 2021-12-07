@@ -2250,9 +2250,9 @@ int main()
     // std::cout << std::endl;
 
     // erase(it1, it2) ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
-    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
     TEST_CASE(testModifiers)
-    // std::cout << std::endl;
+    std::cout << std::endl;
 
     // DOOOOONE
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;

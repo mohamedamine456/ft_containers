@@ -85,7 +85,11 @@ class ft::map
         ~map() {
             Node<const Key, T>  *min_node = __rbtree.minimum(__rbtree.getRoot());
             if (min_node == nullptr || min_node == __rbtree.getNullNode())
+            {
+                __allocator.deallocate(__rbtree.getNullNode()->data, 1);
+			    __node_alloc.deallocate(__rbtree.getNullNode(), 1);
                 return;
+            }
             else
             {
                 Node<const Key, T>  *next_min = __rbtree.successor(min_node);
