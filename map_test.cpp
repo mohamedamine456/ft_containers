@@ -58,7 +58,7 @@ void testModifiers()
             /*-----------------------------------------------------*/
             /*------------------ ft::maps ---------------------*/
             ualarm(diff * 1e3, 0);
-            ft_m1.erase(ft_m1.begin(), ft_m1.end());
+			ft_m1.erase(ft_m1.begin(), ft_m1.end());
             ualarm(0, 0);
             /*----------------------------------------------------*/
         }
@@ -110,27 +110,27 @@ void testModifiers()
 
         // /* ---------- Testing some edge cases ---------- */
 
-        std::map<int, std::string> m2;
-        ft::map<int, std::string> ft_m2;
+        // std::map<int, std::string> m2;
+        // ft::map<int, std::string> ft_m2;
 
-        for (size_t i = 0; i < 1e5; i++)
-        {
-            m2.insert(std::make_pair(i, "string1"));
-            ft_m2.insert(ft::make_pair(i, "string1"));
-        }
+        // for (size_t i = 0; i < 1e5; i++)
+        // {
+        //     m2.insert(std::make_pair(i, "string1"));
+        //     ft_m2.insert(ft::make_pair(i, "string1"));
+        // }
 
-        std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
-        ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
+        // std::map<int, std::string>::reverse_iterator it2 = m2.rbegin();
+        // ft::map<int, std::string>::reverse_iterator ft_it2 = ft_m2.rbegin();
 
-        m2.erase(m2.begin());
-        ft_m2.erase(ft_m2.begin());
+        // m2.erase(m2.begin());
+        // ft_m2.erase(ft_m2.begin());
 
-        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
+        // cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
 
-        m2.erase(it2->first);
-        ft_m2.erase(ft_it2->first);
+        // m2.erase(it2->first);
+        // ft_m2.erase(ft_it2->first);
 
-        cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
+        // cond = cond && m2.size() == ft_m2.size() && comparemaps(m2.begin(), m2.end(), ft_m2.begin(), ft_m2.end());
 
         // std::map<int, std::string> m3;
         // ft::map<int, std::string> ft_m3;
@@ -178,5 +178,5 @@ void testModifiers()
 
 int main() {
     testModifiers();
-    // system("leaks a.out");
+    system("leaks a.out");
 }
