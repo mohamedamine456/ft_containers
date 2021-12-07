@@ -262,8 +262,10 @@ class ft::map
                 {
                     __rbtree.deleteNode(next_min);
                     next_min = __rbtree.successor(min_node);
+                    __size--;
                 }
                 __rbtree.deleteNode(min_node);
+                __size--;
             }
 		}
 

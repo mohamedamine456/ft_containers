@@ -391,7 +391,7 @@ class RedBlackTree {
 			{
 				if (tmp->data->first == key)
 					break ;
-				else if (__comp(tmp->data->first, key))
+				else if (__comp(key, tmp->data->first))
 					tmp = tmp->leftChild;
 				else
 					tmp = tmp->rightChild;
