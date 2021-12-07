@@ -223,16 +223,15 @@ class RedBlackTree {
             *this = rbt;
         }
 
-        ~RedBlackTree() {
-			__pair_alloc.deallocate(nullNode->data, 1);
-			__alloc.deallocate(nullNode, 1);
-		}
+        ~RedBlackTree() {}
 
         RedBlackTree &operator= (RedBlackTree const &rbt) {
 			this->root = rbt.root;
 			this->__size = rbt.__size;
 			this->nullNode = rbt.nullNode;
 			this->__alloc = rbt.__alloc;
+			this->__pair_alloc = rbt.__pair_alloc;
+			this->__comp = rbt.__comp;
             return *this;
         }
 

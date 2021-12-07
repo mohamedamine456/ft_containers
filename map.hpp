@@ -4,6 +4,7 @@
 #include "namespace.hpp"
 #include "utils/redBlackTree.hpp"
 #include "utils/iterator.hpp"
+#include <unistd.h>
 
 template < class Key, class T, class Compare, class Allocator >
 class ft::map
@@ -37,12 +38,14 @@ class ft::map
                     return comp(x.first, y.first);
                 }
         };
-        typedef typename Allocator::template rebind<RedBlackTree<key_type, mapped_type, key_compare, Allocator> >::other       Tree_Allocator;
+        typedef typename Allocator::template rebind<RedBlackTree<key_type, mapped_type, key_compare, Allocator> >::other	Tree_Allocator;
+		typedef typename Allocator::template rebind<Node<const key_type, mapped_type> >::other									Node_Allocator;
 	private:
 		// attributes
 		
 		allocator_type																__allocator;
-        Tree_Allocator                                                              __tree_allocator;
+        Tree_Allocator                                                              __tree_alloc;
+		Node_Allocator																__node_alloc;
 		size_type																	__size;
 		RedBlackTree<key_type, mapped_type, key_compare, Allocator>					__rbtree;
 		key_compare																	__key_comp;
@@ -95,13 +98,17 @@ class ft::map
                 __rbtree.deleteNode(min_node);
                 __size--;
             }
+			__allocator.deallocate(__rbtree.getNullNode()->data, 1);
+			__node_alloc.deallocate(__rbtree.getNullNode(), 1);
         }
 
         // operator=
         map& operator= ( const map& mp ) {
             this->clear();
-            __tree_allocator.destroy(&(this)->__rbtree);
-            __tree_allocator.construct(&(this->__rbtree));
+			__allocator.deallocate(__rbtree.getNullNode()->data, 1);
+			__node_alloc.deallocate(__rbtree.getNullNode(), 1);
+			__tree_alloc.destroy(&__rbtree);
+            __tree_alloc.construct(&(this->__rbtree));
             this->insert(mp.begin(), mp.end());
             this->__size = mp.__size;
             this->__value_compare = value_compare(mp.__value_compare);
@@ -255,14 +262,20 @@ class ft::map
             RedBlackTree<key_type, mapped_type, key_compare, Allocator>	tmp_rbtree = mp.__rbtree;
 			key_compare													tmp_key_comp = mp.__key_comp;
 			value_compare												tmp_value_comp = mp.__value_compare;
+			Tree_Allocator												tmp_tree_alloc = mp.__tree_alloc;
+			Node_Allocator												tmp_node_alloc = mp.__node_alloc;
 
 			mp.__allocator = this->__allocator;
+			mp.__tree_alloc = this->__tree_alloc;
+			mp.__node_alloc = this->__node_alloc;
 			mp.__size = this->__size;
 			mp.__rbtree = this->__rbtree;
 			mp.__key_comp = this->__key_comp;
 			mp.__value_compare = this->__value_compare;
 
 			this->__allocator = tmp_alloc;
+			this->__tree_alloc = tmp_tree_alloc;
+			this->__node_alloc = tmp_node_alloc;
 			this->__size = tmp_size;
 			this->__rbtree = tmp_rbtree;
 			this->__key_comp = tmp_key_comp;
