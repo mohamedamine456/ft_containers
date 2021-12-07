@@ -99,6 +99,7 @@ class ft::map
 
         // operator=
         map& operator= ( const map& mp ) {
+            this->clear();
             __tree_allocator.destroy(&(this)->__rbtree);
             __tree_allocator.construct(&(this->__rbtree));
             this->insert(mp.begin(), mp.end());
