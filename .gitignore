@@ -1,3 +1,4 @@
 a.out
-tester/map.out
-tester/map.out.dSYM
+*.dSYM
+tester/*.out
+tester/*.dSYM
