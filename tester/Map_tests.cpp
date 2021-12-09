@@ -2250,19 +2250,19 @@ int main()
     // std::cout << std::endl;
 
     // erase(it1, it2) ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
-    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    TEST_CASE(testModifiers)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    // TEST_CASE(testModifiers)
+    // std::cout << std::endl;
 
     // DOOOOONE
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
     // TEST_CASE(testObservers)
     // std::cout << std::endl;
 
-    // upper & lower bound & equal_range ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
-    // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    // TEST_CASE(testOperations)
-    // std::cout << std::endl;
+    // upper_bound & equal_range ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
+    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    TEST_CASE(testOperations)
+    std::cout << std::endl;
 
     // DOOOOONE
     // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
