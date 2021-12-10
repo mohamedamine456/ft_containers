@@ -192,7 +192,7 @@ void testOperations()
               << "] --------------------]\t\t\033[0m";
     {
         bool cond;
-        /*---------------------------------- time limit test --------------------------------------------*/
+        // /*---------------------------------- time limit test --------------------------------------------*/
         {
             time_t start, end, diff;
             int res, ft_res;
@@ -215,29 +215,41 @@ void testOperations()
             ualarm(0, 0);
             cond = ft_res == res;
         }
-        // std::map<int, std::string> m;
-        // ft::map<int, std::string> ft_m;
-        // int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150}; // size = 9
-        // for (size_t i = 0; i < 9; ++i)
-        // {
-        //     m.insert(std::make_pair(arr[i], "value"));
-        //     ft_m.insert(ft::make_pair(arr[i], "value"));
-        // }
-        // std::map<int, std::string> const c_m(m.begin(), m.end());
-        // ft::map<int, std::string> const c_ft_m(ft_m.begin(), ft_m.end());
-        // cond = (cond && (m.upper_bound(15)->first == ft_m.upper_bound(15)->first));
-        // cond = (cond && (m.upper_bound(65)->first == ft_m.upper_bound(65)->first));
-        // cond = (cond && (m.upper_bound(63)->first == ft_m.upper_bound(63)->first));
-        // cond = (cond && (m.upper_bound(120)->first == ft_m.upper_bound(120)->first));
-        // cond = (cond && (m.upper_bound(70)->first == ft_m.upper_bound(70)->first));
-        // cond = (cond && (m.upper_bound(150)->first == ft_m.upper_bound(150)->first));
+        std::map<int, std::string> m;
+        ft::map<int, std::string> ft_m;
+        int arr[] = {20, 10, 100, 15, 60, 90, 65, 200, 150}; // size = 9
+        for (size_t i = 0; i < 9; ++i)
+        {
+            m.insert(std::make_pair(arr[i], "value"));
+            ft_m.insert(ft::make_pair(arr[i], "value"));
+        }
+        std::map<int, std::string> const c_m(m.begin(), m.end());
+        ft::map<int, std::string> const c_ft_m(ft_m.begin(), ft_m.end());
+        cond = (cond && (m.upper_bound(15)->first == ft_m.upper_bound(15)->first));
+        std::cout << "std: " << m.upper_bound(15)->first << ", ft: " << ft_m.upper_bound(15)->first << "\n";
+        std::cout << "std: " << m.upper_bound(65)->first << ", ft: " << ft_m.upper_bound(65)->first << "\n";
+        std::cout << "std: " << m.upper_bound(63)->first << ", ft: " << ft_m.upper_bound(63)->first << "\n";
+        std::cout << "std: " << m.upper_bound(120)->first << ", ft: " << ft_m.upper_bound(120)->first << "\n";
+        std::cout << "std: " << m.upper_bound(70)->first << ", ft: " << ft_m.upper_bound(70)->first << "\n";
+        std::cout << "std: " << m.upper_bound(150)->first << ", ft: " << ft_m.upper_bound(150)->first << "\n";
+        cond = (cond && (m.upper_bound(65)->first == ft_m.upper_bound(65)->first));
+        cond = (cond && (m.upper_bound(63)->first == ft_m.upper_bound(63)->first));
+        cond = (cond && (m.upper_bound(120)->first == ft_m.upper_bound(120)->first));
+        cond = (cond && (m.upper_bound(70)->first == ft_m.upper_bound(70)->first));
+        cond = (cond && (m.upper_bound(150)->first == ft_m.upper_bound(150)->first));
 
-        // cond = (cond && (c_m.upper_bound(15)->first == c_ft_m.upper_bound(15)->first));
-        // cond = (cond && (c_m.upper_bound(65)->first == c_ft_m.upper_bound(65)->first));
-        // cond = (cond && (c_m.upper_bound(63)->first == c_ft_m.upper_bound(63)->first));
-        // cond = (cond && (c_m.upper_bound(120)->first == c_ft_m.upper_bound(120)->first));
-        // cond = (cond && (c_m.upper_bound(70)->first == c_ft_m.upper_bound(70)->first));
-        // cond = (cond && (c_m.upper_bound(150)->first == c_ft_m.upper_bound(150)->first));
+        cond = (cond && (c_m.upper_bound(15)->first == c_ft_m.upper_bound(15)->first));
+        cond = (cond && (c_m.upper_bound(65)->first == c_ft_m.upper_bound(65)->first));
+        cond = (cond && (c_m.upper_bound(63)->first == c_ft_m.upper_bound(63)->first));
+        cond = (cond && (c_m.upper_bound(120)->first == c_ft_m.upper_bound(120)->first));
+        cond = (cond && (c_m.upper_bound(70)->first == c_ft_m.upper_bound(70)->first));
+        cond = (cond && (c_m.upper_bound(150)->first == c_ft_m.upper_bound(150)->first));
+        // std::cout << "std: " << m.upper_bound(15)->first << ", ft: " << ft_m.upper_bound(15)->first << "\n";
+        // std::cout << "std: " << m.upper_bound(65)->first << ", ft: " << ft_m.upper_bound(65)->first << "\n";
+        // std::cout << "std: " << m.upper_bound(63)->first << ", ft: " << ft_m.upper_bound(63)->first << "\n";
+        // std::cout << "std: " << m.upper_bound(120)->first << ", ft: " << ft_m.upper_bound(120)->first << "\n";
+        // std::cout << "std: " << m.upper_bound(70)->first << ", ft: " << ft_m.upper_bound(70)->first << "\n";
+        // std::cout << "std: " << m.upper_bound(150)->first << ", ft: " << ft_m.upper_bound(150)->first << "\n";
         EQUAL(cond);
     }
     // std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " equal_range method "

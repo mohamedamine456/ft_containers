@@ -359,7 +359,7 @@ class ft::map
 				return const_iterator(tmp, __rbtree.getRoot());
 			else {
 				tmp = __rbtree.minimum(__rbtree.getRoot());
-				while (tmp->data->first < k)
+				while (__key_comp(tmp->data->first, k))
 					tmp = __rbtree.successor(tmp);
 				return const_iterator(tmp, __rbtree.getRoot());
 			}
@@ -367,35 +367,25 @@ class ft::map
 
         iterator								upper_bound( const key_type& k ) {
             Node<const Key, T>    *tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
-			Node<const Key, T>    *tmp2;
-			if (tmp != __rbtree.getNullNode())
-				return iterator(tmp, __rbtree.getRoot());
-			else {
-				tmp = __rbtree.maximum(__rbtree.getRoot());
-				tmp2 = tmp;
-				while (tmp->data->first < k)
-				{
-					tmp2 = tmp;
-					tmp = __rbtree.predecessor(tmp);
-				}
-				return iterator(tmp2, __rbtree.getRoot());
-			}
+			if (tmp == __rbtree.getNullNode())
+            {
+                tmp = __rbtree.maximum(__rbtree.getRoot());
+                while (__key_comp(k, tmp->data->first))
+                    tmp = __rbtree.predecessor(tmp);
+            }
+            tmp = __rbtree.successor(tmp);
+            return iterator(tmp, __rbtree.getRoot());
 		}
         const_iterator							upper_bound( const key_type& k ) const {
             Node<const Key, T>    *tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
-			Node<const Key, T>    *tmp2;
-			if (tmp != __rbtree.getNullNode())
-				return const_iterator(tmp, __rbtree.getRoot());
-			else {
-				tmp = __rbtree.maximum(__rbtree.getRoot());
-				tmp2 = tmp;
-				while (tmp->data->first < k)
-				{
-					tmp2 = tmp;
-					tmp = __rbtree.predecessor(tmp);
-				}
-				return const_iterator(tmp2, __rbtree.getRoot());
-			}
+			if (tmp == __rbtree.getNullNode())
+            {
+                tmp = __rbtree.maximum(__rbtree.getRoot());
+                while (__key_comp(k, tmp->data->first))
+                    tmp = __rbtree.predecessor(tmp);
+            }
+            tmp = __rbtree.successor(tmp);
+            return const_iterator(tmp, __rbtree.getRoot());
 		}
 
         // (Operations equal_range
