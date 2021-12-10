@@ -390,28 +390,47 @@ class ft::map
 
         // (Operations equal_range
         pair< const_iterator, const_iterator>	equal_range( const key_type& k ) const {
-			Node<const Key, T>	*tmp1 =__rbtree.searchNode(__rbtree.getRoot(), k);
-			Node<const Key, T>	*tmp2 = nullptr;
-			if (tmp1 != __rbtree.getNullNode())
-				return ft::pair<const_iterator, const_iterator>(const_iterator(tmp1, __rbtree.getRoot()), const_iterator(tmp2, __rbtree.getRoot()));
-			return ft::pair<const_iterator, const_iterator>(const_iterator(tmp1, __rbtree.getRoot()), const_iterator(tmp2, __rbtree.getRoot()));
+			Node<const Key, T>	*tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
+			if (tmp != __rbtree.getNullNode())
+            {
+                const_iterator it1(tmp, __rbtree.getRoot());
+                const_iterator it2(__rbtree.successor(tmp), __rbtree.getRoot());
+                return ft::pair<const_iterator, const_iterator>(it1, it2);
+            }
+			else {
+                tmp = __rbtree.maximum(__rbtree.getRoot());
+                while (__key_comp(k, tmp->data->first))
+                    tmp = __rbtree.predecessor(tmp);
+                tmp = __rbtree.successor(tmp);
+                const_iterator it1(tmp, __rbtree.getRoot());
+                return ft::pair<const_iterator, const_iterator>(it1, it1);
+            }
         }
         pair<iterator, iterator>				equal_range( const key_type& k) {
-            (void)k;
-			Node<const Key, T>	*tmp1 =__rbtree.searchNode(__rbtree.getRoot(), k);
-			Node<const Key, T>	*tmp2 = nullptr;
-			if (tmp1 != __rbtree.getNullNode())
-				return ft::pair<iterator, iterator>(iterator(tmp1, __rbtree.getRoot()), iterator(tmp2, __rbtree.getRoot()));
-			return ft::pair<iterator, iterator>(iterator(tmp1, __rbtree.getRoot()), iterator(tmp2, __rbtree.getRoot()));
+			Node<const Key, T>	*tmp =__rbtree.searchNode(__rbtree.getRoot(), k);
+			if (tmp != __rbtree.getNullNode())
+            {
+                iterator it1(tmp, __rbtree.getRoot());
+                iterator it2(__rbtree.successor(tmp), __rbtree.getRoot());
+                return ft::pair<iterator, iterator>(it1, it2);
+            }
+            else {
+                tmp = __rbtree.maximum(__rbtree.getRoot());
+                while (__key_comp(k, tmp->data->first))
+                    tmp = __rbtree.predecessor(tmp);
+                tmp = __rbtree.successor(tmp);
+                iterator it1(tmp, __rbtree.getRoot());
+                return ft::pair<iterator, iterator>(it1, it1);
+            }
         }
 
         // (Allocator) get_allocator
         allocator_type							get_allocator() const {
 			return __allocator;
 		}
-
-        // should add relational operators & swap
 };
+
+// should add relational operators & swap
 
 template < class Key, class T, class Compare, class Alloc >
 bool    operator== (const ft::map<Key, T, Compare, Alloc> &lhs, const ft::map<Key, T, Compare, Alloc> &rhs) {
