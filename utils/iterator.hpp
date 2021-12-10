@@ -281,8 +281,6 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         pointer     operator->() const {
             return this->__node->data;
         }
-
-
 };
 
 template< class Category, class Pair>

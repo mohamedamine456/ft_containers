@@ -2235,9 +2235,9 @@ int main()
     // std::cout << std::endl;
 
     // rbegin & rend ERRRROOOOOOOOOOOORRRR CHECKKKKK ************************//-------//************************
-    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    // TEST_CASE(testIterators);
-    // std::cout << std::endl;
+    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    TEST_CASE(testIterators);
+    std::cout << std::endl;
 
     // DOOOOONE
     // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
@@ -2250,9 +2250,9 @@ int main()
     // std::cout << std::endl;
 
     // DOOOOONE (the test with rbegin and rend will be fixed when fixing rbegin and rend)
-    std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
-    TEST_CASE(testModifiers)
-    std::cout << std::endl;
+    // std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
+    // TEST_CASE(testModifiers)
+    // std::cout << std::endl;
 
     // DOOOOONE
     // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
@@ -2278,6 +2278,6 @@ int main()
     // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
     // TEST_CASE(testNonMemberSwap);
     // std::cout << std::endl;
-    system("leaks map.out");
+    // system("leaks map.out");
     return 0;
 }
