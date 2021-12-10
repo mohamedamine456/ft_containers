@@ -4,6 +4,7 @@
 #include "namespace.hpp"
 #include "utils/redBlackTree.hpp"
 #include "utils/iterator.hpp"
+#include "vector.hpp"
 #include <unistd.h>
 
 template < class Key, class T, class Compare, class Allocator >
@@ -245,18 +246,24 @@ class ft::map
             return 0;
 		}
         void									erase( iterator first, iterator last ) {
-            iterator    tmp_it = first;
-            Node<const Key, T>    *tmp;
-            while (tmp_it != last)
+            Node<const Key, T>	*tmp;
+            ft::vector<Node< const Key, T> *> nodes;
+            while (first != last)
             {
-                ++first;
-                tmp = __rbtree.searchNode(__rbtree.getRoot(), (*tmp_it).first);
+                tmp = __rbtree.searchNode(__rbtree.getRoot(), (*first).first);
                 if (tmp != nullptr && tmp != __rbtree.getNullNode()) {
-                    __rbtree.deleteNode(tmp);
-                    __size--;
+					nodes.push_back(tmp);
                 }
-                tmp_it = first;
+                else
+                    return;
+                ++first;
             }
+			for (size_t i = 0; i < nodes.size(); i++)
+			{
+				__rbtree.deleteNode(nodes[i]);
+				__size--;
+			}
+			nodes.clear();
 		}
 
         // (Modifiers) swap

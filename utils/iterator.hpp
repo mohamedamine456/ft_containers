@@ -218,7 +218,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         }
         
         map_iterator    &operator++() {
-            if (this->__node->empty == false)
+            if (this->__node != nullptr && this->__node->empty == false)
             {
                 if (this->__node->rightChild->empty == true && this->__node == maximum(this->__root))
                 {
@@ -239,7 +239,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         }
         map_iterator    operator++(int) {
             map_iterator    tmp(*this);
-            if (this->__node->empty == false)
+            if (this->__node && this->__node->empty == false)
             {
                 if (this->__node->rightChild->empty == true && this->__node == maximum(this->__root))
                 {
@@ -259,7 +259,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
             return tmp;
         }
 		map_iterator    &operator--() {
-            if (this->__node->empty == true) {
+            if (this->__node && this->__node->empty == true) {
                 this->__node = maximum(this->__root);
             }
             else
@@ -268,7 +268,7 @@ class ft::map_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
         }
         map_iterator    operator--(int) {
             map_iterator    tmp(*this);
-            if (this->__node->empty == true) {
+            if (this->__node && this->__node->empty == true) {
                 this->__node = maximum(this->__root);
             }
             else
