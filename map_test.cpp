@@ -36,7 +36,7 @@ bool comparemaps(Iter1 first1, Iter1 last1, Iter2 first2, Iter2 last2)
     return true;
 }
 
-int main() {
+void testrbeginrend() {
     std::cout << "\t\033[1;37m[-------------------- [" << std::setw(40) << std::left << " rbegin and rend methods "
               << "] --------------------]\t\t\033[0m";
     {
@@ -103,5 +103,9 @@ int main() {
         rit--;
         EQUAL(res == ft_res && c_res == c_ft_res && rit->first == 12);
     }
+}
+
+int main() {
+    testrbeginrend();
     // system("leaks a.out");
 }

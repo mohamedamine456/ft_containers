@@ -36,13 +36,17 @@ int main() {
     //     std::cout << "[" << min->data.first << ", " << min->data.second << "], (" << (min->red ? "RED" : "BLACK") << ")\n";
     // }
 
-    Node<const int, int> *n1 = rbt.newNode(55, 10);
-    Node<const int, int> *n2 = rbt.newNode(40, 10);
-    Node<const int, int> *n3 = rbt.newNode(65, 10);
-    Node<const int, int> *n4 = rbt.newNode(60, 10);
-    Node<const int, int> *n5 = rbt.newNode(75, 10);
-    Node<const int, int> *n6 = rbt.newNode(57, 10);
-    Node<const int, int> *n7 = rbt.newNode(58, 10);
+    Node<const int, int> *n1 = rbt.newNode(9, 10);
+    Node<const int, int> *n2 = rbt.newNode(8, 10);
+    Node<const int, int> *n3 = rbt.newNode(7, 10);
+    Node<const int, int> *n4 = rbt.newNode(6, 10);
+    Node<const int, int> *n5 = rbt.newNode(5, 10);
+    Node<const int, int> *n6 = rbt.newNode(4, 10);
+    Node<const int, int> *n7 = rbt.newNode(3, 10);
+    Node<const int, int> *n8 = rbt.newNode(2, 10);
+    Node<const int, int> *n9 = rbt.newNode(1, 10);
+    Node<const int, int> *n10 = rbt.newNode(0, 10);
+
 
     rbt.insertNode(n1);
     rbt.insertNode(n2);
@@ -51,6 +55,9 @@ int main() {
     rbt.insertNode(n5);
     rbt.insertNode(n6);
     rbt.insertNode(n7);
+    rbt.insertNode(n8);
+    rbt.insertNode(n9);
+    rbt.insertNode(n10);
     rbt.printRBT(rbt.getRoot(), "", true);
 
     std::cout << "---------------------------\n\n";

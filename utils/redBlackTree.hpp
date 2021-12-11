@@ -176,7 +176,7 @@ class RedBlackTree {
 			}
 			tmp->parent = node->parent;
 			if (node->parent == nullptr) {
-				this->root = node;
+				this->root = tmp;
 			} else if (node == node->parent->rightChild) {
 				node->parent->rightChild = tmp;
 			} else {

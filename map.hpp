@@ -72,9 +72,12 @@ class ft::map
                 if (tmp != __rbtree.getNullNode())
                     tmp->data->second = first->second;
                 else
-                    __rbtree.insertNode(__rbtree.newNode(first->first, first->second));
+                {
+                    tmp = __rbtree.newNode(first->first, first->second);
+                    __rbtree.insertNode(tmp);
+                    __size++;
+                }
                 ++first;
-                __size++;
             }
         }
 
