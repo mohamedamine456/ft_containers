@@ -2220,63 +2220,63 @@ int main()
     signal(SIGALRM, alarm_handler);
 
     // DOOOOONE
-    std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
-    TEST_CASE(iterator_tests);
+    // std::cout << YELLOW << "Testing Iterators;" << RESET << std::endl;
+    // TEST_CASE(iterator_tests);
 
-    // DOOOOONE
-    TEST_CASE(const_iterator_tests);
-    TEST_CASE(reverse_iterator_tests);
-    std::cout << std::endl;
+    // // DOOOOONE
+    // TEST_CASE(const_iterator_tests);
+    // TEST_CASE(reverse_iterator_tests);
+    // std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
-    TEST_CASE(testConstructors);
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Constructors;" << RESET << std::endl;
+    // TEST_CASE(testConstructors);
+    // std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
-    TEST_CASE(testIterators);
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Iterator Methods;" << RESET << std::endl;
+    // TEST_CASE(testIterators);
+    // std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
-    TEST_CASE(testCapacityMethods);
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Capacity Methods;" << RESET << std::endl;
+    // TEST_CASE(testCapacityMethods);
+    // std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
-    TEST_CASE(testElementAccess);
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Access Element Methods; " << RESET << std::endl;
+    // TEST_CASE(testElementAccess);
+    // std::cout << std::endl;
 
-    // DOOOOONE (the test with rbegin and rend will be fixed when fixing rbegin and rend)
+    // // DOOOOONE (the test with rbegin and rend will be fixed when fixing rbegin and rend)
     std::cout << YELLOW << "Testing Modifiers Methods;" << RESET << std::endl;
     TEST_CASE(testModifiers)
     std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
-    TEST_CASE(testObservers)
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Observers Methods;" << RESET << std::endl;
+    // TEST_CASE(testObservers)
+    // std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
-    TEST_CASE(testOperations)
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Operations Methods;" << RESET << std::endl;
+    // TEST_CASE(testOperations)
+    // std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
-    TEST_CASE(testAllocatorMethodes)
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Allocator Methods;" << RESET << std::endl;
+    // TEST_CASE(testAllocatorMethodes)
+    // std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
-    TEST_CASE(testRetionalOperators);
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Retional Operators; " << RESET << std::endl;
+    // TEST_CASE(testRetionalOperators);
+    // std::cout << std::endl;
 
-    // DOOOOONE
-    std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
-    TEST_CASE(testNonMemberSwap);
-    std::cout << std::endl;
+    // // DOOOOONE
+    // std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
+    // TEST_CASE(testNonMemberSwap);
+    // std::cout << std::endl;
     // system("leaks map.out");
     return 0;
 }

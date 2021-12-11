@@ -312,8 +312,10 @@ class ft::reverse_iterator: public ft::iterator_base<typename ft::iterator_trait
 
         reverse_iterator(): __current() {}
         explicit reverse_iterator(iterator_type c): __current(c) {}
+
         template < class U >
         reverse_iterator(const reverse_iterator<U>& rv_iter): __current(rv_iter.base()) {}
+
         virtual ~reverse_iterator() {}
         Iter    base() const {
             return __current;
