@@ -264,6 +264,7 @@ class ft::vector
 					pointer		tmp = __allocator.allocate(__capacity);
 					for (size_type i = 0; i < __size; i++) {
 						__allocator.construct(&tmp[i], __sequence[i]);
+						__allocator.destroy(&__sequence[i]);
 					}
 					__allocator.deallocate(__sequence, __size);
 					__sequence = tmp;
