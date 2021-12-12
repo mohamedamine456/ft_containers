@@ -61,7 +61,7 @@ class ft::vector
 
 		vector ( const vector& vec ) {							// copy constructor
             try {
-				this->__sequence = __allocator.allocate(vec.__size);
+				this->__sequence = __allocator.allocate(vec.__capacity);
 				for (size_type i = 0; i < vec.__size; i++)
 					__allocator.construct(&this->__sequence[i], vec.__sequence[i]);
 				this->__size = vec.__size;
@@ -160,7 +160,7 @@ class ft::vector
 
         // (capacity) empty
         bool					empty() const {
-			return this->begin() == this->end();
+			return this->__size == 0;
 		}
 
         // (capacity) reserve

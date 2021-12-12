@@ -169,6 +169,10 @@ namespace ft {
 		class Allocator = std::allocator<ft::pair <const Key, T> > >
 	class map;
 
+	// set
+	template < class Key, class T, class Compare, class Allocator >
+	class set;
+
 	// Exceptions
 	class LengthError: public std::exception {
 		private:

@@ -2277,6 +2277,6 @@ int main()
     std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
     TEST_CASE(testNonMemberSwap);
     std::cout << std::endl;
-    // system("leaks map.out");
+    system("leaks map.out");
     return 0;
 }
