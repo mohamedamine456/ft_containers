@@ -16,6 +16,11 @@ class ft::iterator : public ft::iterator_base <ft::random_access_iterator_tag, T
         iterator ( T* x ) : __p(x) {}
         template < class U>
         iterator ( const iterator<ft::random_access_iterator_tag, U>& cp ) : __p(cp.base()) {}
+        
+        operator iterator<Category, const T>() const {
+            return iterator<Category, const T>(this->__p);
+        }
+        
         virtual ~iterator() {}
         T*  base() const {
             return this->__p;

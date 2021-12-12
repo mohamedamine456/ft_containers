@@ -60,7 +60,15 @@ class ft::vector
 		}
 
 		vector ( const vector& vec ) {							// copy constructor
-            *this = vec;
+            try {
+				this->__sequence = __allocator.allocate(vec.__size);
+				for (size_type i = 0; i < vec.__size; i++)
+					__allocator.construct(&this->__sequence[i], vec.__sequence[i]);
+				this->__size = vec.__size;
+				this->__capacity = vec.__capacity;
+			} catch (std::exception &ex) {
+				throw ft::LengthError("vector");
+			}
         }
 
         // destructor
@@ -75,6 +83,8 @@ class ft::vector
         // operator=
         vector&	operator= ( const vector& vec ) {
 			try {
+				this->clear();
+				__allocator.deallocate(__sequence, __capacity);
 				this->__sequence = __allocator.allocate(vec.__size);
 				for (size_type i = 0; i < vec.__size; i++)
 					__allocator.construct(&this->__sequence[i], vec.__sequence[i]);
