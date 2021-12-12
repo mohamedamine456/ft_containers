@@ -1,0 +1,184 @@
+begin & end: 
+
+key: 13, value: 37
+key: 26, value: 74
+key: 39, value: 111
+key: 52, value: 148
+key: 65, value: 185
+key: 78, value: 222
+key: 91, value: 259
+max_size: 1152921504606846975
+
+
+clear: 
+
+key: a, value: 100
+key: b, value: 500
+key: c, value: 400
+key: z, value: 700
+
+key: m, value: 777
+key: o, value: 111
+key: t, value: 555
+
+
+cout: 
+
+char : a is an element of the map.
+char : b is not an element of the map.
+char : c is an element of the map.
+char : d is not an element of the map.
+char : e is not an element of the map.
+char : f is not an element of the map.
+char : g is not an element of the map.
+char : h is an element of the map.
+char : i is not an element of the map.
+char : j is an element of the map.
+char : k is not an element of the map.
+char : l is not an element of the map.
+char : m is an element of the map.
+char : n is not an element of the map.
+char : o is not an element of the map.
+char : p is not an element of the map.
+char : q is not an element of the map.
+char : r is not an element of the map.
+char : s is not an element of the map.
+char : t is an element of the map.
+char : u is not an element of the map.
+char : v is not an element of the map.
+char : w is not an element of the map.
+char : x is an element of the map.
+char : y is not an element of the map.
+char : z is an element of the map.
+
+empty
+
+Map 'mp' is empty: NO
+Map 'mp' is empty: Yes
+
+equal_range
+
+lower bound points to: h => 400
+upper bound points to: j => 800
+
+erase & find: 
+
+Before erase map: 
+key: a, value: 100
+key: c, value: 200
+key: h, value: 400
+key: j, value: 800
+key: m, value: 600
+key: t, value: 700
+key: x, value: 500
+key: z, value: 300
+
+After erase map: 
+key: a, value: 100
+key: j, value: 800
+key: m, value: 600
+key: t, value: 700
+
+j => 800
+t => 700
+m => 600
+
+get_allocator: 
+
+The allocated array has a size of: 280 bytes
+
+insert: 
+
+element 'x' inserted successfully.
+
+After insertion with single parameter: 
+key: t, value: 600
+key: x, value: 700
+key: z, value: 800
+
+
+After insertion with hint position: 
+key: a, value: 100
+key: m, value: 500
+key: t, value: 600
+key: x, value: 700
+key: z, value: 800
+
+
+After range insertion sec_map contains: 
+key: a, value: 100
+key: m, value: 500
+key: t, value: 600
+
+
+key_comp
+
+Map contains: 
+a => 100
+c => 200
+h => 400
+z => 300
+
+
+lower_bound & upper_bound: 
+
+key: a, value: 100
+key: c, value: 200
+key: h, value: 400
+key: z, value: 300
+
+
+max_size: 
+
+The Map Contains 1000 elements.
+
+operator=: 
+
+Size of mp: 0
+Size of sec_mp: 8
+
+operator[]: 
+
+mp["x"]: this case contains 500
+mp["m"]: this case contains 600
+mp["j"]: this case contains 800
+mp["o"]: 
+mp now contains: 4 elements.
+
+rbegin && rend: 
+
+z => 300
+x => 500
+t => 700
+m => 600
+j => 800
+h => 400
+c => 200
+a => 100
+
+size: 
+
+The Map size is: 8
+
+swap: 
+
+After Swap, The Map mp contains: 
+key: v, value: 900
+key: w, value: 500
+key: x, value: 600
+key: y, value: 700
+key: z, value: 800
+After Swap, The Map sec contains: 
+key: a, value: 100
+key: b, value: 200
+key: c, value: 300
+key: d, value: 400
+
+
+value_comp: 
+
+The Map mp contains: 
+key: a, value: 100
+key: b, value: 200
+key: c, value: 300
+key: d, value: 400
