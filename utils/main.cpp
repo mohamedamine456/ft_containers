@@ -61,11 +61,11 @@ int main() {
     rbt.printRBT(rbt.getRoot(), "", true);
 
     std::cout << "---------------------------\n\n";
-    rbt.deleteNode(n7);
+    rbt.deleteNode(n10);
     rbt.printRBT(rbt.getRoot(), "", true);
 
     std::cout << "---------------------------\n\n";
-    rbt.deleteNode(n3);
+    rbt.deleteNode(n9);
     rbt.printRBT(rbt.getRoot(), "", true);
 
     std::cout << "Finished.\n";

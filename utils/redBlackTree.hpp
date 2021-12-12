@@ -191,7 +191,7 @@ class RedBlackTree {
 			Node<const K, V> *tmp = node->rightChild;
 
 			node->rightChild = tmp->leftChild;
-			if (tmp->leftChild != nullNode) {
+			if (tmp->rightChild != nullNode) {
 				tmp->leftChild->parent = node;
 			}
 			tmp->parent = node->parent;

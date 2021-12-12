@@ -233,13 +233,11 @@ class ft::map
 
         // (Modifiers) erase
         void									erase( iterator position ) {
-            std::cout << "max: " << this->__rbtree.maximum(this->__rbtree.getRoot())->data->first << "\n";
             Node<const Key, T>    *tmp = __rbtree.searchNode(__rbtree.getRoot(), position->first);
             if (tmp != __rbtree.getNullNode()) {
                 __rbtree.deleteNode(tmp);
                 __size--;
             }
-            std::cout << "max: " << this->__rbtree.maximum(this->__rbtree.getRoot())->data->first << "\n";
 		}
 
         size_type								erase( const key_type& k ) {
