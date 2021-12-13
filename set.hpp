@@ -7,40 +7,28 @@
 #include "vector.hpp"
 #include <unistd.h>
 
-template < class Key, class T, class Compare, class Allocator >
+template < class T, class Compare, class Allocator >
 class ft::set
 {
     public:
-        typedef Key																	key_type;
-        typedef T																	mapped_type;
-        typedef ft::pair<const key_type, mapped_type>								value_type;
+        typedef T																	key_type;
+        typedef T																	value_type;
         typedef	Compare																key_compare;
+		typedef	Compare																value_compre;
         typedef Allocator															allocator_type;
-        typedef value_type&															reference;
-        typedef const value_type&													const_reference;
+        typedef typename allocator_type::reference									reference;
+        typedef typename allocator_type::const_reference    						const_reference;
         typedef typename allocator_type::pointer									pointer;
         typedef typename allocator_type::const_pointer								const_pointer;
-        typedef ft::map_iterator<bidirectional_iterator_tag, value_type>			iterator;
-        typedef ft::map_iterator<bidirectional_iterator_tag, const value_type >     const_iterator;
+        typedef ft::set_iterator<bidirectional_iterator_tag, value_type>			iterator;
+        typedef ft::set_iterator<bidirectional_iterator_tag, const value_type >     const_iterator;
         typedef ft::reverse_iterator<iterator>										reverse_iterator;
         typedef ft::reverse_iterator<const_iterator>								const_reverse_iterator;
         typedef typename ft::iterator_traits<iterator>::difference_type				difference_type;
         typedef std::size_t															size_type;
-        class value_compare {
-            protected:
-                Compare comp;
-                value_compare (Compare c) : comp(c) {}
-            public:
-                value_compare () {}
-                typedef bool			result_type;
-                typedef value_type		first_argumanet_type;
-                typedef value_type		second_argument_type;
-                bool operator() ( const value_type& x, const value_type& y) const {
-                    return comp(x.first, y.first);
-                }
-        };
-        typedef typename Allocator::template rebind<RedBlackTree<key_type, mapped_type, key_compare, Allocator> >::other	Tree_Allocator;
-		typedef typename Allocator::template rebind<Node<const key_type, mapped_type> >::other									Node_Allocator;
+
+        typedef typename Allocator::template rebind<RedBlackTree<key_type, key_value, key_compare, Allocator> >::other		Tree_Allocator;
+		typedef typename Allocator::template rebind<Node<const key_type, key_value> >::other								Node_Allocator;
 	private:
 		// attributes
 		
@@ -443,35 +431,35 @@ class ft::set
 
 // should add relational operators & swap
 
-template < class Key, class T, class Compare, class Alloc >
-bool    operator== (const ft::set<Key, T, Compare, Alloc> &lhs, const ft::set<Key, T, Compare, Alloc> &rhs) {
+template < class T, class Compare, class Alloc >
+bool    operator== (const ft::set<T, Compare, Alloc> &lhs, const ft::set<T, Compare, Alloc> &rhs) {
     if (lhs.size() != rhs.size())
         return false;
     return ft::equal(lhs.begin(), lhs.end(), rhs.begin());
 }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator!= (const ft::set<Key, T, Compare, Alloc> &lhs, const ft::set<Key, T, Compare, Alloc> &rhs) {
+template < class T, class Compare, class Alloc > 
+bool    operator!= (const ft::set<T, Compare, Alloc> &lhs, const ft::set<T, Compare, Alloc> &rhs) {
     return !(lhs == rhs);
 }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator< (const ft::set<Key, T, Compare, Alloc> &lhs, const ft::set<Key, T, Compare, Alloc> &rhs) {
+template < class T, class Compare, class Alloc > 
+bool    operator< (const ft::set<T, Compare, Alloc> &lhs, const ft::set<T, Compare, Alloc> &rhs) {
     return ft::lexicographical_compare(lhs.begin(), lhs.end(), rhs.begin(), rhs.end());
 }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator<= (const ft::set<Key, T, Compare, Alloc> &lhs, const ft::set<Key, T, Compare, Alloc> &rhs) {
+template < class T, class Compare, class Alloc > 
+bool    operator<= (const ft::set<T, Compare, Alloc> &lhs, const ft::set<T, Compare, Alloc> &rhs) {
     return (lhs < rhs || lhs == rhs);
 }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator> (const ft::set<Key, T, Compare, Alloc> &lhs, const ft::set<Key, T, Compare, Alloc> &rhs) {
+template < class T, class Compare, class Alloc > 
+bool    operator> (const ft::set<T, Compare, Alloc> &lhs, const ft::set<T, Compare, Alloc> &rhs) {
     return !(lhs < rhs) && (lhs != rhs);
 }
 
-template < class Key, class T, class Compare, class Alloc > 
-bool    operator>= (const ft::set<Key, T, Compare, Alloc> &lhs, const ft::set<Key, T, Compare, Alloc> &rhs) {
+template < class T, class Compare, class Alloc > 
+bool    operator>= (const ft::set<T, Compare, Alloc> &lhs, const ft::set<T, Compare, Alloc> &rhs) {
     return !(lhs < rhs);
 }
 

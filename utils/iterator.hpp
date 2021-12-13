@@ -310,6 +310,76 @@ bool    operator!= (ft::map_iterator<Category, Pair> fir, ft::map_iterator<Categ
     return fir.base() != sec.base();
 }
 
+
+/* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
+// map iterator
+
+template <class Category, class T>
+class ft::set_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag, T >
+{
+    private:
+        T* __p;
+
+    public:
+        set_iterator () {}
+        set_iterator (T *x) : __p(x) {}
+
+        template < class U >
+        set_iterator ( const set_iterator<ft::bidirectional_iterator_tag, U>& cp ) : __p(cp.base()) {}
+        
+
+        operator set_iterator<const Category, const T>() const{
+            return set_iterator<const Category, const T>(this->__p);
+        }
+
+        virtual ~set_iterator() {}
+
+        set_iterator    &operator= ( const set_iterator &st_it ) {
+            this->__p = st_it.__p;
+            return *this;
+        }
+
+        T    *base() const {
+            return this->__node;
+        }
+
+        set_iterator    &operator++() {
+            ++__p;
+            return *this;
+        }
+        set_iterator    operator++(int) {
+            set_iterator tmp(*this);
+            ++__p;
+            return tmp;
+        }
+		set_iterator    &operator--() {
+            __p;
+            return *this;
+        }
+        set_iterator    operator--(int) {
+            set_iterator tmp(*this);
+            --__p;
+            return tmp;
+        }
+		typename ft::iterator_base<Category, T>::reference   operator*() const {
+            return *__p;
+        }
+        typename ft::iterator_base<Category, T>::pointer     operator->() const {
+            return __p;
+        }
+};
+
+template< class Category, class T >
+bool    operator== (ft::set_iterator<Category, T> fir, ft::set_iterator<Category, T> sec) {
+    return fir.base() == sec.base();
+}
+
+template< class Category, class T >
+bool    operator!= (ft::set_iterator<Category, T> fir, ft::set_iterator<Category, T> sec) {
+    return fir.base() != sec.base();
+}
+
+
 /* -------------------------------------------------------------------------------------------------------------------------------------------------------------------- */
 // reverse_iterator class
 template < class Iter >

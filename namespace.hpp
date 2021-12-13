@@ -66,39 +66,17 @@ namespace ft {
 	template < class InputIterator >
 	typename iterator_traits<InputIterator>::difference_type	distance(InputIterator first, InputIterator last);
 
-	// back_insert_iterator
-	template < class Container >
-	class back_insert_iterator;
-
-	// back_inserter function
-	template < class Container>
-	back_insert_iterator< Container > back_inserter (Container &c);
-
-	// front_insert_iterator
-	template < class Container >
-	class front_insert_iterator;
-
-	// front_inserter function
-	template < class Container >
-	front_insert_iterator< Container > front_inserter (Container &c);
-
-
-	// insert_iterator
-	template < class Container >
-	class insert_iterator;
-
-	// inserter
-	template < class Container >
-	insert_iterator< Container > inserter (Container &c, typename Container::iterator iter);
-
 	// reverse_iterator class
 	template < class Iter >
 	class reverse_iterator;
 
 
 	// map iterator
-	template <class Category, class Pair>
+	template < class Category, class Pair >
 	class map_iterator;
+
+	template< class Category, class T >
+	class set_iterator;
 
 	// equal
 	template < class InputIterator1, class InputIterator2 >
@@ -170,7 +148,7 @@ namespace ft {
 	class map;
 
 	// set
-	template < class Key, class T, class Compare, class Allocator >
+	template < class T, class Compare, class Allocator >
 	class set;
 
 	// Exceptions
