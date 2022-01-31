@@ -14,7 +14,7 @@ class ft::set
         typedef T																	key_type;
         typedef T																	value_type;
         typedef	Compare																key_compare;
-		typedef	Compare																value_compre;
+		typedef	Compare																value_compare;
         typedef Allocator															allocator_type;
         typedef typename allocator_type::reference									reference;
         typedef typename allocator_type::const_reference    						const_reference;
@@ -27,8 +27,8 @@ class ft::set
         typedef typename ft::iterator_traits<iterator>::difference_type				difference_type;
         typedef std::size_t															size_type;
 
-        typedef typename Allocator::template rebind<RedBlackTree<key_type, key_value, key_compare, Allocator> >::other		Tree_Allocator;
-		typedef typename Allocator::template rebind<Node<const key_type, key_value> >::other								Node_Allocator;
+        typedef typename Allocator::template rebind<RedBlackTree< key_type, key_type, key_compare, Allocator > >::other		Tree_Allocator;
+		typedef typename Allocator::template rebind<Node< const key_type, key_type > >::other								Node_Allocator;
 	private:
 		// attributes
 		
@@ -36,7 +36,7 @@ class ft::set
         Tree_Allocator                                                              __tree_alloc;
 		Node_Allocator																__node_alloc;
 		size_type																	__size;
-		RedBlackTree<key_type, mapped_type, key_compare, Allocator>					__rbtree;
+		RedBlackTree<key_type, key_type, key_compare, Allocator>					__rbtree;
 		key_compare																	__key_comp;
 		value_compare																__value_compare;
 	public:
