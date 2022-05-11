@@ -37,8 +37,11 @@ clean:
 	rm -f $(VECTOR) $(STACK) $(MAP)
 
 fclean:
-	rm -f $(VECTOR) $(STACK) $(MAP)
+	rm -f $(VECTOR) $(STACK) $(MAP) $(SET)
 
 re: fclean all
 
 bonus: $(SET)
+
+clean_bonus:
+	rm -f $(SET)

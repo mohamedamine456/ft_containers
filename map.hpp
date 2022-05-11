@@ -111,16 +111,18 @@ class ft::map
 
 		// operator=
 		map& operator= ( const map& mp ) {
-			this->clear();
-			__allocator.deallocate(__rbtree.getNullNode()->data, 1);
-			__node_alloc.deallocate(__rbtree.getNullNode(), 1);
-			__tree_alloc.destroy(&__rbtree);
-			__tree_alloc.construct(&(this->__rbtree));
-			this->insert(mp.begin(), mp.end());
-			this->__size = mp.__size;
-			this->__value_compare = value_compare(mp.__value_compare);
-			this->__key_comp = key_compare(mp.__key_comp);
-			this->__allocator = allocator_type(mp.__allocator);
+			if (this != &mp) {
+				this->clear();
+				__allocator.deallocate(__rbtree.getNullNode()->data, 1);
+				__node_alloc.deallocate(__rbtree.getNullNode(), 1);
+				__tree_alloc.destroy(&__rbtree);
+				__tree_alloc.construct(&(this->__rbtree));
+				this->insert(mp.begin(), mp.end());
+				this->__size = mp.__size;
+				this->__value_compare = value_compare(mp.__value_compare);
+				this->__key_comp = key_compare(mp.__key_comp);
+				this->__allocator = allocator_type(mp.__allocator);
+			}
 			return *this;
 		}
 
