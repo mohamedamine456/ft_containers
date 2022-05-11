@@ -1,25 +1,37 @@
 VECTOR = vector
 STACK = stack
 MAP = map
+SET = set
 
-VECTOR_STD = vector_std
-STACK_STD = stack_std
-MAP_STD = map_std
-
+CC = clang++
+FLAGS = -Wall -Wextra -Werror
+FSANITIZE = -fsanitize=address
 
 all: $(VECTOR) $(STACK) $(MAP)
 
 $(VECTOR):
-	clang++ -Wall -Wextra -Werror tests/vector_ft.cpp -o $(VECTOR)_ft.out
-	clang++ -Wall -Wextra -Werror tests/vector_std.cpp -o $(VECTOR_STD).out
+	$(CC) $(FLAGS) tester/vector_tests.cpp -o $(VECTOR)
 
 $(STACK):
-	clang++ -Wall -Wextra -Werror tests/stack_ft.cpp  -o $(STACK)_ft.out
-	clang++ -Wall -Wextra -Werror tests/stack_std.cpp -o $(STACK_STD).out
+	$(CC) $(FLAGS) tester/stack_tests.cpp -o $(STACK)
 
 $(MAP):
-	clang++ -Wall -Wextra -Werror tests/map_ft.cpp -o $(MAP)_ft.out
-	clang++ -Wall -Wextra -Werror tests/map_std.cpp -o $(MAP_STD).out
+	$(CC) $(FLAGS) tester/map_tests.cpp -o $(MAP)
+
+$(SET):
+	$(CC) $(FLAGS) tester/set_tests.cpp -o $(SET)
+
+vector_sanitize:
+	$(CC) $(FLAGS) $(FSANITIZE)	tester/vector_tests.cpp -o vector.out
+
+map_sanitize:
+	$(CC) $(FLAGS) $(FSANITIZE)	tester/map_tests.cpp -o map.out 
+
+stack_sanitize:
+	$(CC) $(FLAGS) $(FSANITIZE)	tester/stack_tests.cpp -o stack.out 
+
+set_sanitize:
+	$(CC) $(FLAGS) $(FSANITIZE)	tester/set_tests.cpp -o set.out 
 
 clean:
 	rm -f $(VECTOR) $(STACK) $(MAP)
@@ -28,3 +40,5 @@ fclean:
 	rm -f $(VECTOR) $(STACK) $(MAP)
 
 re: fclean all
+
+bonus: $(SET)

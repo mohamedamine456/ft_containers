@@ -1545,13 +1545,7 @@ void testModifiers()
         ft_m2["ε"] = "epsilon";
 
         const std::pair<std::string, std::string> &ref = *(m1.begin());
-        // const std::map<std::string, std::string, std::greater<std::string> >::iterator iter = std::next(m1.begin());
         const ft::pair<std::string, std::string> &ft_ref = *(ft_m1.begin());
-        // const ft::map<std::string, std::string, std::greater<std::string> >::iterator ft_iter = std::next(ft_m1.begin());
-
-        // std::cout << "──────── before swap ────────\n"
-        //           << "m1: " << m1 << "m2: " << m2 << "ref: " << ref
-        //           << "\niter: " << *iter << '\n';
 
         cond = cond && ref.first == ft_ref.first && ref.second == ft_ref.second && m1.size() == ft_m1.size() && m2.size() && ft_m2.size();
 
@@ -2277,6 +2271,6 @@ int main()
     std::cout << YELLOW << "Testing Non-Member Swap  ; " << RESET << std::endl;
     TEST_CASE(testNonMemberSwap);
     std::cout << std::endl;
-    system("leaks map.out");
+    // system("leaks map.out");
     return 0;
 }

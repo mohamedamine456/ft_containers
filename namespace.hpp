@@ -75,8 +75,10 @@ namespace ft {
 	template < class Category, class Pair >
 	class map_iterator;
 
-	template< class Category, class T >
+	// map iterator
+	template < class Category, class T >
 	class set_iterator;
+	
 
 	// equal
 	template < class InputIterator1, class InputIterator2 >
@@ -148,7 +150,7 @@ namespace ft {
 	class map;
 
 	// set
-	template < class T, class Compare, class Allocator >
+	template < class T, class Compare = std::less<T>, class Allocator = std::allocator<T> >
 	class set;
 
 	// Exceptions
