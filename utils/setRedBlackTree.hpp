@@ -9,9 +9,9 @@ struct SetNode
 	bool					empty;
 	bool					red;
 	T						*data;
-	SetNode<T>		*leftChild;
-	SetNode<T>		*rightChild;
-	SetNode<T>		*parent;
+	SetNode<T>				*leftChild;
+	SetNode<T>				*rightChild;
+	SetNode<T>				*parent;
 };
 
 template < class T, class Compare = std::less<T>, class Allocator = std::allocator<T> >

@@ -375,9 +375,9 @@ class ft::set_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
 	public:
 
 		typedef		std::ptrdiff_t						difference_type;
-		typedef		T							value_type;
-		typedef		T*							pointer;
-		typedef		T&							reference;
+		typedef		T									value_type;
+		typedef		const T*							pointer;
+		typedef		const T&							reference;
 		typedef		ft::bidirectional_iterator_tag	    iterator_category;
 
 		set_iterator () {}
@@ -397,9 +397,9 @@ class ft::set_iterator: public ft::iterator_base<ft::bidirectional_iterator_tag,
 			this->__last_used = st_it.last_used();
 		}
 
-		// operator set_iterator<const Category, const T>() const {
-		// 	return set_iterator<const Category, const T>(this->__node, this->__root, this->__last_used);
-		// }
+		operator set_iterator<const Category, const T>() const {
+			return set_iterator<const Category, const T>(this->__node, this->__root, this->__last_used);
+		}
 
 		virtual ~set_iterator() {}
 
